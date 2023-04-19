@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="43" height="43" viewBox="0 0 43 43">
+  <defs>
+    <filter id="Ellipse_84" x="0" y="0" width="43" height="43" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_336" data-name="Group 336" transform="translate(-227 -385)">
+    <g transform="matrix(1, 0, 0, 1, 227, 385)" filter="url(#Ellipse_84)">
+      <circle id="Ellipse_84-2" data-name="Ellipse 84" cx="12.5" cy="12.5" r="12.5" transform="translate(9 6)" fill="#fff"/>
+    </g>
+    <path id="Icon_ionic-ios-checkmark" data-name="Icon ionic-ios-checkmark" d="M21.874,13.237l-.94-.967a.2.2,0,0,0-.15-.064h0a.194.194,0,0,0-.15.064l-6.515,6.563-2.371-2.371a.206.206,0,0,0-.3,0l-.951.951a.213.213,0,0,0,0,.3l2.991,2.991a.946.946,0,0,0,.625.3.991.991,0,0,0,.619-.294h.005l7.14-7.178A.228.228,0,0,0,21.874,13.237Z" transform="translate(232.316 386.994)" fill="#cf040d"/>
+  </g>
+</svg>
