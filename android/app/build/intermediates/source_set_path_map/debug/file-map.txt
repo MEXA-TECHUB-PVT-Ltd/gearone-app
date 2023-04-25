@@ -24,20 +24,20 @@ com.mtechubgearone.app-jetified-emoji2-views-helper-1.0.0-22 C:\Users\mtechubuse
 com.mtechubgearone.app-jetified-annotation-experimental-1.1.0-23 C:\Users\mtechubuser\.gradle\caches\transforms-3\e0a1603de116f315cea80cdc8604a239\transformed\jetified-annotation-experimental-1.1.0\res
 com.mtechubgearone.app-jetified-react-android-0.71.6-debug-24 C:\Users\mtechubuser\.gradle\caches\transforms-3\e130ab6804e166a1486f733ffc21e975\transformed\jetified-react-android-0.71.6-debug\res
 com.mtechubgearone.app-jetified-startup-runtime-1.0.0-25 C:\Users\mtechubuser\.gradle\caches\transforms-3\ee52d1298a974e8c315372d93d5b5cab\transformed\jetified-startup-runtime-1.0.0\res
-com.mtechubgearone.app-pngs-26 E:\MtechubProjects\Gear_1\git project\gearone-app\android\app\build\generated\res\pngs\debug
-com.mtechubgearone.app-resValues-27 E:\MtechubProjects\Gear_1\git project\gearone-app\android\app\build\generated\res\resValues\debug
-com.mtechubgearone.app-rs-28 E:\MtechubProjects\Gear_1\git project\gearone-app\android\app\build\generated\res\rs\debug
-com.mtechubgearone.app-mergeDebugResources-29 E:\MtechubProjects\Gear_1\git project\gearone-app\android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
-com.mtechubgearone.app-mergeDebugResources-30 E:\MtechubProjects\Gear_1\git project\gearone-app\android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
-com.mtechubgearone.app-merged_res-31 E:\MtechubProjects\Gear_1\git project\gearone-app\android\app\build\intermediates\merged_res\debug
-com.mtechubgearone.app-debug-32 E:\MtechubProjects\Gear_1\git project\gearone-app\android\app\src\debug\res
-com.mtechubgearone.app-main-33 E:\MtechubProjects\Gear_1\git project\gearone-app\android\app\src\main\res
-com.mtechubgearone.app-packaged_res-34 E:\MtechubProjects\Gear_1\git project\gearone-app\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_res\debug
-com.mtechubgearone.app-packaged_res-35 E:\MtechubProjects\Gear_1\git project\gearone-app\node_modules\react-native-gesture-handler\android\build\intermediates\packaged_res\debug
-com.mtechubgearone.app-packaged_res-36 E:\MtechubProjects\Gear_1\git project\gearone-app\node_modules\react-native-image-crop-picker\android\build\intermediates\packaged_res\debug
-com.mtechubgearone.app-packaged_res-37 E:\MtechubProjects\Gear_1\git project\gearone-app\node_modules\react-native-insta-story\android\build\intermediates\packaged_res\debug
-com.mtechubgearone.app-packaged_res-38 E:\MtechubProjects\Gear_1\git project\gearone-app\node_modules\react-native-reanimated\android\build\intermediates\packaged_res\debug
-com.mtechubgearone.app-packaged_res-39 E:\MtechubProjects\Gear_1\git project\gearone-app\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug
-com.mtechubgearone.app-packaged_res-40 E:\MtechubProjects\Gear_1\git project\gearone-app\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug
-com.mtechubgearone.app-packaged_res-41 E:\MtechubProjects\Gear_1\git project\gearone-app\node_modules\react-native-svg\android\build\intermediates\packaged_res\debug
-com.mtechubgearone.app-packaged_res-42 E:\MtechubProjects\Gear_1\git project\gearone-app\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug
+com.mtechubgearone.app-pngs-26 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\android\app\build\generated\res\pngs\debug
+com.mtechubgearone.app-resValues-27 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\android\app\build\generated\res\resValues\debug
+com.mtechubgearone.app-rs-28 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\android\app\build\generated\res\rs\debug
+com.mtechubgearone.app-mergeDebugResources-29 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.mtechubgearone.app-mergeDebugResources-30 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.mtechubgearone.app-merged_res-31 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\android\app\build\intermediates\merged_res\debug
+com.mtechubgearone.app-debug-32 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\android\app\src\debug\res
+com.mtechubgearone.app-main-33 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\android\app\src\main\res
+com.mtechubgearone.app-packaged_res-34 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-async-storage\async-storage\android\build\intermediates\packaged_res\debug
+com.mtechubgearone.app-packaged_res-35 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-gesture-handler\android\build\intermediates\packaged_res\debug
+com.mtechubgearone.app-packaged_res-36 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\packaged_res\debug
+com.mtechubgearone.app-packaged_res-37 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-insta-story\android\build\intermediates\packaged_res\debug
+com.mtechubgearone.app-packaged_res-38 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-reanimated\android\build\intermediates\packaged_res\debug
+com.mtechubgearone.app-packaged_res-39 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug
+com.mtechubgearone.app-packaged_res-40 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug
+com.mtechubgearone.app-packaged_res-41 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-svg\android\build\intermediates\packaged_res\debug
+com.mtechubgearone.app-packaged_res-42 E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug
