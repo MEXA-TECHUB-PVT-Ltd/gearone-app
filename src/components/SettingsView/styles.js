@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     marginTop:wp(0),
     marginBottom: wp(3),
     //justifyContent:'center',
-    backgroundColor: 'white',
+    backgroundColor:Colors.AppBckGround_color,
     width: wp(95),
     height: hp(6),
     alignSelf: 'center',
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
   labeltext:
   {
-    color: '#262626',
+    color: '#FFFFFF',
 fontFamily:fontFamily.Poppins_Medium,
     fontSize: hp(1.8),
   },
