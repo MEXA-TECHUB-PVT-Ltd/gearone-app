@@ -20,8 +20,10 @@ const Tab = createBottomTabNavigator();
 
 //screeens
 import Home from '../../screens/BottomTab/Home/Home';
-// import ChatList from '../../screens/BottomTabs/ChatList/ChatList';
-// import Profile from '../../screens/BottomTabs/Profile/Profile';
+import Categories from '../../screens/BottomTab/Categories/Categories';
+import Sell from '../../screens/BottomTab/Sell/Sell';
+import Search from '../../screens/BottomTab/Search/Search';
+import MyGear from '../../screens/BottomTab/MyGear/MyGear';
 
 function BottomTab() {
   return (
@@ -35,7 +37,7 @@ function BottomTab() {
         tabBarInactiveTintColor: 'grey',
         tabBarStyle: {
           height: hp(8),
-          backgroundColor: 'white',
+          backgroundColor: Colors.AppBckGround_color,
           shadowColor: '#000',
           shadowOffset: {
             width: 10,
@@ -55,71 +57,79 @@ function BottomTab() {
 
           tabBarIcon: ({color, focused}) => (
             <View style={style.maintabview}>
-            {!focused ? (
-              <Entypo
-                name="home"
-                color={ Colors.App_Tab_icon }
-                size={25}
-              />
-            ) : (
-              <View style={[style.tab]}>
-                <Text style={style.tabtextcolor}>{'Home'}</Text>
-                <View style={[style.tabview]}></View>
-              </View>
-            )}
-          </View>
+                <View style={[style.tab]}>
+                  <Text style={style.tabtextcolor}>{'Home'}</Text>
+                </View>
+            </View>
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="ChatList"
-        component={ChatList}
+      <Tab.Screen
+        name="Categories"
+        component={Categories}
         options={{
           headerShown: false,
 
           tabBarIcon: ({color, focused}) => (
             <View style={style.maintabview}>
-            {!focused ? (
-              <Ionicons
-                name="chatbubbles-sharp"
-                color={Colors.App_Tab_icon}
-                size={25}
-              />
-            ) : (
               <View style={[style.tab]}>
-                <Text style={style.tabtextcolor}>{'Inbox'}</Text>
-                <View style={[style.tabview]}></View>
+                <Text style={style.tabtextcolor}>{'Categories'}</Text>
               </View>
-            )}
-          </View>
+            </View>
           ),
         }}
       />
 
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="Sell"
+        component={Sell}
         options={{
           headerShown: false,
-
           tabBarIcon: ({color, focused}) => (
             <View style={style.maintabview}>
-              {!focused ? (
-                <Ionicons
-                  name="person"
-                  color={Colors.App_Tab_icon}
-                  size={25}
-                />
-              ) : (
-                <View style={[style.tab]}>
-                  <Text style={style.tabtextcolor}>{'Profile'}</Text>
-                  <View style={[style.tabview]}></View>
+              <View style={[style.tab]}>
+                <View style={[style.tabview,focused ? style.selectedtabview : null]}>
+                  <Text
+                    style={[
+                      style.tabtextcolor,
+                      {fontFamily: fontFamily.Poppins_Regular, color: 'white'},
+                    ]}>
+                    {'Sell'}
+                  </Text>
                 </View>
-              )}
+              </View>
             </View>
           ),
         }}
-      /> */}
+      />
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, focused}) => (
+            <View style={style.maintabview}>
+              <View style={[style.tab]}>
+                <Text style={style.tabtextcolor}>{'Search'}</Text>
+              </View>
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="MyGear"
+        component={MyGear}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, focused}) => (
+            <View style={style.maintabview}>
+              <View style={[style.tab]}>
+                <Text style={style.tabtextcolor}>{'MyGear'}</Text>
+              </View>
+            </View>
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -135,23 +145,19 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  tabview: {
-    width: wp(8),
-    height: hp(0.5),
-    backgroundColor: Colors.Appthemecolor,
-    borderRadius: wp(2),
-    alignSelf: 'center',
-    marginTop: hp(0.8),
+  selectedtabview: {
+    width: wp(14),
+    height: hp(4.5),
+    borderColor: Colors.Appthemecolor,
+    borderWidth: wp(0.3),
+    borderRadius: wp(7),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   tabtextcolor: {
-    color: Colors.Appthemecolor,
-    fontSize: hp(2),
-    fontFamily: fontFamily.Inter_Medium,
-  },
-  icon: {
-    width: 20,
-    height: 20,
-    resizeMode: 'contain',
+    color: 'grey',
+    fontSize: hp(1.4),
+    fontFamily: fontFamily.Poppins_Extra_Light,
   },
 });
 export default BottomTab;

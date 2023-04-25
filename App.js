@@ -8,6 +8,7 @@ import {Store} from './src/redux/store';
 ////////Screens
 import AuthNav from './src/navigation/AuthNav/AuthNav';
 import Drawerroute from './src/navigation/Drawer/Drawer';
+import CategoryItem from './src/screens/StackScreen/Categories/CategoryItem';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -17,7 +18,7 @@ function App() {
     <Provider store={Store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName={initialRoute}>
-        {/* <Stack.Screen
+          {/* <Stack.Screen
             name="AuthNav"
             component={AuthNav}
             options={{
@@ -27,6 +28,13 @@ function App() {
           <Stack.Screen
             name="Drawerroute"
             component={Drawerroute}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="CategoryItem"
+            component={CategoryItem}
             options={{
               headerShown: false,
             }}

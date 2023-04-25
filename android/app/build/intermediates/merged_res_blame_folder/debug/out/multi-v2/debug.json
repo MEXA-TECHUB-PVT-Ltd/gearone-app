@@ -2399,23 +2399,6 @@
                     }
                 },
                 {
-                    "source": "E:\\MtechubProjects\\Gear_1\\git project\\gearone-app\\android\\app\\src\\main\\res\\values\\strings.xml",
-                    "from": {
-                        "startLines": "1",
-                        "startColumns": "4",
-                        "startOffsets": "16",
-                        "endColumns": "51",
-                        "endOffsets": "63"
-                    },
-                    "to": {
-                        "startLines": "740",
-                        "startColumns": "4",
-                        "startOffsets": "47519",
-                        "endColumns": "51",
-                        "endOffsets": "47566"
-                    }
-                },
-                {
                     "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\8d8bf0ed3d88cfda20e86f963f79a7ca\\transformed\\jetified-viewpager2-1.0.0\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
@@ -2583,24 +2566,43 @@
                     }
                 },
                 {
-                    "source": "E:\\MtechubProjects\\Gear_1\\git project\\gearone-app\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
+                    "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\97aa19878e2d0d07709ad1e6d84d3065\\transformed\\jetified-autofill-1.1.0\\res\\values\\values.xml",
                     "from": {
-                        "startLines": "6,8",
-                        "startColumns": "4,4",
-                        "startOffsets": "159,265",
-                        "endColumns": "63,68",
-                        "endOffsets": "218,329"
+                        "startLines": "2,3,19,20,27,32,37,44,53",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,123,934,994,1376,1656,1938,2322,2820",
+                        "endLines": "2,18,19,26,31,36,43,52,66",
+                        "endColumns": "67,12,59,12,12,12,12,12,24",
+                        "endOffsets": "118,929,989,1371,1651,1933,2317,2815,3867"
                     },
                     "to": {
-                        "startLines": "702,703",
-                        "startColumns": "4,4",
-                        "startOffsets": "44849,44913",
-                        "endColumns": "63,68",
-                        "endOffsets": "44908,44977"
+                        "startLines": "310,3348,3779,3780,3787,3792,3797,3804,5242",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "20299,223989,255209,255269,255651,255931,256213,256597,324154",
+                        "endLines": "310,3363,3779,3786,3791,3796,3803,3812,5255",
+                        "endColumns": "67,12,59,12,12,12,12,12,24",
+                        "endOffsets": "20362,224795,255264,255646,255926,256208,256592,257090,324735"
                     }
                 },
                 {
-                    "source": "E:\\MtechubProjects\\Gear_1\\git project\\gearone-app\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "E:\\MtechubProjects\\Gear_1\\git project again\\gearone-app-1\\android\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endColumns": "51",
+                        "endOffsets": "63"
+                    },
+                    "to": {
+                        "startLines": "740",
+                        "startColumns": "4",
+                        "startOffsets": "47519",
+                        "endColumns": "51",
+                        "endOffsets": "47566"
+                    }
+                },
+                {
+                    "source": "E:\\MtechubProjects\\Gear_1\\git project again\\gearone-app-1\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3",
                         "startColumns": "4",
@@ -2619,22 +2621,20 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\97aa19878e2d0d07709ad1e6d84d3065\\transformed\\jetified-autofill-1.1.0\\res\\values\\values.xml",
+                    "source": "E:\\MtechubProjects\\Gear_1\\git project again\\gearone-app-1\\android\\app\\build\\generated\\res\\resValues\\debug\\values\\gradleResValues.xml",
                     "from": {
-                        "startLines": "2,3,19,20,27,32,37,44,53",
-                        "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,123,934,994,1376,1656,1938,2322,2820",
-                        "endLines": "2,18,19,26,31,36,43,52,66",
-                        "endColumns": "67,12,59,12,12,12,12,12,24",
-                        "endOffsets": "118,929,989,1371,1651,1933,2317,2815,3867"
+                        "startLines": "6,8",
+                        "startColumns": "4,4",
+                        "startOffsets": "159,265",
+                        "endColumns": "63,68",
+                        "endOffsets": "218,329"
                     },
                     "to": {
-                        "startLines": "310,3348,3779,3780,3787,3792,3797,3804,5242",
-                        "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "20299,223989,255209,255269,255651,255931,256213,256597,324154",
-                        "endLines": "310,3363,3779,3786,3791,3796,3803,3812,5255",
-                        "endColumns": "67,12,59,12,12,12,12,12,24",
-                        "endOffsets": "20362,224795,255264,255646,255926,256208,256592,257090,324735"
+                        "startLines": "702,703",
+                        "startColumns": "4,4",
+                        "startOffsets": "44849,44913",
+                        "endColumns": "63,68",
+                        "endOffsets": "44908,44977"
                     }
                 },
                 {
