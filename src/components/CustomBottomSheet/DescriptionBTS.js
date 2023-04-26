@@ -28,7 +28,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 //////////////////app Images////////////////
 import { appImages } from "../../constant/images";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+
+/////////////colors//////////
+import Colors from "../../utills/Colors";
 
 
 const DescriptionBottomSheet = (props) => {
@@ -79,12 +81,13 @@ const DescriptionBottomSheet = (props) => {
           backgroundColor: "rgba(52, 52, 52, 0.5)",
         },
         draggableIcon: {
-          backgroundColor: "white",
+          backgroundColor: Colors.AppBckGround_color,
         },
         container: {
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           height: hp(50),
+          backgroundColor: Colors.AppBckGround_color,
         },
       }}
     >

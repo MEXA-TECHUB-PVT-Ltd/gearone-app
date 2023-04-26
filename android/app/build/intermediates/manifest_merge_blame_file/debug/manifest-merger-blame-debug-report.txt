@@ -108,52 +108,144 @@
 58            </intent-filter>
 59        </activity>
 60
-61        <provider
-61-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:9-26:20
-62            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
-62-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:19:13-94
-63            android:authorities="com.mtechubgearone.provider"
-63-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:13-60
-64            android:exported="false"
-64-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:13-37
-65            android:grantUriPermissions="true" >
-65-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-47
-66            <meta-data
-66-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
-67                android:name="android.support.FILE_PROVIDER_PATHS"
-67-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
-68                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
-68-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
-69        </provider>
-70
-71        <activity
-71-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:9-30:72
-72            android:name="com.yalantis.ucrop.UCropActivity"
-72-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:13-60
-73            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-73-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-69
-74
-75        <provider
-75-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
-76            android:name="androidx.startup.InitializationProvider"
-76-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
-77            android:authorities="com.mtechubgearone.androidx-startup"
-77-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
-78            android:exported="false" >
-78-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
-79            <meta-data
-79-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
-80                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-80-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
-81                android:value="androidx.startup" />
-81-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
-82            <meta-data
-82-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\168829b299da31b5f39d19c1353bb79f\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
-83                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-83-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\168829b299da31b5f39d19c1353bb79f\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
-84                android:value="androidx.startup" />
-84-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\168829b299da31b5f39d19c1353bb79f\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
-85        </provider>
-86    </application>
-87
-88</manifest>
+61        <meta-data
+61-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:11:9-13:36
+62            android:name="app_data_collection_default_enabled"
+62-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-63
+63            android:value="true" />
+63-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-33
+64
+65        <service
+65-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:15:9-23:19
+66            android:name="com.google.firebase.components.ComponentDiscoveryService"
+66-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:16:13-84
+67            android:directBootAware="true"
+67-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:17:13-43
+68            android:exported="false" >
+68-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:13-37
+69            <meta-data
+69-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:13-22:85
+70                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
+70-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:17-120
+71                android:value="com.google.firebase.components.ComponentRegistrar" />
+71-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:17-82
+72            <meta-data
+72-->[com.google.firebase:firebase-firestore:24.4.5] C:\Users\mtechubuser\.gradle\caches\transforms-3\2183a04c619c52b8fdd44e6133ba043c\transformed\jetified-firebase-firestore-24.4.5\AndroidManifest.xml:19:13-21:85
+73                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+73-->[com.google.firebase:firebase-firestore:24.4.5] C:\Users\mtechubuser\.gradle\caches\transforms-3\2183a04c619c52b8fdd44e6133ba043c\transformed\jetified-firebase-firestore-24.4.5\AndroidManifest.xml:20:17-111
+74                android:value="com.google.firebase.components.ComponentRegistrar" />
+74-->[com.google.firebase:firebase-firestore:24.4.5] C:\Users\mtechubuser\.gradle\caches\transforms-3\2183a04c619c52b8fdd44e6133ba043c\transformed\jetified-firebase-firestore-24.4.5\AndroidManifest.xml:21:17-82
+75        </service>
+76
+77        <provider
+77-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:9-29:38
+78            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
+78-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:26:13-88
+79            android:authorities="com.mtechubgearone.reactnativefirebaseappinitprovider"
+79-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:27:13-86
+80            android:exported="false"
+80-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:13-37
+81            android:initOrder="99" />
+81-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:13-35
+82        <provider
+82-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:18:9-26:20
+83            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
+83-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:19:13-94
+84            android:authorities="com.mtechubgearone.provider"
+84-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:20:13-60
+85            android:exported="false"
+85-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:21:13-37
+86            android:grantUriPermissions="true" >
+86-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:22:13-47
+87            <meta-data
+87-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:23:13-25:78
+88                android:name="android.support.FILE_PROVIDER_PATHS"
+88-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:24:17-67
+89                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
+89-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:25:17-75
+90        </provider>
+91
+92        <activity
+92-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:28:9-30:72
+93            android:name="com.yalantis.ucrop.UCropActivity"
+93-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:29:13-60
+94            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+94-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\git project again\gearone-app-1\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\debug\AndroidManifest.xml:30:13-69
+95        <activity
+95-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:23:9-27:75
+96            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+96-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:24:13-93
+97            android:excludeFromRecents="true"
+97-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:25:13-46
+98            android:exported="false"
+98-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:26:13-37
+99            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+99-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:27:13-72
+100        <!--
+101            Service handling Google Sign-In user revocation. For apps that do not integrate with
+102            Google Sign-In, this service will never be started.
+103        -->
+104        <service
+104-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:33:9-37:51
+105            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+105-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:34:13-89
+106            android:exported="true"
+106-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:35:13-36
+107            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+107-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:36:13-107
+108            android:visibleToInstantApps="true" />
+108-->[com.google.android.gms:play-services-auth:20.3.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a400abd4cba98a1b9edcac405759226b\transformed\jetified-play-services-auth-20.3.0\AndroidManifest.xml:37:13-48
+109
+110        <activity
+110-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\bba8b0a0859a6350c0a29a8db486a41f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+111            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+111-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\bba8b0a0859a6350c0a29a8db486a41f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+112            android:exported="false"
+112-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\bba8b0a0859a6350c0a29a8db486a41f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+113            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+113-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\bba8b0a0859a6350c0a29a8db486a41f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+114
+115        <provider
+115-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\6f7c4f7139c6c929ef8e58fbdd52d2c5\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:25:9-30:39
+116            android:name="com.google.firebase.provider.FirebaseInitProvider"
+116-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\6f7c4f7139c6c929ef8e58fbdd52d2c5\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:26:13-77
+117            android:authorities="com.mtechubgearone.firebaseinitprovider"
+117-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\6f7c4f7139c6c929ef8e58fbdd52d2c5\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:27:13-72
+118            android:directBootAware="true"
+118-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\6f7c4f7139c6c929ef8e58fbdd52d2c5\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:28:13-43
+119            android:exported="false"
+119-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\6f7c4f7139c6c929ef8e58fbdd52d2c5\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:29:13-37
+120            android:initOrder="100" />
+120-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\6f7c4f7139c6c929ef8e58fbdd52d2c5\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:30:13-36
+121
+122        <meta-data
+122-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\bbface69f09ed1bdda151249513f51af\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+123            android:name="com.google.android.gms.version"
+123-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\bbface69f09ed1bdda151249513f51af\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+124            android:value="@integer/google_play_services_version" />
+124-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\bbface69f09ed1bdda151249513f51af\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+125
+126        <provider
+126-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+127            android:name="androidx.startup.InitializationProvider"
+127-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
+128            android:authorities="com.mtechubgearone.androidx-startup"
+128-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
+129            android:exported="false" >
+129-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
+130            <meta-data
+130-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+131                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+131-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
+132                android:value="androidx.startup" />
+132-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\30102b16e64b2b966e993f978f0d77f3\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+133            <meta-data
+133-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\168829b299da31b5f39d19c1353bb79f\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+134                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+134-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\168829b299da31b5f39d19c1353bb79f\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+135                android:value="androidx.startup" />
+135-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\168829b299da31b5f39d19c1353bb79f\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+136        </provider>
+137    </application>
+138
+139</manifest>

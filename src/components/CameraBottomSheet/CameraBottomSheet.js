@@ -26,9 +26,8 @@ import { BASE_URL } from '../../utills/ApiRootUrl';
   //////////////app pakages//////////////////
 import ImagePicker from 'react-native-image-crop-picker';
 
-//////////////////app Images////////////////
-import { appImages } from '../../constant/images';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+///////colors///////
+import Colors from '../../utills/Colors';
 
 
 const CamerBottomSheet = (props) => {
@@ -76,12 +75,13 @@ const CamerBottomSheet = (props) => {
           backgroundColor: 'rgba(52, 52, 52, 0.5)',
         },
         draggableIcon: {
-          backgroundColor: "white"
+          backgroundColor:Colors.AppBckGround_color
         },
         container: {
-      borderTopLeftRadius:wp(10),
-      borderTopRightRadius:wp(10),
-      height:hp(25)
+      borderTopLeftRadius:wp(8),
+      borderTopRightRadius:wp(8),
+      height:hp(25),
+      backgroundColor:Colors.AppBckGround_color
       }
       }}
     >
@@ -90,7 +90,7 @@ const CamerBottomSheet = (props) => {
   }}>
    <Text style={styles.maintext}>Upload Image</Text>
    <TouchableOpacity    onPress={() =>  props.refRBSheet.current.close()}>
-   <Ionicons name="close" size={22} color={"#303030"}  
+   <Ionicons name="close" size={22} color={"white"}  
      onPress={() =>  props.refRBSheet.current.close()}/>
    {/* <Image
                source={appImages.Closeicon}
@@ -102,7 +102,7 @@ const CamerBottomSheet = (props) => {
 
    </View>   
 
-        <View style={{justifyContent:'center',marginTop:hp(3)}}>
+        <View style={{justifyContent:'center',marginTop:hp(3),backgroundColor:Colors.AppBckGround_color}}>
           <TouchableOpacity 
           onPress={()=>{ 
             props.type === 'onepic' || props.type === "Chat_image"? takePhotoFromCamera() :navigation.navigate('CameraViewScreen','Take Photo'),
@@ -110,7 +110,7 @@ const CamerBottomSheet = (props) => {
           //onPress={props.takePhotoFromCamera}
           style={styles.modaltextview}
           >
-        <Ionicons name="camera" size={25} color={"#707070"} />
+        <Ionicons name="camera" size={25} color={"white"} />
         {/* <Image
                  source={require('../../assets/imagepicker/camera.png')}
                  style={styles.uploadicon}
@@ -118,13 +118,13 @@ const CamerBottomSheet = (props) => {
               /> */}
     <Text style={styles.optiontext}>Upload from Camera</Text>
     </TouchableOpacity>
-<View style={{borderBottomColor:'#DCDCDC',borderBottomWidth:1,width:wp(85),alignSelf:'center',marginBottom:hp(2),marginTop:hp(2)}}></View>
+<View style={{borderBottomColor:'rgba(255, 255, 255, 0.60)',borderBottomWidth:hp(0.1),width:wp(85),alignSelf:'center',marginBottom:hp(2),marginTop:hp(2)}}></View>
     <TouchableOpacity  onPress={()=>{ 
             props.type === 'onepic'? choosePhotoFromLibrary() :navigation.navigate('CameraViewScreen','Take Photo'),
            props.refRBSheet.current.close()}}
     style={styles.modaltextview}
     >
-        <Ionicons name="image" size={25} color={"#707070"} />
+        <Ionicons name="image" size={25} color={"white"} />
         {/* <Image
                  source={require('../../assets/imagepicker/gallery.png')}
                  style={styles.uploadicon}

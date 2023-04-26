@@ -4,6 +4,10 @@ import {
   Text
 } from 'react-native';
 
+
+/////////////app components//////////
+import CustomButtonhere from '../Button/CustomButton';
+
 /////////////icons//////////////////
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 
@@ -16,11 +20,8 @@ import {
 /////////////fonts///////////
 import { fontFamily } from '../../constant/fonts';
 
-
 const ProfileImage = ({navigation}) => {
 
-
-  ///////////emai
   return (
         <View style={{marginTop:hp(20)}}>
     <View style={{
@@ -44,6 +45,19 @@ const ProfileImage = ({navigation}) => {
     <View style={{alignItems:'center',justifyContent:'center',marginTop:hp(3)}}>
         <Text style={{color:'white',fontFamily:fontFamily.Poppins_Light,fontSize:hp(1.6)}}>Profile Image</Text>
     </View>
+    <View style={{height:hp(20), marginTop: hp(0), marginBottom: hp(20)}}>
+          <CustomButtonhere
+            title={'Countinue'}
+            widthset={80}
+            topDistance={15}
+            loading={loading}
+            disabled={disable}
+            onPress={() =>
+              //navigation.navigate('ProfileSucess')
+              formValidation()
+            }
+          />
+        </View>
         </View>
   );
 };

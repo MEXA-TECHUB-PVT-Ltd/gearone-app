@@ -20,13 +20,13 @@ const styles = StyleSheet.create({
       optiontext:
       {
           fontSize:hp(1.7),
-          color:'#303030',
+          color:'white',
           fontFamily: fontFamily.Poppins_Regular,
           marginLeft:wp(4)
       },
       maintext:{
         fontSize:hp(2),
-        color:'#303030',
+        color:'white',
         fontFamily: fontFamily.Poppins_Medium,
       },
         modaltextview:
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems:"center",
         width:wp(90),
         borderRadius:25,
-        backgroundColor:'white',
+        backgroundColor:Colors.AppBckGround_color,
         paddingHorizontal:wp(15)
   },
   });

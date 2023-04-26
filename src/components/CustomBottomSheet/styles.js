@@ -60,6 +60,23 @@ const styles = StyleSheet.create({
     color: "white",
   },
 
+  ////////////ratting///////////
+  Ratting_maintext:{
+    fontSize:hp(2),
+    color:'white',
+    fontFamily: fontFamily.Poppins_Regular
+  },
+  usertext: {
+    fontFamily: fontFamily.Poppins_Regular,
+    fontSize: hp(3),
+    color: 'black',
+  },
+  star: {
+		color: '#707070',
+    marginHorizontal:wp(3),
+    alignSelf:'center'
+    //'#EBD300'
+	},
   });
   export default styles;
   
