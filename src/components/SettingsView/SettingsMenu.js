@@ -34,12 +34,12 @@ const SettingsMenu = ({label, labelPress, icon, last_item}) => {
         </View>
         <Ionicons
           name="chevron-forward"
-          color={'#404040'}
-          size={20}
+          color={'#FFFFFF'}
+          size={18}
           onPress={labelPress}
         />
       </View>
-      {last_item === 'yes' ? null : (
+      {/* {last_item === 'yes' ? null : (
         <View
           style={{
             width: wp(85),
@@ -48,7 +48,7 @@ const SettingsMenu = ({label, labelPress, icon, last_item}) => {
             alignSelf: 'center',
             marginTop: hp(1),
           }}></View>
-      )}
+      )} */}
     </TouchableOpacity>
   );
 };

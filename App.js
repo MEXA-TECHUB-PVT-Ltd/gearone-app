@@ -9,7 +9,7 @@ import {Store} from './src/redux/store';
 import AuthNav from './src/navigation/AuthNav/AuthNav';
 import Drawerroute from './src/navigation/Drawer/Drawer';
 import CategoryItem from './src/screens/StackScreen/Categories/CategoryItem';
-
+import MyPosts from './src/screens/StackScreen/MyGear/MyPosts';
 const Stack = createNativeStackNavigator();
 function App() {
   const [initialRoute, setInitialRoute] = React.useState('Home');
@@ -35,6 +35,13 @@ function App() {
           <Stack.Screen
             name="CategoryItem"
             component={CategoryItem}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MyPosts"
+            component={MyPosts}
             options={{
               headerShown: false,
             }}

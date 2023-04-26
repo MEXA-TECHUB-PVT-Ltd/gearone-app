@@ -6,10 +6,12 @@ import {
   Text,
   FlatList,
   Image,
+  TouchableOpacity
 } from 'react-native';
 
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
+import SettingsMenu from '../../../components/SettingsView/SettingsMenu';
 
 /////////////app styles///////////////////
 import styles from './styles';
@@ -24,6 +26,12 @@ import {
 import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+///////////////////icons///////////
+import Icon from "react-native-vector-icons/Ionicons";
+
+/////////////colors////////////
+import Colors from '../../../utills/Colors';
 
 const MyGear = ({navigation}) => {
   return (
@@ -62,35 +70,35 @@ const MyGear = ({navigation}) => {
           marginTop: hp(1.5),
           marginBottom: hp(1),
           //backgroundColor:"red",
-          width: props.type === "other" ? wp(45) : wp(62),
+        //   /width: wp(62),
         }}
       >
         <View style={{ alignItems: "center" }}>
             <Icon name={"facebook"} size={25} color={"blue"} />
-            <Text style={styles.verticletext}>{props.followers}</Text>
+            <Text style={styles.verticletext}>followers</Text>
           <Text
             style={styles.verticletext}
-            onPress={() => props.type === "other_user"?null :navigation.navigate("Followers")}
+            onPress={() =>navigation.navigate("Followers")}
           >
-            {props.following_text}
+            following_text
           </Text>
         </View>
         <View style={styles.verticleLine}></View>
         <View style={{ alignItems: "center" }}>
             <Icon name={"star"} size={25} color={"orange"} />
-            <Text style={styles.verticletext}>{props.following}</Text>
+            <Text style={styles.verticletext}>following</Text>
           <Text
             style={styles.verticletext}
             
             onPress={() =>navigation.navigate("Followings")}
           >
-            {props.followers_text}
+           followers_text
           </Text>
         </View>
           <View style={styles.verticleLine}></View>
           <View style={{ alignItems: "center" }}>
             <View style={{ alignItems: "center", flexDirection: "row" }}>
-              <Text style={styles.verticletext}>{props.ratting}</Text>
+              <Text style={styles.verticletext}>ratting</Text>
               <Icon name={"star"} size={20} color={"orange"} />
             </View>
             <TouchableOpacity
@@ -101,20 +109,30 @@ const MyGear = ({navigation}) => {
                 borderRadius: wp(5),
               }}
             >
-              <Text style={styles.verticletext} onPress={props.onratepress}>
-                {props.ratting_text}
+              <Text style={styles.verticletext}>
+                ratting_text
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={{ alignItems: "center" }}>
-            <Text style={styles.verticletext}>{props.ratting}</Text>
-            <Text
-              style={styles.verticletext}
-              //onPress={() => navigation.navigate("Reviews")}
-            >
-              {props.ratting_text}
-            </Text>
-          </View>
+
+      </View>
+      <View>
+      <SettingsMenu
+       label={'My Account'}
+       labelPress={()=>navigation.navigate('ChangePassword',{navplace:'ChangePassword'})}
+       />
+             <SettingsMenu
+       label={'My Posts'}
+       labelPress={()=>navigation.navigate('MyPosts',{navplace:'MyPosts'})}
+       />
+             <SettingsMenu
+       label={'Edit Profile'}
+       labelPress={()=>navigation.navigate('ChangePassword',{navplace:'ChangePassword'})}
+       />
+             <SettingsMenu
+       label={'Logout'}
+       labelPress={()=>navigation.navigate('ChangePassword',{navplace:'ChangePassword'})}
+       />
       </View>
       </ScrollView>
     </SafeAreaView>
