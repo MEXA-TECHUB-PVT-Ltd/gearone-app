@@ -129,8 +129,7 @@ const CustomTextInput = ({
         ):type === 'dropdowniconinput'?
         <MaterialCommunityIcons
           name={dopdownicon}
-          color={Colors.App_icon_color}
-          size={25}
+          color={'white'}
           style={{marginRight: wp(4)}}
         /> : null}
       </View>

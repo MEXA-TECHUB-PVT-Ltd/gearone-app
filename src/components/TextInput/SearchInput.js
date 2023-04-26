@@ -35,8 +35,8 @@ const SearchTextInput = ({
       <View style={[styles.TextFieldView]}>
       <Ionicons
         name={'search'}
-        size={25}
-        color={"black"}
+        size={20}
+        color={"white"}
         onPress={searchiconpress}
         style={{ marginLeft: wp(3) }}
       />
@@ -51,7 +51,7 @@ const SearchTextInput = ({
           disabled={disable}
           returnKeyType={returnType}
           keyboardType={keyboard_type}
-          placeholderTextColor={'black'}
+          placeholderTextColor={'white'}
           onChangeText={onTermChange}
           onSubmitEditing={onNext}
           secureTextEntry={secureTextEntry}
@@ -67,18 +67,18 @@ const styles = StyleSheet.create({
     fontSize: hp(1.6),
     marginLeft:wp(5),
     fontFamily: fontFamily.Poppins_Regular,
-    color: "black",
-    width: wp(62),
+    color: "white",
+    width: wp(75),
     //backgroundColor:'red'
   },
   TextFieldView: {
     flexDirection: "row",
     height: hp(7),
-    width: wp(80),
-    borderRadius: wp(3),
+    width: wp(90),
+    borderRadius: wp(1),
     marginTop: hp(1),
     marginBottom: hp(1),
-    backgroundColor:'#EAEBEC',
+    backgroundColor:'#444444',
     //borderColor: "black",
     //borderWidth: wp(0.3),
     alignSelf: "center",

@@ -20,5 +20,17 @@ const styles = StyleSheet.create({
     backgroundColor:Colors.AppBckGround_color
   },
 
+
+  ///////////////My Account//////////////
+  account_text:{
+fontFamily:fontFamily.Poppins_Regular,
+color:'white',
+fontSize:hp(2)
+  },
+  account_subtext:{
+    fontFamily:fontFamily.Poppins_Light,
+    color:'white',
+    fontSize:hp(1.6)
+      },
 });
 export default styles;

@@ -6,6 +6,7 @@ import {
 
 ///////////////app components////////////////
 import CustomTextInput from '../../components/TextInput/CustomTextInput';
+import CustomButtonhere from '../Button/CustomButton';
 
 //////////height and width/////////////
 import {
@@ -53,6 +54,19 @@ const PersonalDetail = ({navigation}) => {
               onTermChange={experience => setEmail(experience)}
             />
           </View>
+          <View style={{height:hp(20), marginTop: hp(0), marginBottom: hp(20)}}>
+          <CustomButtonhere
+            title={'Countinue'}
+            widthset={80}
+            topDistance={15}
+            loading={loading}
+            disabled={disable}
+            onPress={() =>
+              //navigation.navigate('ProfileSucess')
+              formValidation()
+            }
+          />
+        </View>
         </View>
   );
 };

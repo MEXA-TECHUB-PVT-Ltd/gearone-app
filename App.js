@@ -10,6 +10,12 @@ import AuthNav from './src/navigation/AuthNav/AuthNav';
 import Drawerroute from './src/navigation/Drawer/Drawer';
 import CategoryItem from './src/screens/StackScreen/Categories/CategoryItem';
 import MyPosts from './src/screens/StackScreen/MyGear/MyPosts';
+import MyAccount from './src/screens/StackScreen/MyGear/MyAccount';
+import ItemDetails from './src/screens/StackScreen/Dashboard/ItemDetails';
+import OtherProfile from './src/screens/StackScreen/Dashboard/Othersprofile';
+import UploadItem from './src/screens/StackScreen/Sell/UploadItem';
+import ChatScreen from './src/screens/Drawer/Chat/ChatScreen';
+
 const Stack = createNativeStackNavigator();
 function App() {
   const [initialRoute, setInitialRoute] = React.useState('Home');
@@ -42,6 +48,41 @@ function App() {
           <Stack.Screen
             name="MyPosts"
             component={MyPosts}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MyAccount"
+            component={MyAccount}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ItemDetails"
+            component={ItemDetails}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="OtherProfile"
+            component={OtherProfile}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="UploadItem"
+            component={UploadItem}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ChatScreen"
+            component={ChatScreen}
             options={{
               headerShown: false,
             }}

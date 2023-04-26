@@ -24,7 +24,8 @@ import { fontFamily } from "../../constant/fonts";
 /////////////image url////////////////
 import { IMAGE_URL } from "../../utills/ApiRootUrl";
 
-
+///////////logo svg/////////
+import Logo from '../../assets/svgs/Logo.svg'
 
 export const DrawerContent = (props) => {
   const paperTheme = useTheme();
@@ -55,7 +56,7 @@ export const DrawerContent = (props) => {
     //GetUserData();
   }, []);
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1,backgroundColor:Colors.AppBckGround_color }}>
       <DrawerContentScrollView
         {...props}
         showsVerticalScrollIndicator={false}
@@ -63,21 +64,9 @@ export const DrawerContent = (props) => {
       >
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
-            <View style={{ marginTop: 25, alignSelf: "center" }}>
-              <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate("Profile", {
-                    item: "profile",
-                    id: userid,
-                  })
-                }
-              >
-                <Avatar.Image
-                  source={{ uri: IMAGE_URL + user_image }}
-                  style={{ backgroundColor: "grey" }}
-                  size={wp(20)}
-                />
-              </TouchableOpacity>
+            <View style={{ marginTop: 25, alignSelf: "center",alignItems:'center',justifyContent:'center',
+            width:wp(60) }}>
+        <Logo width={wp(45)} height={hp(11)} />
             </View>
             <View style={{ alignSelf: "center", marginLeft: wp(4) }}>
               <Title style={styles.title}>{user_fullname}</Title>
@@ -87,9 +76,9 @@ export const DrawerContent = (props) => {
           <View
             style={{
               marginTop: hp(3),
-              height: hp(0.4),
-              backgroundColor: "rgba(112, 112,112, 0.1)",
-              width: wp(65),
+              height: hp(0.1),
+              backgroundColor: "white",
+              width: wp(68),
               alignSelf: "center",
               marginBottom: hp(3),
             }}
@@ -97,24 +86,9 @@ export const DrawerContent = (props) => {
           <Drawer.Section style={styles.drawerSection} showDivider={false}>
             <DrawerItem
               icon={({ color, size }) => (
-                <Image
-                  source={appImages.drawerpayment}
-                  style={styles.icon}
-                  resizeMode="contain"
-                />
-              )}
-              label="Manage Stripe"
-              labelStyle={styles.subtitle}
-              onPress={() => {
-                props.navigation.navigate("StripePayments");
-              }}
-            />
-
-            <DrawerItem
-              icon={({ color, size }) => (
                 <Image source={appImages.drawercard} style={styles.icon} />
               )}
-              label="Manage shipping address"
+              label="Home"
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("ShippingAddressList");
@@ -128,7 +102,7 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Language"
+              label="My Gear"
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("Language");
@@ -143,7 +117,7 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Invite Friends"
+              label="Apparel Sale"
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate("InviteFriends");
@@ -157,10 +131,10 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Banner Advertisement"
+              label="Liked Items"
               labelStyle={styles.subtitle}
               onPress={() => {
-                props.navigation.navigate("BannerAdvertisment");
+                props.navigation.navigate("LikedItems");
               }}
             />
             <DrawerItem
@@ -171,10 +145,10 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Blogs"
+              label="Saved Items"
               labelStyle={styles.subtitle}
               onPress={() => {
-                props.navigation.navigate("Blogs");
+                props.navigation.navigate("SavedItems");
               }}
             />
             <DrawerItem
@@ -185,10 +159,10 @@ export const DrawerContent = (props) => {
                   resizeMode="contain"
                 />
               )}
-              label="Privacy Policy"
+              label="Messages"
               labelStyle={styles.subtitle}
               onPress={() => {
-                props.navigation.navigate("PrivacyTerms");
+                props.navigation.navigate("ChatList");
               }}
             />
             <DrawerItem
@@ -205,13 +179,27 @@ export const DrawerContent = (props) => {
                 props.navigation.navigate("TermsCondition");
               }}
             />
+                    <DrawerItem
+              icon={({ color, size }) => (
+                <Image
+                  source={appImages.drawerterms}
+                  style={styles.icon}
+                  resizeMode="contain"
+                />
+              )}
+              label="About Us"
+              labelStyle={styles.subtitle}
+              onPress={() => {
+                props.navigation.navigate("AboutUs");
+              }}
+            />
           </Drawer.Section>
         </View>
         <Drawer.Section style={styles.bottomDrawerSection} showDivider={false}>
           <TouchableOpacity
             onPress={() => setModalVisible(true)}
             style={{
-              borderRadius: wp(8),
+              borderRadius: wp(1),
               width: wp(60),
               height: hp(6),
               alignSelf: "center",
@@ -231,18 +219,22 @@ export const DrawerContent = (props) => {
       </DrawerContentScrollView>
       <CustomModal
         modalVisible={modalVisible}
-        CloseModal={() => setModalVisible(false)}
-        Icon={appImages.confirm}
-        text={"Confirmation"}
-        type={"confirmation"}
-        subtext={"Do you really want to Logout?"}
-        buttontext={"Yes"}
-        buttontext1={"Cancel"}
-        onPress={() => {
+        text={'Confirmation'}
+        btn_text={'Go to Home'}
+        btn_text_cancel={'Cancel'}
+        btn_text_done={'Yes'}
+        subtext={'Do you really want to logout?'}
+        type={'confirmation'}
+        onPress_yes={() => {
+          setModalVisible(false);
+          navigation.navigate('Login');
+        }}
+        onPress_cancel={() => {
           setModalVisible(false);
         }}
-        onPress1={() => {
-          logout();
+        onPress_back={() => {
+          setModalVisible(false);
+          navigation.navigate('Login');
         }}
       />
     </View>
@@ -252,6 +244,7 @@ export const DrawerContent = (props) => {
 const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
+    backgroundColor:Colors.AppBckGround_color
   },
   userInfoSection: {
     marginTop: hp(3),
@@ -278,11 +271,13 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: hp(1.5),
     fontFamily: fontFamily.Poppins_Medium,
-    color: "#404040",
+    color: "white",
   },
   bottomDrawerSection: {
-    marginBottom: hp(3),
-    marginTop: hp(10),
+    height:hp(30),
+    // marginBottom: hp(3),
+     paddingTop: hp(10),
+    backgroundColor:Colors.AppBckGround_color,
   },
   icon: {
     width: wp(6),

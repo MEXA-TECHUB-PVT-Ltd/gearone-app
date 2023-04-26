@@ -114,8 +114,8 @@ const Home = ({navigation}) => {
         subtext={item.location}
         price={item.price}
         onpress={() => {
-          navigation.navigate('MainListingsDetails', {
-            listing_id: item.id,
+          navigation.navigate('ItemDetails', {
+            Item_id: item.id,
           });
         }}
       />
@@ -129,9 +129,9 @@ const Home = ({navigation}) => {
         <Header
           title={'Home'}
           left_icon={'menu'}
-          // left_iconPress={() => {
-          //   navigation.goBack();
-          // }}
+          left_iconPress={() => {
+           navigation.toggleDrawer()
+          }}
         />
         <InstaStory
           data={data}

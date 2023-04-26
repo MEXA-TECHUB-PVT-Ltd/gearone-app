@@ -19,6 +19,15 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     backgroundColor:Colors.AppBckGround_color
   },
-
+  horizontal_lefttext:{
+    fontFamily:fontFamily.Poppins_Regular,
+    color:'white',
+    fontSize:hp(2)
+      },
+      horizontal_righttext:{
+        fontFamily:fontFamily.Poppins_Regular,
+        color:'#B1B1B1',
+        fontSize:hp(1.8)
+          },
 });
 export default styles;

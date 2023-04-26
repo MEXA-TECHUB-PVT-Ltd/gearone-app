@@ -66,6 +66,50 @@ const styles = StyleSheet.create({
     fontSize: hp(1.6),
     fontFamily: fontFamily.Poppins_Regular,
   },
+  logoutbtnView: {
+    width: wp(65),
+    borderRadius: wp(3),
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: hp(2),
+    //backgroundColor:'red',
+  },
+  cancelbtn: {
+    height: hp(5.5),
+    width: wp(28),
+    borderRadius: wp(2),
+    borderColor: 'white',
+    borderWidth: wp(0.3),
+    //backgroundColor: "white",
+    alignItems: "center",
+    marginBottom: hp(4),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
 
+    elevation: 9,
+  },
+  donebtn: {
+    height: hp(5.5),
+    width: wp(28),
+    borderRadius: wp(2),
+    backgroundColor: Colors.Appthemecolor,
+    alignItems: "center",
+    marginBottom: hp(4),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+
+    elevation: 9,
+  },
 });
 export default styles;

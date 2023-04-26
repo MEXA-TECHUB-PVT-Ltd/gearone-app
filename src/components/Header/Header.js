@@ -28,36 +28,39 @@ const Header = ({
   left_iconPress,
   right_icon,
   right_iconPress,
-  headertype
+  headertype,
+  type
 }) => {
   return (
-    <View style={styles.header}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: wp(2),
-        }}>
-        <View
-          style={{
-            height: hp(8),
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Logo width={wp(30)} height={hp(6.5)} />
-        </View>
-        <View
-          style={{
-            height: hp(8),
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <YourLogo width={wp(30)} height={hp(6)} />
-        </View>
-      </View>
+    <View style={[styles.header,{height:headertype === 'header_without_text' ? hp(14):hp(18.5),
+       borderBottomWidth:headertype === 'header_without_text' ? hp(0):hp(0.1)}]}>
+            <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingHorizontal: wp(2),
+            }}>
+            <View
+              style={{
+                height: hp(8),
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Logo width={wp(30)} height={hp(6.5)} />
+            </View>
+            <View
+              style={{
+                height: hp(8),
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <YourLogo width={wp(30)} height={hp(6)} />
+            </View>
+          </View>
+
       {headertype === 'header_without_text' ? null:
        (
-        <View style={{flexDirection: 'row', marginTop: hp(5)}}>
+        <View style={{flexDirection: 'row', marginTop:hp(5)}}>
           <View style={styles.iconContainer}>
             <Icon
               name={left_icon}
@@ -79,11 +82,11 @@ const Header = ({
 const styles = StyleSheet.create({
   header: {
     // flexDirection: 'row',
-    height: hp(20),
+    height: hp(18.5),
     paddingTop: hp(1),
     backgroundColor: Colors.AppBckGround_color,
-    borderBottomColor: 'gray',
-    borderWidth: wp(0.4),
+    borderBottomColor: 'white',
+    borderWidth: hp(0.1),
   },
   iconContainer: {
     // flex:0.8,
@@ -101,10 +104,10 @@ const styles = StyleSheet.create({
     //backgroundColor:'yellow'
   },
   title: {
-    fontSize: hp(2.3),
+    fontSize: hp(2),
     color: 'white',
     textAlign: 'center',
-    fontFamily: fontFamily.Inter_Medium,
+    fontFamily: fontFamily.Poppins_Regular,
   },
 });
 
