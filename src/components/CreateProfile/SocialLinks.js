@@ -3,6 +3,7 @@ import {View, Text} from 'react-native';
 
 ///////////////app components////////////////
 import CustomTextInput from '../../components/TextInput/CustomTextInput';
+import CustomButtonhere from '../Button/CustomButton';
 
 //////////height and width/////////////
 import {
@@ -13,7 +14,15 @@ import {
 ///////////////styles////////////////
 import Authstyles from '../../styles/Authstyles';
 
+////////////////////redux////////////
+import {useSelector, useDispatch} from 'react-redux';
+import {setLinksMenu,setCoverImageMenu} from '../../redux/CreateProfileSlice';
+
 const SocialLinks = ({navigation}) => {
+  
+  ////////////////redux/////////////////
+  const dispatch = useDispatch();
+
   /////////TextInput References///////////
   const ref_input2 = useRef();
   const ref_input3 = useRef();
@@ -74,6 +83,18 @@ const SocialLinks = ({navigation}) => {
           term={linkedIn}
           placeholder="Enter LinkedIn Link"
           onTermChange={text => setLinkedIn(text)}
+        />
+      </View>
+      <View style={{height: hp(20), marginTop: hp(0), marginBottom: hp(20)}}>
+        <CustomButtonhere
+          title={'Countinue'}
+          widthset={80}
+          topDistance={23}
+          // loading={loading}
+          // disabled={disable}
+          onPress={() => {dispatch(setLinksMenu(false)),
+            dispatch(setCoverImageMenu(true))
+          }}
         />
       </View>
     </View>

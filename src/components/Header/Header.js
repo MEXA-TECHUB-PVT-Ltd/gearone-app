@@ -32,7 +32,7 @@ const Header = ({
   type
 }) => {
   return (
-    <View style={[styles.header,{height:headertype === 'header_without_text' ? hp(14):hp(18.5),
+    <View style={[styles.header,{height:headertype === 'header_without_text' ? hp(14):hp(16),
        borderBottomWidth:headertype === 'header_without_text' ? hp(0):hp(0.1)}]}>
             <View
             style={{
@@ -46,21 +46,21 @@ const Header = ({
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Logo width={wp(30)} height={hp(6.5)} />
+              <Logo width={wp(30)} height={hp(7)} />
             </View>
             <View
               style={{
                 height: hp(8),
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'center'
               }}>
-              <YourLogo width={wp(30)} height={hp(6)} />
+              <YourLogo width={wp(30)} height={hp(6.5)} />
             </View>
           </View>
 
       {headertype === 'header_without_text' ? null:
        (
-        <View style={{flexDirection: 'row', marginTop:hp(5)}}>
+        <View style={{flexDirection: 'row', marginTop:hp(3)}}>
           <View style={styles.iconContainer}>
             <Icon
               name={left_icon}

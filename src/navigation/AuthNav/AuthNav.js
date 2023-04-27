@@ -13,13 +13,6 @@ const Stack = createNativeStackNavigator();
 function AuthNav() {
   return (
     <Stack.Navigator>
-            <Stack.Screen
-        name="CreateProfile"
-        component={CreateProfile}
-        options={{
-          headerShown: false,
-        }}
-      />
       <Stack.Screen
         name="Login"
         component={Login}
@@ -31,6 +24,13 @@ function AuthNav() {
       <Stack.Screen
         name="Verification"
         component={Verification}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="CreateProfile"
+        component={CreateProfile}
         options={{
           headerShown: false,
         }}

@@ -21,8 +21,20 @@ const styles = StyleSheet.create({
   ///////////////Main Listings Details/////////
   iconview: {
     flexDirection: 'row',
-    paddingHorizontal: wp(7),
+    paddingHorizontal: wp(5),
     marginVertical: hp(0.7),
+  },
+  ItemName_text: {
+    fontFamily: fontFamily.Poppins_Medium,
+    fontSize: hp(2),
+    color:'white',
+    width: wp(25),
+  },
+  ItemPrice_text: {
+    fontFamily:  fontFamily.Poppins_Medium,
+    fontSize: hp(1.6),
+    color: 'white',
+textAlign:'right'
   },
   icontext: {
     fontFamily: fontFamily.Poppins_Regular,
@@ -60,9 +72,14 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Poppins_Light,
     fontSize: hp(1.6),
   },
-  userdeatilview: {},
-  userimageview: {},
-  userimage: {},
+  userdeatilview: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: wp(5),
+    marginBottom: hp(5),
+  },
+  userimage: {width: wp(18), height: hp(10), borderRdius: wp(15)},
   user_name: {
     color: 'white',
     fontFamily: fontFamily.Poppins_Medium,
@@ -80,8 +97,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(68, 68, 68, 1)',
     borderWidth: hp(0.2),
     borderColor: '#FFFFFF',
-    alignItems:'center',
-    justifyContent:"center"
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   btn_text: {
     color: 'white',

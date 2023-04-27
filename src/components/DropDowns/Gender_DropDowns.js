@@ -15,14 +15,15 @@ import {
 ////////////////////redux////////////
 import { useDispatch} from 'react-redux';
 import {updateGender} from '../../redux/GenderSlice';
+import Colors from '../../utills/Colors';
 
 const Gender_DropDowns = props => {
   /////////////redux states///////
   const dispatch = useDispatch();
 
   const [gender_data] = useState([
-    {id: '1', name: 'Male', value: 'male'},
-    {id: '2', name: 'Female', value: 'female'},
+    {id: '1', name: 'Category 1', value: 'Category 1'},
+    {id: '2', name: 'Category 2', value: 'Category 2'},
   ]);
 
   // Function to update the gender state
@@ -43,12 +44,13 @@ const Gender_DropDowns = props => {
           backgroundColor: 'rgba(52, 52, 52, 0.5)',
         },
         draggableIcon: {
-          backgroundColor: 'white',
+          backgroundColor: Colors.AppBckGround_color,
         },
         container: {
           borderTopLeftRadius: wp(10),
           borderTopRightRadius: wp(10),
           height: hp(35),
+          backgroundColor:Colors.AppBckGround_color
         },
       }}>
       <View
@@ -57,7 +59,7 @@ const Gender_DropDowns = props => {
           justifyContent: 'space-between',
           marginHorizontal: 0,
         }}>
-        <Text style={styles.bottomsheettext}>{'Select Gender'}</Text>
+        <Text style={styles.bottomsheettext}>{'Select Category'}</Text>
       </View>
       <FlatList
         data={gender_data}

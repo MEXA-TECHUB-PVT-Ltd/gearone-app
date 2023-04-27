@@ -152,8 +152,8 @@ const Verification = ({navigation, route}) => {
           title={'Submit'}
           widthset={80}
           topDistance={35}
-          loading={loading}
-          disabled={disable}
+          // loading={loading}
+          // disabled={disable}
           onPress={() => 
             setModalVisible(true)
             //verifyno()
@@ -166,9 +166,9 @@ const Verification = ({navigation, route}) => {
         btn_text={'Go to Home'}
         subtext={'Account Verified Successfully'}
         type={'single_btn'}
-        onPress_back={() => {
+        onPress={() => {
           setModalVisible(false);
-          navigation.navigate('ResetPassword', {data: predata});
+          navigation.navigate('Drawerroute');
         }}
       />
     </SafeAreaView>

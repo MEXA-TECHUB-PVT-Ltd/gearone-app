@@ -72,11 +72,11 @@ const MyGear = ({navigation}) => {
             alignSelf: 'center',
             marginTop: hp(1.5),
             marginBottom: hp(1),
-            //backgroundColor:"red",
-            //   /width: wp(62),
+            // /backgroundColor:"red",
+            width: wp(80),
           }}>
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.verticletext}>456</Text>
+            <Text style={styles.verticletoptext}>456</Text>
             <Text
               style={styles.verticletext}
               onPress={() => navigation.navigate('Followers')}>
@@ -85,7 +85,7 @@ const MyGear = ({navigation}) => {
           </View>
           <View style={styles.verticleLine}></View>
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.verticletext}>234</Text>
+            <Text style={styles.verticletoptext}>234</Text>
             <Text
               style={styles.verticletext}
               onPress={() => navigation.navigate('Followings')}>
@@ -96,7 +96,7 @@ const MyGear = ({navigation}) => {
           <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Icon name={'star'} size={20} color={'#F7FF00'} />
-              <Text style={styles.verticletext}>4.5</Text>
+              <Text style={[styles.verticletoptext,{marginLeft:wp(1)}]}>4.5</Text>
 
             </View>
             <TouchableOpacity
@@ -110,6 +110,7 @@ const MyGear = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
+        <View style={{borderBottomWidth:hp(0.15),borderColor:'rgba(255, 255, 255, 0.25)',marginBottom:hp(3),marginTop:hp(0)}}></View>
         <View>
           <SettingsMenu
             label={'My Account'}
@@ -128,9 +129,7 @@ const MyGear = ({navigation}) => {
           <SettingsMenu
             label={'Edit Profile'}
             labelPress={() =>
-              navigation.navigate('ChangePassword', {
-                navplace: 'ChangePassword'
-              })
+              navigation.navigate('EditProfile')
             }
           />
           <SettingsMenu

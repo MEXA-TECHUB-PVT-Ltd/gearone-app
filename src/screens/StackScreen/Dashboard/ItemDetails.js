@@ -11,6 +11,7 @@ import {
 
 ////////////////////app components//////////////
 import Loader from '../../../components/Loader/Loader';
+import CustomModal from '../../../components/Modal/CustomModal';
 
 ///////////////app icons////////////
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -35,6 +36,9 @@ import Colors from '../../../utills/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ItemDetails = ({navigation, route}) => {
+  ///////////////Modal States///////////////
+  const [modalVisible, setModalVisible] = useState(false);
+
   ///////////////PREVIOUS DATA////////////
   const [predata] = useState(route.params);
 
@@ -50,16 +54,11 @@ const ItemDetails = ({navigation, route}) => {
   /////////////Item Detail states/////////////
   const [Item_item_title, setItem_Item_Title] = useState('here');
   const [Item_item_price, setItem_Item_Price] = useState('here');
-  const [Item_comments_count, setItem_Comments_count] = useState(23);
-  const [Item_likes_count, setItem_Likes_count] = useState(23);
-  const [Item_views_count, setItem_Views_count] = useState(56);
+  const [Item_comments_count, setItem_Comments_count] = useState('23');
+  const [Item_likes_count, setItem_Likes_count] = useState('23');
+  const [Item_views_count, setItem_Views_count] = useState('56');
   const [Item_details, setItem_Details] = useState('here deatils');
 
-  useEffect(() => {
-    // GetListData();
-    //Item_views();
-    //getuser();
-  }, []);
   const [login_user_id, setlogin_user_id] = useState();
   const images = [
     require('../../../assets/dummyimages/image_1.png'),
@@ -80,22 +79,31 @@ const ItemDetails = ({navigation, route}) => {
           }}
         />
         <AutoImageSlider slider_images_array={images} />
+        {/*
+         */}
         <View>
-          <View style={{marginTop: hp(4), marginHorizontal: wp(7)}}>
-            <Text style={styles.pricetext}>{4578 + ' $'}</Text>
-            <Text style={styles.maintext}>Item Name</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: hp(2),
+              marginTop: hp(5),
+              marginHorizontal: wp(5),
+            }}>
+            <Text style={styles.ItemName_text}>Item Name</Text>
+            <Text style={styles.ItemPrice_text}>4578 $</Text>
           </View>
 
           <TouchableOpacity
-            style={[styles.iconview, {width: wp(55)}]}
+            style={[styles.iconview, {width: wp(80)}]}
             onPress={() => {
               navigation.navigate('CommentsDetails', route.params);
             }}>
             <MaterialCommunityIcons
               name={'share'}
               size={20}
-              color={Colors.activetextinput}
-              style={{marginRight: wp(3)}}
+              color={'white'}
+              style={{marginRight: wp(1)}}
               onPress={() => {
                 {
                   navigation.navigate('CommentsDetails', route.params);
@@ -112,12 +120,8 @@ const ItemDetails = ({navigation, route}) => {
                 <Icon
                   name={'heart'}
                   size={20}
-                  color={Colors.activetextinput}
-                  style={{marginRight: wp(3)}}
-                  onPress={() => {
-                    {
-                    }
-                  }}
+                  color={'white'}
+                  style={{marginRight: wp(1)}}
                 />
                 <Text style={styles.icontext}>234 Likes</Text>
               </View>
@@ -128,10 +132,11 @@ const ItemDetails = ({navigation, route}) => {
               //onPress={() => Item_like(predata.Item_id)}
               style={[styles.iconview, {width: wp(30)}]}>
               <Icon
-                name={'heart-outline'}
+                name={'heart'}
+                //name={'heart-outline'}
                 size={20}
-                color={Colors.activetextinput}
-                style={{marginRight: wp(3)}}
+                color={'white'}
+                style={{marginRight: wp(1)}}
               />
               <Text style={styles.icontext}>234 Likes</Text>
             </TouchableOpacity>
@@ -170,15 +175,24 @@ const ItemDetails = ({navigation, route}) => {
               </Text>
             </View>
             <View style={styles.verticleLine}></View>
-            <View style={{alignItems: 'center'}}>
+            <TouchableOpacity
+              style={{alignItems: 'center'}}
+              onPress={() => setModalVisible(true)}>
               <Icon name={'bookmark'} size={20} color={'white'} />
               <Text style={styles.verticletext}>Save</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.verticleLine}></View>
-            <View style={{alignItems: 'center'}}>
+            <TouchableOpacity
+              style={{alignItems: 'center'}}
+              onPress={() =>
+                navigation.navigate('ChatScreen', {
+                  navtype: 'chatlist',
+                  userid: '1',
+                })
+              }>
               <MaterialIcons name={'chat'} size={20} color={'white'} />
               <Text style={styles.verticletext}>Messages</Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <View style={{marginVertical: hp(2), marginLeft: wp(5)}}>
             <Text style={styles.heading_text}>Description</Text>
@@ -201,18 +215,11 @@ const ItemDetails = ({navigation, route}) => {
           <View style={{marginVertical: hp(2), marginLeft: wp(5)}}>
             <Text style={styles.heading_text}>Seller's Detail</Text>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              paddingHorizontal: wp(5),
-              marginBottom: hp(5),
-            }}>
+          <View style={styles.userdeatilview}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Image
                 source={require('../../../assets/dummyimages/profile.png')}
-                style={{width: wp(18), height: hp(10), borderRdius: wp(15)}}
+                style={styles.userimage}
                 resizeMode="contain"
               />
               <View style={{marginLeft: wp(3)}}>
@@ -229,6 +236,16 @@ const ItemDetails = ({navigation, route}) => {
           </View>
         </View>
       </ScrollView>
+      <CustomModal
+        modalVisible={modalVisible}
+        text={'Success'}
+        btn_text={'Go to Home'}
+        subtext={'Item Saved Successfully'}
+        type={'single_btn'}
+        onPress={() => {
+          setModalVisible(false), navigation.navigate('BottomTab');
+        }}
+      />
     </SafeAreaView>
   );
 };

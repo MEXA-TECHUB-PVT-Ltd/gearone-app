@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
 
   mainview: {
     marginTop:wp(0),
-    marginBottom: wp(3),
+    marginBottom: wp(0),
     //justifyContent:'center',
     backgroundColor:Colors.AppBckGround_color,
     width: wp(95),
-    height: hp(6),
+    height: hp(5),
     alignSelf: 'center',
     //paddingLeft: wp(2),
     alignItems: 'center'

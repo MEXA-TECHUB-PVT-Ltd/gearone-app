@@ -197,8 +197,8 @@ const Login = ({navigation}) => {
             title={'Submit'}
             widthset={80}
             topDistance={18}
-            loading={loading}
-            disabled={disable}
+            // loading={loading}
+            // disabled={disable}
             onPress={() => {
               navigation.navigate("Verification",{data:'001'});
               //formValidation();

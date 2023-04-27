@@ -5,11 +5,12 @@ import Colors from '../../utills/Colors';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} 
 from 'react-native-responsive-screen';
+import { fontFamily } from '../../constant/fonts';
 const styles = StyleSheet.create({
 
 card:
 {
-  borderColor:'rgba(0, 0, 0, 0.2)',
+  borderColor:'rgba(255, 255, 255, 0.70)',
   borderBottomWidth: 1,
  width: wp(82),
  marginHorizontal:wp(8)
@@ -17,20 +18,19 @@ card:
 },
 cardtext:
 {
-  color:'black', 
+  color:'white', 
   marginBottom:hp(2),
   marginTop:hp(2),
    fontFamily:'Poppins',
    fontSize:hp(2),
    marginLeft:wp(5),
-    color:"grey",
 },
 bottomsheettext:
 {
 paddingHorizontal:wp(8),
-fontWeight:'600',
+fontFamily:fontFamily.Poppins_SemiBold,
 fontSize:hp(2.5),
-color:'black'
+color:'white'
 },
   });
   export default styles;

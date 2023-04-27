@@ -34,7 +34,13 @@ import axios from 'axios';
 import {BASE_URL} from '../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+////////////////////redux////////////
+import {useSelector, useDispatch} from 'react-redux';
+
 const CreateProfile = ({navigation}) => {
+    ////////////////redux/////////////////
+    const dispatch = useDispatch();
+    const { personal,links ,profile_Image,cover_Image} = useSelector(state => state.createProfile);
 
   /////////TextInput References///////////
   const ref_input2 = useRef();
@@ -122,25 +128,30 @@ const CreateProfile = ({navigation}) => {
             navigation.goBack();
           }}
         />
-     
-        {/* <PersonalDetail/> */}
-        {/* <SocialLinks/> */}
-        {/* <CoverImage/> */}
-        <ProfileImage/>
+     {personal === true?
+             <PersonalDetail/>
+    :links === true?
+    <SocialLinks/> 
+  :cover_Image === true?
+  <CoverImage/> 
+:profile_Image === true?
+<ProfileImage/>
+:null
+}
 
-        <View style={{height:hp(20), marginTop: hp(0), marginBottom: hp(20)}}>
+        {/* <View style={{height:hp(20), marginTop: hp(0), marginBottom: hp(20)}}>
           <CustomButtonhere
             title={'Countinue'}
             widthset={80}
             topDistance={15}
-            loading={loading}
-            disabled={disable}
+            // loading={loading}
+            // disabled={disable}
             onPress={() =>
               //navigation.navigate('ProfileSucess')
               formValidation()
             }
           />
-        </View>
+        </View> */}
         <Snackbar
           duration={400}
           visible={visible}
