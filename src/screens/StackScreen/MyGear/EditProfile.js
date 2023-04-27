@@ -1,21 +1,13 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text
-} from 'react-native';
+import {SafeAreaView, ScrollView, View, Text} from 'react-native';
 
 ///////////////app components////////////////
-import CustomButtonhere from '../../components/Button/CustomButton';
-import CustomTextInput from '../../components/TextInput/CustomTextInput';
-import Header from '../../components/Header/Header';
+import Header from '../../../components/Header/Header';
 
 /////////////////components/////////////
-import PersonalDetail from '../../components/CreateProfile/PersonalDetail';
-import SocialLinks from '../../components/CreateProfile/SocialLinks';
-import CoverImage from '../../components/CreateProfile/CoverImage';
-import ProfileImage from '../../components/CreateProfile/ProfileImage';
+import EditPersonalDetail from '../../../components/EditProfile/EditPersonal';
+import EditSocialLinks from '../../../components/EditProfile/EditLinks';
+import EditImages from '../../../components/EditProfile/EditImages';
 
 ////////////////app pakages////////////
 import {Snackbar} from 'react-native-paper';
@@ -31,14 +23,18 @@ import {
 
 ////////////////api////////////////
 import axios from 'axios';
-import {BASE_URL} from '../../utills/ApiRootUrl';
+import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const EditProfile = ({navigation}) => {
+////////////////////redux////////////
+import {useSelector, useDispatch} from 'react-redux';
 
-  /////////TextInput References///////////
-  const ref_input2 = useRef();
-  const ref_input3 = useRef();
+const EditProfile = ({navigation}) => {
+  ////////////////redux/////////////////
+  const dispatch = useDispatch();
+  const {edit_personal, edit_links, edit_Images} = useSelector(
+    state => state.editProfile,
+  );
 
   ///////////////button states/////////////
   const [loading, setloading] = useState(0);
@@ -46,10 +42,6 @@ const EditProfile = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({value: '', color: ''});
   const onDismissSnackBar = () => setVisible(false);
-
-  ///////////////data states////////////////////
-  const [phone_number, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState();
 
   //Api form validation
   const formValidation = async () => {
@@ -116,31 +108,21 @@ const EditProfile = ({navigation}) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <Header
-          title={'Create Profile'}
+          title={'Edit Profile'}
           left_icon={'chevron-back-sharp'}
           left_iconPress={() => {
             navigation.goBack();
           }}
         />
-     
-        {/* <PersonalDetail/> */}
-        {/* <SocialLinks/> */}
-        {/* <CoverImage/> */}
-        <ProfileImage/>
 
-        {/* <View style={{height:hp(20), marginTop: hp(0), marginBottom: hp(20)}}>
-          <CustomButtonhere
-            title={'Countinue'}
-            widthset={80}
-            topDistance={15}
-            loading={loading}
-            disabled={disable}
-            onPress={() =>
-              //navigation.navigate('ProfileSucess')
-              formValidation()
-            }
-          />
-        </View> */}
+        {edit_personal === true ? (
+          <EditPersonalDetail />
+        ) : edit_links === true ? (
+          <EditSocialLinks />
+        ) : edit_Images === true ? (
+          <EditImages />
+        ) : null}
+
         <Snackbar
           duration={400}
           visible={visible}

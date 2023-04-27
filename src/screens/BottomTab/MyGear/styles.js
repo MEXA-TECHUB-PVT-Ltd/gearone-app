@@ -41,9 +41,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.activetextinput,
     marginHorizontal: wp(4),
   },
-  verticletext: {
-    color: Colors.activetextinput,
+  verticletoptext: {
+    color: 'white',
     fontSize: hp(1.6),
+    fontFamily: fontFamily.Poppins_SemiBold,
+  },
+  verticletext: {
+    color:'#E6E6E6',
+    fontSize: hp(1.5),
     fontFamily: fontFamily.Poppins_Medium,
   },
 });

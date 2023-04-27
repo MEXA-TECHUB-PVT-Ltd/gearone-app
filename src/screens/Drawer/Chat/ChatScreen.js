@@ -13,6 +13,7 @@ import Header from '../../../components/Header/Header';
 
 //////////////////app icons////////////////
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 ////////////////app styles/////////////////////
 import styles from './styles';
@@ -51,8 +52,11 @@ import Colors from '../../../utills/Colors';
 ////////////////////navigation//////////////////
 import {useIsFocused} from '@react-navigation/native';
 
-const ChatScreen = ({route, navigation}) => {
+//////////////sens button svg////////////
+import SendBtn from '../../../assets/svgs/send.svg';
+import { fontFamily } from '../../../constant/fonts';
 
+const ChatScreen = ({route, navigation}) => {
   const isFocused = useIsFocused();
 
   ////////////previos data//////////
@@ -205,55 +209,71 @@ const ChatScreen = ({route, navigation}) => {
           bottom: hp(3.5),
           height: hp(10),
           paddingBottom: hp(3),
-          width:wp(100),
-          alignItems:'center',
-justifyContent:'center',
+          width: wp(100),
+          alignItems: 'center',
+          justifyContent: 'center',
+
         }}>
         <InputToolbar
           {...props}
           containerStyle={{
-            alignItems:'center',
-           backgroundColor: '#F5F5F5',
-            height: hp(6.5),
+            //alignItems:'center',
+            backgroundColor: '#E6E6E6',
+            height: hp(6),
             borderColor: '#ccc',
             borderTopColor: '#ccc',
             borderWidth: 0.3,
             borderRadius: wp(4),
-            marginLeft: wp(12),
-            width: wp(75),
-            //position: 'absolute',
+            paddingLeft: wp(6),
+            width: wp(80),
             top: 0,
-            left: wp(10),
+            left: wp(3),
             bottom: hp(1),
             marginTop: hp(0.5),
+  
           }}
-          textInputStyle={{color: 'black'}}
+          textInputStyle={{color: 'black',fontSize:hp(1.8),fontFamily:fontFamily.Poppins_Regular}}
+          placeholder="Type a message"
+          placeholderTextColor="#707070"
         />
+        <View style={{position: 'absolute', top: hp(2), left: wp(6)}}>
+          <FontAwesome5
+            name={'smile'}
+            size={22}
+            color={'#444444'}
+            onPress={() => refRBSheet.current.open()}
+          />
+        </View>
+        <View style={{position: 'absolute', top: hp(2), right: wp(20)}}>
+          <MaterialCommunityIcons
+            name={'camera'}
+            size={22}
+            color={'#444444'}
+            onPress={() => refRBSheet.current.open()}
+          />
+        </View>
       </View>
     );
   };
-
   const SendComponent = props => {
     return (
       <Send
         {...props}
         containerStyle={{
-alignItems:'center',
-justifyContent:'center',
-marginRight:wp(2),
-marginTop:hp(1),
+          borderWidth: 0,
         }}>
         <View
           style={{
-            // justifyContent: 'center',
-            // alignItems: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: hp(5),
+            width: wp(12),
+            borderRadius: wp(10),
+            position: 'absolute',
+            bottom: hp(0),
+            left: wp(3),
           }}>
-          <MaterialCommunityIcons
-            name={'send'}
-            size={25}
-            color={Colors.Appthemecolor}
-            //onPress={() => Send()}
-          />
+          <SendBtn width={wp(16)} height={hp(10)} />
         </View>
       </Send>
     );
@@ -276,16 +296,18 @@ marginTop:hp(1),
   return (
     <SafeAreaView style={styles.container}>
       <Header
-          title={'Messages'}
-          left_icon={'chevron-back-sharp'}
-          type={'withoutlogo'}
-          left_iconPress={() => {
-            navigation.goBack();
-          }}
-        />
+        title={'Messages'}
+        left_icon={'chevron-back-sharp'}
+        type={'withoutlogo'}
+        left_iconPress={() => {
+          navigation.goBack();
+        }}
+      />
 
       <GiftedChat
         alwaysShowSend
+        placeholderTextColor="#707070"
+        textInputStyle={{ fontSize: hp(1.8), color: 'black' }}
         renderInputToolbar={props => {
           return <CustomInputToolbar {...props} />;
         }}

@@ -4,6 +4,9 @@ import {
   Text
 } from 'react-native';
 
+///////////componetes///////////
+import CustomButtonhere from '../Button/CustomButton';
+
 /////////////icons//////////////////
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 
@@ -16,9 +19,15 @@ import {
 /////////////fonts///////////
 import { fontFamily } from '../../constant/fonts';
 
+////////////////////redux////////////
+import {useSelector, useDispatch} from 'react-redux';
+import {setCoverImageMenu,setProfileImageMenu} from '../../redux/CreateProfileSlice';
+
 
 const CoverImage = ({navigation}) => {
 
+  ////////////////redux/////////////////
+  const dispatch = useDispatch();
 
   ///////////emai
   return (
@@ -43,6 +52,18 @@ const CoverImage = ({navigation}) => {
     <View style={{alignItems:'center',justifyContent:'center',marginTop:hp(3)}}>
         <Text style={{color:'white',fontFamily:fontFamily.Poppins_Light,fontSize:hp(1.6)}}>Cover Image</Text>
     </View>
+    <View style={{height: hp(20), marginTop: hp(0), marginBottom: hp(20)}}>
+        <CustomButtonhere
+          title={'Countinue'}
+          widthset={80}
+          topDistance={27}
+          // loading={loading}
+          // disabled={disable}
+          onPress={() => { dispatch(setCoverImageMenu(false),
+            dispatch(setProfileImageMenu(true)));
+          }}
+        />
+      </View>
         </View>
   );
 };

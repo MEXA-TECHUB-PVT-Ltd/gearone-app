@@ -70,11 +70,12 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Poppins_Regular,
     fontSize: hp(3),
     color: 'black',
+    marginLeft:wp(3)
   },
   star: {
 		color: '#707070',
-    marginHorizontal:wp(3),
-    alignSelf:'center'
+    padding:wp(3),
+    margin:wp(3),
     //'#EBD300'
 	},
   });

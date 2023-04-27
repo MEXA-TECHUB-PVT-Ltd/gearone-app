@@ -15,6 +15,7 @@ import CustomTextInput from '../../../components/TextInput/CustomTextInput';
 import CustomButtonhere from '../../../components/Button/CustomButton';
 import CustomModal from '../../../components/Modal/CustomModal';
 import CamerBottomSheet from '../../../components/CameraBottomSheet/CameraBottomSheet';
+import Gender_DropDowns from '../../../components/DropDowns/Gender_DropDowns';
 
 /////////////app styles///////////////////
 import styles from './styles';
@@ -73,10 +74,19 @@ const DATA = [
     },
   ];
 
+////////////////////redux////////////
+import {useSelector, useDispatch} from 'react-redux';
+
 const UploadItem = ({navigation}) => {
+  /////////////reducer value////////////
+  const imagePath = useSelector(state => state.image.path);
+    const gender = useSelector((state) => state.gender);
 
   //camera and imagepicker
   const refRBSheet = useRef();
+
+    ////DROPDOWNS//////////
+    const refRBGenderDDSheet = useRef();
 
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
@@ -155,12 +165,13 @@ const UploadItem = ({navigation}) => {
           <Text style={styles.textinput_title}>Category</Text>
         </View>
         <TouchableOpacity onPress={() => refRBGenderDDSheet.current.open()}>
-
-            </TouchableOpacity>
         <CustomTextInput
              dopdownicon={'chevron-down'}
              type={'dropdowniconinput'}
-          term={Item_category}
+        term={Item_category}
+          //term={gender.name}
+          editable={false}
+          disable={false}
           returnType={'next'}
           onNext={() => {
             ref_input2.current.focus();
@@ -168,6 +179,8 @@ const UploadItem = ({navigation}) => {
           placeholder="Select Category"
           onTermChange={text => setItemCategory(text)}
         />
+            </TouchableOpacity>
+
         <View style={{marginLeft: wp(12)}}>
           <Text style={styles.textinput_title}>Description</Text>
         </View>
@@ -205,6 +218,10 @@ const UploadItem = ({navigation}) => {
           onClose={() => refRBSheet.current.close()}
           title={'From Gallery'}
           type={'onepic'}
+        />
+                <Gender_DropDowns
+          refRBSheet={refRBGenderDDSheet}
+          onClose={() => refRBGenderDDSheet.current.close()}
         />
       </ScrollView>
     </SafeAreaView>

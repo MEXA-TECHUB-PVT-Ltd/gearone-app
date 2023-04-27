@@ -158,6 +158,9 @@ const style = StyleSheet.create({
     color: 'grey',
     fontSize: hp(1.4),
     fontFamily: fontFamily.Poppins_Extra_Light,
+    width: wp(19),    
+    textAlign:'center'
+
   },
 });
 export default BottomTab;

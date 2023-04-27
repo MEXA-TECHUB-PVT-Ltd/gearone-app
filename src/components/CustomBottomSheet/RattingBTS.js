@@ -109,14 +109,14 @@ const RattingBottomSheet = (props) => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+      <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',alignSelf:'center',marginTop:hp(2)}}>
           <Text style={styles.usertext}>{stars}</Text>
             </View>
       <View style={{ marginTop: hp(0) }}>
           <CustomButtonhere
             title={"Rate"}
             widthset={80}
-            topDistance={7}
+            topDistance={5}
             loading={loading}
             disabled={disable}
             onPress={() => {
