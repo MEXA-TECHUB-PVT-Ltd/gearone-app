@@ -10,6 +10,8 @@ import {
 
 ///////////////app icons///////////////
 import Icon from "react-native-vector-icons/Ionicons";
+import Octicons from "react-native-vector-icons/Octicons";
+
 
 ////////////////navigation///////////////
 import { useNavigation } from "@react-navigation/native";
@@ -49,7 +51,7 @@ const ChatHeader = ({
         <Icon
        name={"chevron-back"}
        size={25}
-       color={"#020202"}
+       color={"white"}
           onPress={() => navigation.goBack()}
           style={{ marginLeft: wp(0) }}
         />
@@ -58,12 +60,14 @@ const ChatHeader = ({
         <TouchableOpacity style={styles.profile}>
           <View>
             <Image source={picture} style={styles.image} resizeMode="contain" />
-            <View style={{ position: "absolute", right: 0, bottom: hp(0.5) }}>
-              <Image
-                source={appImages.onlinechatdot}
-                style={styles.icondot}
-                resizeMode="contain"
-              />
+            <View style={{ position: "absolute", right: wp(1), bottom: hp(0.) }}>
+            <Octicons
+       name={"dot-fill"}
+       size={23}
+       color={Colors.Appthemecolor}
+          onPress={() => navigation.goBack()}
+          style={{ marginLeft: wp(0) }}
+        />
             </View>
           </View>
           <View style={styles.usernameAndOnlineStatus}>
@@ -79,18 +83,11 @@ const ChatHeader = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: 'white',
+    backgroundColor: Colors.AppBckGround_color,
     height: Height * 0.1,
     width: wp(100),
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 7,
-    },
-    shadowOpacity: 0.43,
-    shadowRadius: 9.51,
-
-    elevation: 15,
+    borderBottomWidth:hp(0.2),
+    borderBottomColor: '#B1B1B1',
   },
   backButton: {
     alignSelf: "center",
@@ -124,14 +121,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(2),
   },
   username: {
-    color: "#262626",
+    color: "white",
     fontSize: hp(2),
-    fontFamily: fontFamily.Poppins_SemiBold,
+    fontFamily: fontFamily.Poppins_Regular,
   },
   onlineStatus: {
-    color: Colors.Appthemecolor,
+    color: '#B1B1B1',
     fontSize: hp(1.8),
-    fontFamily: fontFamily.Poppins_Medium,
+    fontFamily: fontFamily.Poppins_Regular,
   },
 });
 

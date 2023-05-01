@@ -19,6 +19,12 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     backgroundColor:Colors.AppBckGround_color
   },
-
+stories_user:
+{
+  color:'white',
+  fontFamily:fontFamily.Poppins_Regular,
+  fontSize:hp(1.6),
+  width:wp(20)
+}
 });
 export default styles;

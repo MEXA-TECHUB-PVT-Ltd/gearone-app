@@ -124,7 +124,7 @@ function BottomTab() {
           tabBarIcon: ({color, focused}) => (
             <View style={style.maintabview}>
               <View style={[style.tab]}>
-                <Text style={style.tabtextcolor}>{'MyGear'}</Text>
+                <Text style={style.tabtextcolor}>{'My Gear'}</Text>
               </View>
             </View>
           ),

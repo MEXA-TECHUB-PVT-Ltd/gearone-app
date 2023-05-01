@@ -27,7 +27,7 @@ const data = [
     user_id: 1,
     user_image:
       'https://pbs.twimg.com/profile_images/1222140802475773952/61OmyINj.jpg',
-    user_name: 'Ahmet Çağlar Durmuş',
+    user_name: 'Ad name',
     stories: [
       {
         story_id: 1,
@@ -47,7 +47,7 @@ const data = [
     user_id: 2,
     user_image:
       'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-    user_name: 'Test User',
+      user_name: 'Ad name',
     stories: [
       {
         story_id: 1,
@@ -138,6 +138,8 @@ const Home = ({navigation}) => {
           duration={10}
           onStart={item => console.log(item)}
           onClose={item => console.log('close: ', item)}
+          showAvatarText={true}
+          avatarTextStyle={styles.stories_user}
           customSwipeUpComponent={
             <View>
               <Text>Swipe</Text>
