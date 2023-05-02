@@ -1,11 +1,12 @@
 import React, {useState, useRef} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
+///////navigation variable///////////
+import { useNavigation } from '@react-navigation/native';
+
 ///////////componetes///////////
 import CustomButtonhere from '../Button/CustomButton';
-
-/////////////icons//////////////////
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import CustomModal from '../Modal/CustomModal';
 
 //////////height and width/////////////
 import {
@@ -22,13 +23,19 @@ import {
   setCoverImageMenu,
   setProfileImageMenu,
 } from '../../redux/CreateProfileSlice';
+
+/////app colors////////////
 import Colors from '../../utills/Colors';
 
-const EditImages = ({navigation}) => {
+const EditImages = ({}) => {
+///////navigation//////  
+ const navigation = useNavigation();
+
   ////////////////redux/////////////////
   const dispatch = useDispatch();
 
-  ///////////emai
+  ///////////////Modal States///////////////
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={{marginTop: hp(2)}}>
       <View style={{marginLeft: wp(3), marginTop: hp(3)}}>
@@ -132,13 +139,23 @@ const EditImages = ({navigation}) => {
           // loading={loading}
           // disabled={disable}
           onPress={() => {
-            dispatch(
-              setCoverImageMenu(false),
-              dispatch(setProfileImageMenu(true)),
-            );
+              setModalVisible(true)
           }}
         />
       </View>
+      <CustomModal
+        modalVisible={modalVisible}
+        text={'Success'}
+        btn_text={'Go Back'}
+        subtext={'Profile Edited Successfully'}
+        type={'single_btn'}
+        onPress={() => {
+          setModalVisible(false);
+          dispatch(setCoverImageMenu(false)),
+          dispatch(setProfileImageMenu(true)),
+          navigation.navigate('BottomTab');
+        }}
+      />
     </View>
   );
 };

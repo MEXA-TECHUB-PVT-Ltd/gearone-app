@@ -1,8 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {
   SafeAreaView,
-  StatusBar,
-  ScrollView,
   TouchableOpacity,
   FlatList,
   View,
@@ -13,16 +11,7 @@ import {
 /////////////////firebase all users//////////////
 //import firestore from '@react-native-firebase/firestore';
 
-//////////////////app icons////////////////
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Icon from 'react-native-vector-icons/Ionicons';
-
 //////////////////////app components///////////////
-import CustomHeader from '../../../components/Header/CustomHeader';
-import DashboardHeader from '../../../components/Header/DashboardHeader';
-import ViewAll from '../../../components/ViewAll/ViewAll';
-import HairStylesCards from '../../../components/CustomCards/HairStyles/HairStylesCard';
-import Loader from '../../../components/Loader/Loader';
 import Header from '../../../components/Header/Header';
 
 ////////////////////redux////////////
@@ -97,7 +86,6 @@ const [loading, setloading] = useState(true);
 
    ///////////////////flatlist render item///////////////
    const renderitem=({item})=>{
-    console.log("here data of user",item)
     return (
       <TouchableOpacity onPress={() => navigation.navigate("ChatScreen",{navtype:"chatlist",
       userid:item.id})}>

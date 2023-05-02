@@ -10,6 +10,7 @@ import {
 ///////////////import app components/////////////
 import CamerBottomSheet from '../../../components/CameraBottomSheet/CameraBottomSheet';
 import Header from '../../../components/Header/Header';
+import ChatHeader from '../../../components/Chat/ChatHeader';
 
 //////////////////app icons////////////////
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -22,8 +23,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-//////////////app components///////////////////
-import ChatHeader from '../../../components/Chat/ChatHeader';
 
 ///////////////////app Packages//////////////
 import {
@@ -55,6 +54,8 @@ import {useIsFocused} from '@react-navigation/native';
 //////////////sens button svg////////////
 import SendBtn from '../../../assets/svgs/send.svg';
 import { fontFamily } from '../../../constant/fonts';
+
+import EmojiPicker from 'react-native-emoji-picker-staltz';
 
 const ChatScreen = ({route, navigation}) => {
   const isFocused = useIsFocused();
@@ -194,7 +195,7 @@ const ChatScreen = ({route, navigation}) => {
 
           setImageUrl(url);
           //onSend(message)
-          //handleSend(message, url, );
+        //handleSend(message, url, );
         },
       );
     } catch (error) {
@@ -206,12 +207,13 @@ const ChatScreen = ({route, navigation}) => {
     return (
       <View
         style={{
-          bottom: hp(3.5),
+          bottom: hp(2),
           height: hp(10),
           paddingBottom: hp(3),
           width: wp(100),
           alignItems: 'center',
           justifyContent: 'center',
+          marginTop:hp(2)
 
         }}>
         <InputToolbar
@@ -228,7 +230,7 @@ const ChatScreen = ({route, navigation}) => {
             width: wp(80),
             top: 0,
             left: wp(3),
-            bottom: hp(1),
+            bottom: hp(0),
             marginTop: hp(0.5),
   
           }}
@@ -241,7 +243,7 @@ const ChatScreen = ({route, navigation}) => {
             name={'smile'}
             size={22}
             color={'#444444'}
-            onPress={() => refRBSheet.current.open()}
+            //onPress={() => refRBSheet.current.open()}
           />
         </View>
         <View style={{position: 'absolute', top: hp(2), right: wp(20)}}>
@@ -250,6 +252,7 @@ const ChatScreen = ({route, navigation}) => {
             size={22}
             color={'#444444'}
             onPress={() => refRBSheet.current.open()}
+            //onPress={() => handleImageUpload()}
           />
         </View>
       </View>
@@ -281,28 +284,42 @@ const ChatScreen = ({route, navigation}) => {
   const CustomBubbleText = props => {
     return (
       <View>
-        <Text
-          style={{
-            color: '#fff',
-            paddingHorizontal: wp(1),
-            paddingVertical: 0,
-            //fontWeight: "bold",
-          }}>
-          {props.currentMessage.text}
-        </Text>
+        {
+          currentMessage.image?
+          <Image source={{ uri: currentMessage.image }} style={styles.image} />
+     :
+            <Text
+            style={{
+              color: 'black',
+              paddingHorizontal: wp(1),
+              paddingVertical: 0,
+              //fontWeight: "bold",
+            }}>
+            {props.currentMessage.text}
+          </Text>
+          }
+      
+
       </View>
     );
   };
   return (
     <SafeAreaView style={styles.container}>
       <Header
-        title={'Messages'}
+        title={'Chat'}
         left_icon={'chevron-back-sharp'}
         type={'withoutlogo'}
         left_iconPress={() => {
           navigation.goBack();
         }}
       />
+            {/* <ChatHeader
+        onPress={() => {}}
+        username={predata.userid + 'username'}
+        picture={require('../../../App_dummy_App/dummy_images/user_1.png')}
+        onlineStatus={'Online'}
+        viewstate={true}
+      /> */}
 
       <GiftedChat
         alwaysShowSend
@@ -334,7 +351,7 @@ const ChatScreen = ({route, navigation}) => {
                       ? Colors.Appthemecolor
                       : 'orange',
                   width: props.currentMessage.text != '' ? wp(80) : wp(70),
-                  marginBottom: hp(1.2),
+                  marginBottom: hp(1.5),
                   paddingTop: hp(2),
                   paddingHorizontal: wp(3),
                 },

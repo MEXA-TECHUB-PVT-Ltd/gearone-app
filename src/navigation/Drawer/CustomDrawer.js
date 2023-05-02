@@ -219,15 +219,15 @@ const styles = StyleSheet.create({
   },
 
   subtitle: {
-    fontSize: hp(1.5),
-    fontFamily: fontFamily.Poppins_Medium,
+    fontSize: hp(1.8),
+    fontFamily: fontFamily.Poppins_Regular,
     color: 'white',
-    marginTop: hp(-2),
+    marginTop: hp(-2.4),
   },
   bottomDrawerSection: {
-    height: hp(30),
+    height: hp(35),
     // marginBottom: hp(3),
-    paddingTop: hp(20),
+    paddingTop: hp(18),
     backgroundColor: Colors.AppBckGround_color,
   },
   icon: {

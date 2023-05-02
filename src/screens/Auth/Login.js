@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {SafeAreaView, ScrollView, Image, View, Text} from 'react-native';
+import {SafeAreaView, ScrollView, Image, View, Text, TouchableOpacity} from 'react-native';
 
 ///////////////app components////////////////
 import CustomButtonhere from '../../components/Button/CustomButton';
@@ -174,6 +174,7 @@ const Login = ({navigation}) => {
             texterror={'invalid'}
             term={email}
             returnType={'next'}
+            keyboard_type={'numeric'}
             onNext={() => {
               ref_input2.current.focus();
             }}
@@ -185,9 +186,10 @@ const Login = ({navigation}) => {
             <View style={Authstyles.horizontal_line} />
           </View>
         </View>
-        <View style={{alignItems:'center'}}>
+        <TouchableOpacity style={{alignItems:'center'}}
+        onPress={ ()=> navigation.navigate('Drawerroute')}>
           <Text style={Authstyles.last_text}>Join as a Guest</Text>
-        </View>
+        </TouchableOpacity>
         <View
           style={{
             height: hp(25),

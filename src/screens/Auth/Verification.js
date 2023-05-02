@@ -168,6 +168,7 @@ const Verification = ({navigation, route}) => {
         type={'single_btn'}
         onPress={() => {
           setModalVisible(false);
+          //  navigation.navigate('CreateProfile');
           navigation.navigate('Drawerroute');
         }}
       />

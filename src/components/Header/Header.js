@@ -9,8 +9,9 @@ import {
 
 ///////////////icons////////////////
 import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
+/////////////app components////////
+import ChatHeader from '../Chat/ChatHeader';
 
 /////////////colors///////////////
 import Colors from '../../utills/Colors';
@@ -59,6 +60,13 @@ const Header = ({
           </View>
 
       {headertype === 'header_without_text' ? null:
+      title === 'Chat'? <ChatHeader
+      onPress={() => {}}
+      username={'username'}
+      picture={require('../../assets/dummyimages/profile_user.png')}
+      onlineStatus={'Online'}
+      viewstate={true}
+    />:
        (
         <View style={{flexDirection: 'row', marginTop:hp(3)}}>
           <View style={styles.iconContainer}>
