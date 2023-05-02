@@ -3,6 +3,9 @@ import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {useTheme, Drawer, Text, Avatar, Title} from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 
+///////navigation////////
+import {useNavigation} from '@react-navigation/native';
+
 //////////////////app components//////////
 import CustomModal from '../../components/Modal/CustomModal';
 
@@ -15,46 +18,25 @@ import {
 } from 'react-native-responsive-screen';
 import Colors from '../../utills/Colors';
 
-/////////////////app images///////////
-import {appImages} from '../../constant/images';
-
 ///////////////app fonts/////////////
 import {fontFamily} from '../../constant/fonts';
-
-/////////////image url////////////////
-import {IMAGE_URL} from '../../utills/ApiRootUrl';
 
 ///////////logo svg/////////
 import Logo from '../../assets/svgs/Logo.svg';
 
 export const DrawerContent = props => {
-  const paperTheme = useTheme();
+  ////////////navigation variable/////
+  const navigation = useNavigation();
+
   //Modal States
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
-
-  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-
+  //////logout function//////
   const logout = async () => {
-    await AsyncStorage.removeItem('Userid');
+    //await AsyncStorage.removeItem('Userid');
     props.navigation.navigate('Login');
   };
-  /////////////main menu status states/////////////
-  const [username, setUsername] = useState('');
-  const [user_image, setUser_Image] = useState('');
-  const [user_fullname, setUser_FullName] = useState('');
-  const GetUserData = async () => {
-    get_Login_UserData().then(response => {
-      console.log('here user data in drawer:', response.data);
-      setUsername(response.data.user_name);
-      setUser_FullName(response.data.full_name);
-      setUser_Image(response.data.image);
-    });
-  };
-  useEffect(() => {
-    //GetUserData();
-  }, []);
+
   return (
     <View style={{flex: 1, backgroundColor: Colors.AppBckGround_color}}>
       <DrawerContentScrollView
@@ -73,10 +55,6 @@ export const DrawerContent = props => {
               }}>
               <Logo width={wp(45)} height={hp(11)} />
             </View>
-            <View style={{alignSelf: 'center', marginLeft: wp(4)}}>
-              <Title style={styles.title}>{user_fullname}</Title>
-              <Title style={styles.caption}>{username}</Title>
-            </View>
           </View>
           <View
             style={{
@@ -92,21 +70,21 @@ export const DrawerContent = props => {
               label="Home"
               labelStyle={styles.subtitle}
               onPress={() => {
-                props.navigation.navigate('ShippingAddressList');
+                props.navigation.navigate('Home');
               }}
             />
             <DrawerItem
               label="My Gear"
               labelStyle={styles.subtitle}
               onPress={() => {
-                props.navigation.navigate('Language');
+                props.navigation.navigate('MyGear');
               }}
             />
             <DrawerItem
               label="Apparel Sale"
               labelStyle={styles.subtitle}
               onPress={() => {
-                props.navigation.navigate('InviteFriends');
+                props.navigation.navigate('Home');
               }}
             />
             <DrawerItem
@@ -177,13 +155,10 @@ export const DrawerContent = props => {
         onPress_yes={() => {
           setModalVisible(false);
           navigation.navigate('Login');
+          //logout()
         }}
         onPress_cancel={() => {
           setModalVisible(false);
-        }}
-        onPress_back={() => {
-          setModalVisible(false);
-          navigation.navigate('Login');
         }}
       />
     </View>

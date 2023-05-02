@@ -10,7 +10,7 @@ import {
 ///////////////import app components/////////////
 import CamerBottomSheet from '../../../components/CameraBottomSheet/CameraBottomSheet';
 import Header from '../../../components/Header/Header';
-import ChatHeader from '../../../components/Chat/ChatHeader';
+import EmojiSelector from '../../../components/Chat/EmojiModal';
 
 //////////////////app icons////////////////
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -22,7 +22,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
 
 ///////////////////app Packages//////////////
 import {
@@ -36,16 +35,12 @@ import {
 //////////////furestore/////////////
 import firestore from '@react-native-firebase/firestore';
 
-////////////////////redux////////////
-import {useSelector, useDispatch} from 'react-redux';
-
 //////////////////////////app api/////////////////////////
 import axios from 'axios';
 import {BASE_URL, IMAGE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /////////////////app images///////////////
-import {appImages} from '../../../constant/images';
 import Colors from '../../../utills/Colors';
 
 ////////////////////navigation//////////////////
@@ -53,12 +48,25 @@ import {useIsFocused} from '@react-navigation/native';
 
 //////////////sens button svg////////////
 import SendBtn from '../../../assets/svgs/send.svg';
-import { fontFamily } from '../../../constant/fonts';
 
-import EmojiPicker from 'react-native-emoji-picker-staltz';
+////////////app fonts////////
+import {fontFamily} from '../../../constant/fonts';
+
+/////////app redux///////
+import {useSelector} from 'react-redux';
 
 const ChatScreen = ({route, navigation}) => {
+  ////////////////redux/////////////////
+  const {path} = useSelector(state => state.image);
+
+  //////////navigation//////////
   const isFocused = useIsFocused();
+
+  /////////////redux/////////////
+  const {emoji_name} = useSelector(state => state.emoji)
+
+  ////////////previos data//////////
+  const [emoji_visible, setEmojivisible] = useState(false);
 
   ////////////previos data//////////
   const [predata] = useState(route.params);
@@ -154,8 +162,9 @@ const ChatScreen = ({route, navigation}) => {
       ...msg,
       //text:text,
       //type: "image_text",
+      //image: path,
       senderId: '2',
-      receiverId: route.params.userid,
+      receiverId: '1',
       user: {
         _id: user,
         name: 'ali',
@@ -195,7 +204,7 @@ const ChatScreen = ({route, navigation}) => {
 
           setImageUrl(url);
           //onSend(message)
-        //handleSend(message, url, );
+          //handleSend(message, url, );
         },
       );
     } catch (error) {
@@ -207,46 +216,34 @@ const ChatScreen = ({route, navigation}) => {
     return (
       <View
         style={{
-          bottom: hp(2),
-          height: hp(10),
-          paddingBottom: hp(3),
+          bottom: hp(1),
+          height: hp(7),
           width: wp(100),
           alignItems: 'center',
           justifyContent: 'center',
-          marginTop:hp(2)
-
+          position: 'absolute',
+          bottom: hp(1),
         }}>
         <InputToolbar
           {...props}
           containerStyle={{
-            //alignItems:'center',
             backgroundColor: '#E6E6E6',
-            height: hp(6),
-            borderColor: '#ccc',
-            borderTopColor: '#ccc',
-            borderWidth: 0.3,
             borderRadius: wp(4),
-            paddingLeft: wp(6),
+            paddingLeft: wp(10),
+            paddingRight: wp(9),
             width: wp(80),
-            top: 0,
             left: wp(3),
-            bottom: hp(0),
-            marginTop: hp(0.5),
-  
           }}
-          textInputStyle={{color: 'black',fontSize:hp(1.8),fontFamily:fontFamily.Poppins_Regular}}
-          placeholder="Type a message"
-          placeholderTextColor="#707070"
         />
-        <View style={{position: 'absolute', top: hp(2), left: wp(6)}}>
+        <View style={{position: 'absolute', top: hp(2.5), left: wp(6)}}>
           <FontAwesome5
             name={'smile'}
             size={22}
             color={'#444444'}
-            //onPress={() => refRBSheet.current.open()}
+            onPress={() => setEmojivisible(true)}
           />
         </View>
-        <View style={{position: 'absolute', top: hp(2), right: wp(20)}}>
+        <View style={{position: 'absolute', top: hp(2.5), right: wp(20)}}>
           <MaterialCommunityIcons
             name={'camera'}
             size={22}
@@ -274,7 +271,7 @@ const ChatScreen = ({route, navigation}) => {
             borderRadius: wp(10),
             position: 'absolute',
             bottom: hp(0),
-            left: wp(3),
+            left: wp(12),
           }}>
           <SendBtn width={wp(16)} height={hp(10)} />
         </View>
@@ -282,24 +279,22 @@ const ChatScreen = ({route, navigation}) => {
     );
   };
   const CustomBubbleText = props => {
+    console.log('here msg',props)
     return (
       <View>
-        {
-          currentMessage.image?
-          <Image source={{ uri: currentMessage.image }} style={styles.image} />
-     :
-            <Text
-            style={{
-              color: 'black',
-              paddingHorizontal: wp(1),
-              paddingVertical: 0,
-              //fontWeight: "bold",
-            }}>
-            {props.currentMessage.text}
-          </Text>
-          }
-      
-
+        {props.currentMessage.image ? (
+          <Image source={{uri: props.currentMessage.image}} />
+        ) : (
+        <Text
+          style={{
+            color: 'black',
+            paddingHorizontal: wp(1),
+            paddingVertical: 0,
+            //fontWeight: "bold",
+          }}>
+          {props.currentMessage.text}
+        </Text>
+        )}
       </View>
     );
   };
@@ -313,18 +308,33 @@ const ChatScreen = ({route, navigation}) => {
           navigation.goBack();
         }}
       />
-            {/* <ChatHeader
-        onPress={() => {}}
-        username={predata.userid + 'username'}
-        picture={require('../../../App_dummy_App/dummy_images/user_1.png')}
-        onlineStatus={'Online'}
-        viewstate={true}
-      /> */}
-
-      <GiftedChat
+<View style={{height:hp(79.6),marginTop:hp(4.5)}}>
+<GiftedChat
         alwaysShowSend
+        isTyping={true}
+        renderAvatar={() => null}
+        // /inverted={true}
+        multiline={true}
+        minInputToolbarHeight={hp(6.5)}
         placeholderTextColor="#707070"
-        textInputStyle={{ fontSize: hp(1.8), color: 'black' }}
+        textInputStyle={{
+          fontSize: hp(1.8),
+          color: 'black',
+          backgroundColor: '#E6E6E6',
+          height: hp(3),
+        }}
+        textInputProps={{
+          placeholder: 'Type Something',
+          placeholderTextColor: '#999',
+          autoFocus: false,
+          autoCorrect: false,
+          style: {
+            backgroundColor: '#E6E6E6',
+            width: wp(60),
+            height: hp(6),
+            bottom: 0,
+          },
+        }}
         renderInputToolbar={props => {
           return <CustomInputToolbar {...props} />;
         }}
@@ -374,12 +384,15 @@ const ChatScreen = ({route, navigation}) => {
           return <CustomBubbleText {...props} />;
         }}
       />
+</View>
+
       <CamerBottomSheet
         refRBSheet={refRBSheet}
         onClose={() => refRBSheet.current.close()}
         title={'From Gallery'}
         type={'Chat_image'}
       />
+      <EmojiSelector modal_open={emoji_visible} />
     </SafeAreaView>
   );
 };

@@ -1,10 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text
-} from 'react-native';
+import {SafeAreaView, ScrollView, View, Text} from 'react-native';
 
 ///////////////app components////////////////
 import CustomButtonhere from '../../components/Button/CustomButton';
@@ -38,9 +33,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSelector, useDispatch} from 'react-redux';
 
 const CreateProfile = ({navigation}) => {
-    ////////////////redux/////////////////
-    const dispatch = useDispatch();
-    const { personal,links ,profile_Image,cover_Image} = useSelector(state => state.createProfile);
+  ////////////////redux/////////////////
+  const dispatch = useDispatch();
+  const {personal, links, profile_Image, cover_Image} = useSelector(
+    state => state.createProfile,
+  );
 
   /////////TextInput References///////////
   const ref_input2 = useRef();
@@ -128,16 +125,15 @@ const CreateProfile = ({navigation}) => {
             navigation.goBack();
           }}
         />
-     {personal === true?
-             <PersonalDetail/>
-    :links === true?
-    <SocialLinks/> 
-  :cover_Image === true?
-  <CoverImage/> 
-:profile_Image === true?
-<ProfileImage/>
-:null
-}
+        {personal === true ? (
+          <PersonalDetail />
+        ) : links === true ? (
+          <SocialLinks />
+        ) : cover_Image === true ? (
+          <CoverImage />
+        ) : profile_Image === true ? (
+          <ProfileImage />
+        ) : null}
 
         {/* <View style={{height:hp(20), marginTop: hp(0), marginBottom: hp(20)}}>
           <CustomButtonhere
