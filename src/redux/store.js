@@ -7,6 +7,7 @@ import GenderReducer from './GenderSlice';
 import ImagePathReducer from './ImagePathSlice'
 import CreateProfileReducer from './CreateProfileSlice'
 import EditProfileReducer from './EditprofileSlice'
+import EmojiReducer from './EmojiSlice'
 
 export const Store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const Store = configureStore({
     auth:AuthSlice,
     createProfile:CreateProfileReducer,
     editProfile:EditProfileReducer,
+    emoji:EmojiReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware()
 });

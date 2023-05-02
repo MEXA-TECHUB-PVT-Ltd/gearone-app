@@ -173,11 +173,7 @@ const Login = ({navigation}) => {
             type={'withouticoninput'}
             texterror={'invalid'}
             term={email}
-            returnType={'next'}
             keyboard_type={'numeric'}
-            onNext={() => {
-              ref_input2.current.focus();
-            }}
             onTermChange={newEmail => setEmail(newEmail)}
           />
           <View style={Authstyles.horizontal_mainview}>

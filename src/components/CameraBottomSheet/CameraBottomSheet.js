@@ -92,11 +92,7 @@ const CamerBottomSheet = (props) => {
    <TouchableOpacity    onPress={() =>  props.refRBSheet.current.close()}>
    <Ionicons name="close" size={22} color={"white"}  
      onPress={() =>  props.refRBSheet.current.close()}/>
-   {/* <Image
-               source={appImages.Closeicon}
-                  style={styles.icons}
-                  resizeMode='contain'
-              /> */}
+
    </TouchableOpacity>
 
 
@@ -105,31 +101,20 @@ const CamerBottomSheet = (props) => {
         <View style={{justifyContent:'center',marginTop:hp(3),backgroundColor:Colors.AppBckGround_color}}>
           <TouchableOpacity 
           onPress={()=>{ 
-            props.type === 'onepic' || props.type === "Chat_image"? takePhotoFromCamera() :navigation.navigate('CameraViewScreen','Take Photo'),
+          takePhotoFromCamera()
            props.refRBSheet.current.close()}}
-          //onPress={props.takePhotoFromCamera}
           style={styles.modaltextview}
           >
         <Ionicons name="camera" size={25} color={"white"} />
-        {/* <Image
-                 source={require('../../assets/imagepicker/camera.png')}
-                 style={styles.uploadicon}
-                  resizeMode='contain'
-              /> */}
     <Text style={styles.optiontext}>Upload from Camera</Text>
     </TouchableOpacity>
 <View style={{borderBottomColor:'rgba(255, 255, 255, 0.60)',borderBottomWidth:hp(0.1),width:wp(85),alignSelf:'center',marginBottom:hp(2),marginTop:hp(2)}}></View>
     <TouchableOpacity  onPress={()=>{ 
-            props.type === 'onepic'? choosePhotoFromLibrary() :navigation.navigate('CameraViewScreen','Take Photo'),
+          choosePhotoFromLibrary(),
            props.refRBSheet.current.close()}}
     style={styles.modaltextview}
     >
         <Ionicons name="image" size={25} color={"white"} />
-        {/* <Image
-                 source={require('../../assets/imagepicker/gallery.png')}
-                 style={styles.uploadicon}
-                  resizeMode='contain'
-              /> */}
     <Text style={styles.optiontext}>Upload from Gallery</Text>
 
     </TouchableOpacity>

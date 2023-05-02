@@ -145,8 +145,9 @@ const Home = ({navigation}) => {
               <Text>Swipe</Text>
             </View>
           }
-          style={{marginTop: 30}}
+          style={{marginTop: 16}}
         />
+        <View style={styles.bottomlineview}></View>
         <FlatList
           data={DATA}
           numColumns={3}
