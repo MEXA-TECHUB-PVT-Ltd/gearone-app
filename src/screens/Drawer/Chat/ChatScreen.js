@@ -160,7 +160,7 @@ const ChatScreen = ({route, navigation}) => {
     console.log('here chat message value', msg);
     myMsg = {
       ...msg,
-      //text:text,
+      text:emoji_name,
       //type: "image_text",
       //image: path,
       senderId: '2',
@@ -221,8 +221,8 @@ const ChatScreen = ({route, navigation}) => {
           width: wp(100),
           alignItems: 'center',
           justifyContent: 'center',
-          position: 'absolute',
-          bottom: hp(1),
+           position: 'absolute',
+          //bottom: hp(1),
         }}>
         <InputToolbar
           {...props}
@@ -279,7 +279,6 @@ const ChatScreen = ({route, navigation}) => {
     );
   };
   const CustomBubbleText = props => {
-    console.log('here msg',props)
     return (
       <View>
         {props.currentMessage.image ? (
@@ -308,20 +307,22 @@ const ChatScreen = ({route, navigation}) => {
           navigation.goBack();
         }}
       />
-<View style={{height:hp(79.6),marginTop:hp(4.5)}}>
+{/* <View style={{height:hp(79.6),marginTop:hp(4.5)}}>
+</View> */}
 <GiftedChat
         alwaysShowSend
         isTyping={true}
         renderAvatar={() => null}
+        bottomOffset ={8}
         // /inverted={true}
         multiline={true}
-        minInputToolbarHeight={hp(6.5)}
+        //minInputToolbarHeight={hp(80)}
         placeholderTextColor="#707070"
         textInputStyle={{
           fontSize: hp(1.8),
           color: 'black',
           backgroundColor: '#E6E6E6',
-          height: hp(3),
+         // height: hp(3),
         }}
         textInputProps={{
           placeholder: 'Type Something',
@@ -332,7 +333,8 @@ const ChatScreen = ({route, navigation}) => {
             backgroundColor: '#E6E6E6',
             width: wp(60),
             height: hp(6),
-            bottom: 0,
+            color:'black'
+           // bottom: 0,
           },
         }}
         renderInputToolbar={props => {
@@ -384,7 +386,7 @@ const ChatScreen = ({route, navigation}) => {
           return <CustomBubbleText {...props} />;
         }}
       />
-</View>
+
 
       <CamerBottomSheet
         refRBSheet={refRBSheet}
@@ -392,7 +394,7 @@ const ChatScreen = ({route, navigation}) => {
         title={'From Gallery'}
         type={'Chat_image'}
       />
-      <EmojiSelector modal_open={emoji_visible} />
+      <EmojiSelector modal_open={emoji_visible} modal_close={()=>setEmojivisible(false)} />
     </SafeAreaView>
   );
 };
