@@ -1,5 +1,18 @@
-import React, {useState, useRef} from 'react';
-import {SafeAreaView, ScrollView, Image, View, Text, TouchableOpacity} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  Image,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Button
+} from 'react-native';
+
+/////////app icons//////////
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 ///////////////app components////////////////
 import CustomButtonhere from '../../components/Button/CustomButton';
@@ -13,10 +26,8 @@ import styles from './styles';
 import Authstyles from '../../styles/Authstyles';
 import Logostyles from '../../styles/Logostyles';
 
-//////////////Colors//////
-import Colors from '../../utills/Colors';
-/////////fonts/////////
-import {fontFamily} from '../../constant/fonts';
+///////////firebase auth/////////////
+import auth from '@react-native-firebase/auth';
 
 ///////////////height and width/////////////
 import {
@@ -40,6 +51,8 @@ import {
 
 ///////////////svg///////////
 import Logo from '../../assets/svgs/Logo.svg';
+
+import {CountryPicker} from 'react-native-country-codes-picker';
 
 const Login = ({navigation}) => {
   ////////redux////////////
@@ -82,7 +95,11 @@ const Login = ({navigation}) => {
     }
   };
 
+  const [show, setShow] = useState(false);
+  const [countryCode, setCountryCode] = useState('+92');
+
   ///////////////data states////////////////////
+  const [phone_no, setPhoneNo] = React.useState('');
   const [email, setEmail] = React.useState(_user_email);
   const [password, setPassword] = React.useState(_user_password);
 
@@ -150,6 +167,43 @@ const Login = ({navigation}) => {
       LoginUser();
     }
   };
+  const [confirm, setConfirm] = useState(null);
+
+  // verification code (OTP - One-Time-Passcode)
+  const [code, setCode] = useState('');
+
+  // Handle login
+  function onAuthStateChanged(user) {
+    if (user) {
+      // Some Android devices can automatically process the verification code (OTP) message, and the user would NOT need to enter the code.
+      // Actually, if he/she tries to enter it, he/she will get an error message because the code was already used in the background.
+      // In this function, make sure you hide the component(s) for entering the code and/or navigate away from this screen.
+      // It is also recommended to display a message to the user informing him/her that he/she has successfully logged in.
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  // Handle the button press
+  async function signInWithPhoneNumber(phoneNumber) {
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    console.log("here",confirmation)
+    setConfirm(confirmation);
+
+    //navigation.navigate("Verification",{code:confirmation,country_code:countryCode,phone_number:phone_no})
+  }
+
+  async function confirmCode() {
+    try {
+      const res=await confirm.confirm(code);
+      console.log(res)
+    } catch (error) {
+      console.log('Invalid code.');
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -169,21 +223,35 @@ const Login = ({navigation}) => {
           <View style={{marginLeft: wp(12)}}>
             <Text style={Authstyles.textinput_title}>Phone Number</Text>
           </View>
-          <CustomTextInput
-            type={'withouticoninput'}
-            texterror={'invalid'}
-            term={email}
-            keyboard_type={'numeric'}
-            onTermChange={newEmail => setEmail(newEmail)}
-          />
+
+          <View style={styles.TextFieldView}>
+            <TouchableOpacity onPress={() => setShow(true)} style={{}}>
+              <TextInput
+                style={[styles.TextField, {width: wp(15)}]}
+                value={countryCode}
+                editable={false}
+                disabled={false}></TextInput>
+            </TouchableOpacity>
+            <TextInput
+              style={[styles.TextField, {width: wp(60)}]}
+              placeholder={'Enter Your Phone Number'}
+              value={phone_no}
+              onChangeText={(text)=>setPhoneNo(text)}
+              keyboardType={'numeric'}
+              placeholderTextColor={'#FFFFFF'}></TextInput>
+          </View>
+          <TextInput style={{backgroundColor:'white',color:'black'}} value={code} onChangeText={text => setCode(text)} />
+      <Button title="Confirm Code" onPress={() => confirmCode()} />
+    
           <View style={Authstyles.horizontal_mainview}>
             <View style={Authstyles.horizontal_line} />
             <Text style={Authstyles.horizontal_text}>OR</Text>
             <View style={Authstyles.horizontal_line} />
           </View>
         </View>
-        <TouchableOpacity style={{alignItems:'center'}}
-        onPress={ ()=> navigation.navigate('Drawerroute')}>
+        <TouchableOpacity
+          style={{alignItems: 'center'}}
+          onPress={() => navigation.navigate('Drawerroute')}>
           <Text style={Authstyles.last_text}>Join as a Guest</Text>
         </TouchableOpacity>
         <View
@@ -198,8 +266,11 @@ const Login = ({navigation}) => {
             // loading={loading}
             // disabled={disable}
             onPress={() => {
-              navigation.navigate("Verification",{data:'001'});
+             // navigation.navigate("Verification",{country_code:countryCode,phone_number:phone_no})
+              //signInWithPhoneNumber(countryCode+phone_no);
+              //navigation.navigate("Verification",{data:'001'});
               //formValidation();
+              navigation.navigate('Drawerroute')
             }}
           />
         </View>
@@ -215,6 +286,37 @@ const Login = ({navigation}) => {
         }}>
         {snackbarValue.value}
       </Snackbar>
+      <CountryPicker
+        show={show}
+        style={{
+          modal: {
+            height: 500,
+            backgroundColor: '#444444',
+          },
+          // Styles for input [TextInput]
+          textInput: {
+            height: hp(6.5),
+            borderRadius: wp(2),
+          },
+          // Dial code styles [Text]
+          dialCode: {
+            color: 'black',
+          },
+          // Country name styles [Text]
+          countryName: {
+            color: 'black',
+          },
+          // Styles for search message [Text]
+          searchMessageText: {
+            color: 'black',
+          },
+        }}
+        // when picker button press you will get the country object with dial code
+        pickerButtonOnPress={item => {
+          setCountryCode(item.dial_code);
+          setShow(false);
+        }}
+      />
     </SafeAreaView>
   );
 };

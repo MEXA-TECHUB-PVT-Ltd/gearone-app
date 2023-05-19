@@ -37,6 +37,34 @@ import Colors from '../../../utills/Colors';
 const MyGear = ({navigation}) => {
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
+
+  
+       /////////////Get Notification/////////////
+       const [my_items, setMyItems] = useState('');
+
+       const GetMyItems = async () => {
+         var user = await AsyncStorage.getItem('Userid');
+         console.log('order request function', user);
+         axios({
+           method: 'GET',
+           url: BASE_URL + 'auth/specific_user/2',
+           body:
+           {
+            user_ID:"1"
+           }
+         })
+           .then(async function (response) {
+             console.log('list data here ', response.data);
+             setMyItems(response.data.result);
+           })
+           .catch(function (error) {
+             console.log('error', error);
+           });
+       };
+         useEffect(() => {
+          GetMyItems()
+           
+         }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView

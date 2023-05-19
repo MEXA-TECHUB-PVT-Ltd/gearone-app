@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { View, Text, SafeAreaView} from 'react-native';
 
 ///////////////app code fields/////////////
@@ -30,9 +30,19 @@ import {
 //////////////svgs/////////////
 import Logo from '../../assets/svgs/Logo.svg'
 
+///////////token function//////////
+import { checkPermission } from '../../api/FCMToken';
+
+/////////asyc////////////
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+////////////api//////////
+import axios from 'axios';
+import { BASE_URL } from '../../utills/ApiRootUrl';
+
 const Verification = ({navigation, route}) => {
   /////////////previous data state///////////////
-  const [predata] = useState(route.params.data);
+  const [predata] = useState(route.params);
 
   console.log(predata)
 
@@ -75,6 +85,94 @@ const Verification = ({navigation, route}) => {
       setloading(0);
     }
   };
+  const [confirm, setConfirm] = useState(null);
+
+  // verification code (OTP - One-Time-Passcode)
+  const [code, setCode] = useState('');
+
+  // Handle login
+  function onAuthStateChanged(user) {
+    if (user) {
+      // Some Android devices can automatically process the verification code (OTP) message, and the user would NOT need to enter the code.
+      // Actually, if he/she tries to enter it, he/she will get an error message because the code was already used in the background.
+      // In this function, make sure you hide the component(s) for entering the code and/or navigate away from this screen.
+      // It is also recommended to display a message to the user informing him/her that he/she has successfully logged in.
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  // Handle the button press
+  async function signInWithPhoneNumber(phoneNumber) {
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    console.log("here",confirmation)
+    setConfirm(confirmation);
+
+    //navigation.navigate("Verification",{code:confirmation,country_code:countryCode,phone_number:phone_no})
+  }
+
+  async function confirmCode() {
+    try {
+      const res=await confirm.confirm(code);
+      console.log(res)
+    } catch (error) {
+      console.log('Invalid code.');
+    }
+  }
+    //////////////Api Calling////////////////////
+    const LoginUser = async () => {
+   const device_id = await AsyncStorage.getItem('Device_id'); 
+   console.log("here toke",device_id)
+      axios({
+        method: 'post',
+        url: BASE_URL + 'auth/sign_up',
+        data: {
+          phone: predata.phone_number,
+          country_code: predata.country_code,
+          deviceToken:device_id
+        },
+      })
+        .then(async function (response) {
+          console.log('here id',response.data)
+         if (response.data.status === true) {
+            const string_id = response.data.result[0].id.toString();
+          //   dispatch(setUserId(response.data.result.id));
+          //   dispatch(setUserEmail(response.data.result.email));
+          //   dispatch(setJWT_Token(JSON.stringify(response.data.jwt_token)));
+          //   dispatch(setUserPassword(password));
+            await AsyncStorage.setItem('User_id', string_id);
+            await AsyncStorage.setItem(
+              'JWT_Token',
+              JSON.stringify(response.data.token),
+            );
+            //await AsyncStorage.setItem('User_email', response.data.result.email);
+            //navigation.navigate('CreateProfile');
+            //navigation.navigate('BottomTab');
+            setloading(0);
+            setdisable(0);
+          setModalVisible(true)
+          } else {
+            setloading(0);
+            setdisable(0);
+          }
+        })
+        .catch(function (error) {
+          setloading(0);
+          setdisable(0);
+          if (error) {
+            console.log('error', error);
+          }
+        });
+    };
+
+    useEffect(() => {
+      checkPermission();
+      confirmCode()
+    }, []);
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={[Logostyles.Logoview, {marginTop: hp(10)}]}>
@@ -155,7 +253,8 @@ const Verification = ({navigation, route}) => {
           // loading={loading}
           // disabled={disable}
           onPress={() => 
-            setModalVisible(true)
+            LoginUser()
+       
             //verifyno()
           }
         />

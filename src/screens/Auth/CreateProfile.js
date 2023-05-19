@@ -39,10 +39,6 @@ const CreateProfile = ({navigation}) => {
     state => state.createProfile,
   );
 
-  /////////TextInput References///////////
-  const ref_input2 = useRef();
-  const ref_input3 = useRef();
-
   ///////////////button states/////////////
   const [loading, setloading] = useState(0);
   const [disable, setdisable] = useState(0);

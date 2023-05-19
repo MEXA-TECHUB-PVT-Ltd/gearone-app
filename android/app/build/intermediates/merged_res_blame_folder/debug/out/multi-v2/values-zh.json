@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.mtechubgearone.app-mergeDebugResources-33:/values-zh/values-zh.xml",
+            "outputFile": "com.mtechubgearone.app-mergeDebugResources-36:/values-zh/values-zh.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\3f950f02d0c2bb52db14bef1e688dbfa\\transformed\\jetified-ucrop-2.2.6-native\\res\\values-zh\\values-zh.xml",
+                    "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\aab2f0676f4047b13fde91f681801a56\\transformed\\jetified-ucrop-2.2.6-native\\res\\values-zh\\values-zh.xml",
                     "from": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",

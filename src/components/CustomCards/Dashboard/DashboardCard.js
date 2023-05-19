@@ -29,7 +29,7 @@ const DashboardCard = props => {
         <View
           style={styles.imageView}>
           <Image
-            source={props.image}
+            source={{uri:props.image}}
             style={styles.image}
             resizeMode="cover"/>
         </View>
@@ -38,8 +38,8 @@ const DashboardCard = props => {
           <Text numberOfLines={1} style={styles.maintext}>
             {props.maintext}
           </Text>
-          <Text numberOfLines={1} style={styles.pricetext}>
-            {formattedLikes === '0' ? 'free' :formattedLikes+ '$'}
+          <Text numberOfLines={1} style={styles.pricetext}>{props.price+'$'}
+            {/* {formattedLikes === '0' ? 'free' :formattedLikes+ '$'} */}
           </Text>
         </View>
       </View>

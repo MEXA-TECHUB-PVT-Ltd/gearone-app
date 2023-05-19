@@ -65,14 +65,41 @@ const DATA = [
   },
 ];
 const Sell = ({navigation}) => {
+
+       /////////////Get Notification/////////////
+       const [my_items, setMyItems] = useState('');
+
+       const GetMyItems = async () => {
+         var user = await AsyncStorage.getItem('Userid');
+         console.log('order request function', user);
+         axios({
+           method: 'POST',
+           url: BASE_URL + 'items/get_items_by_user',
+           body:
+           {
+            user_ID:"1"
+           }
+         })
+           .then(async function (response) {
+             console.log('list data here ', response.data);
+             setMyItems(response.data.result);
+           })
+           .catch(function (error) {
+             console.log('error', error);
+           });
+       };
+         useEffect(() => {
+          GetMyItems()
+           
+         }, []);
   const renderItem = ({item}) => {
     return (
       <SellCard
         image={item.image}
-        maintext={item.title}
+        maintext={item.name}
         subtext={item.location}
         price={item.price}
-        description={item.desc}
+        description={item.description}
         onpress={() => {
           navigation.navigate('CategoryItem', {
             listing_id: item.id,
@@ -96,7 +123,7 @@ const Sell = ({navigation}) => {
           headertype={'header_without_text'}
         />
         <FlatList
-          data={DATA}
+          data={my_items}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}

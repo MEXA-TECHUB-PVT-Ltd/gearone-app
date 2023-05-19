@@ -106,11 +106,39 @@ const DATA = [
 ];
 
 const Home = ({navigation}) => {
+
+     /////////////Get Notification/////////////
+     const [dashboard_items, setDashboardItems] = useState('');
+
+     const GetDashboardItems = async () => {
+       var user = await AsyncStorage.getItem('Userid');
+       console.log('order request function', user);
+       axios({
+         method: 'POST',
+         url: BASE_URL + 'items/get_all_items',
+         body:
+         {
+       
+         }
+       })
+         .then(async function (response) {
+           console.log('list data here ', response.data.result);
+           setDashboardItems(response.data.result);
+         })
+         .catch(function (error) {
+           console.log('error', error);
+         });
+     };
+       useEffect(() => {
+        GetDashboardItems()
+         
+       }, []);
+
   const renderItem = ({item}) => {
     return (
       <DashboardCard
-        image={item.image}
-        maintext={item.title}
+        image={item.image===[]?require('../../../assets/dummyimages/image_1.png'):item.image}
+        maintext={item.name}
         subtext={item.location}
         price={item.price}
         onpress={() => {
@@ -149,7 +177,7 @@ const Home = ({navigation}) => {
         />
         <View style={styles.bottomlineview}></View>
         <FlatList
-          data={DATA}
+          data={dashboard_items}
           numColumns={3}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
