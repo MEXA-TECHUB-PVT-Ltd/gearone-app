@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   maintext: {
     color: Colors.Appthemecolor,
-    width: wp(30),
+    width: wp(25),
     fontSize: hp(1.8),
     fontFamily: fontFamily.Poppins_Medium,
     marginBottom:hp(0.5)

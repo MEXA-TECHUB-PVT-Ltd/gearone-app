@@ -17,6 +17,31 @@ const styles = StyleSheet.create({
     backgroundColor:Colors.AppBckGround_color
   },
 
+  /////login//////////
+  TextField: {
+    fontSize: hp(1.6),
+    marginHorizontal: wp(0),
+    fontFamily: fontFamily.Poppins_Regular,
+    color: 'white',
+    width: wp(20),
+  //backgroundColor: 'red',
+  },
+  TextFieldView: {
+    flexDirection: 'row',
+    height: hp(7),
+    width: wp(83),
+    borderRadius: wp(2),
+    marginTop: hp(1),
+    marginBottom: hp(2),
+    //borderColor: '#6B6B6B',
+    borderWidth: 1,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor:'#444444',
+    paddingHorizontal:wp(5)
+  },
+
   /////////////////create profile//////////////
   userimage: {
     borderColor: '#D6D6D6',
