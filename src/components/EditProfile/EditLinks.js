@@ -34,7 +34,42 @@ const EditSocialLinks = ({navigation}) => {
   const [twitter, setTwitter] = useState('');
   const [linkedIn, setLinkedIn] = useState('');
 
-  ///////////emai
+  //////////////Api Calling////////////////////
+  const EditSocialLinks = async () => {
+    setloading(1);
+    setdisable(1);
+    const user_id = await AsyncStorage.getItem('User_id');
+    console.log('here user id', user_id);
+    var token = await AsyncStorage.getItem('JWT_Token');
+    let data = JSON.stringify({
+      userID: user_id,
+      facebook: facebook,
+      twitter: twitter,
+      insta: insta,
+      linkedin: linkedIn,
+    });
+
+    let config = {
+      method: 'POST',
+      url: BASE_URL + 'SocialMedia/update_social_media',
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+    axios
+      .request(config)
+      .then(response => {
+        console.log('here data', response.data);
+        setloading(0);
+        setdisable(0);
+        dispatch(setLinksMenu(false)), dispatch(setCoverImageMenu(true));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   return (
     <View>
       <View style={{marginTop: hp(6)}}>
@@ -92,7 +127,9 @@ const EditSocialLinks = ({navigation}) => {
           topDistance={23}
           // loading={loading}
           // disabled={disable}
-          onPress={() => {dispatch(editLinksMenu(false)),
+          onPress={() => {
+            EditSocialLinks()
+            dispatch(editLinksMenu(false)),
             dispatch(editImagesMenu(true))
           }}
         />

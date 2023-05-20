@@ -40,7 +40,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { BASE_URL } from '../../utills/ApiRootUrl';
 
+///////////firebase auth/////////////
+import auth from '@react-native-firebase/auth';
+
+///////////////redux////////////
+import {useSelector, useDispatch} from 'react-redux';
+import {setUserPhone_No, setUserId, setJWT_Token,setUserPhone_Country_Code} from '../../redux/AuthSlice';
+
 const Verification = ({navigation, route}) => {
+
+    ////////redux////////////
+    const dispatch = useDispatch();
+    const { } = useSelector(
+      state => state.auth,
+    );
   /////////////previous data state///////////////
   const [predata] = useState(route.params);
 
@@ -85,13 +98,10 @@ const Verification = ({navigation, route}) => {
       setloading(0);
     }
   };
-  const [confirm, setConfirm] = useState(null);
-
-  // verification code (OTP - One-Time-Passcode)
-  const [code, setCode] = useState('');
 
   // Handle login
   function onAuthStateChanged(user) {
+    console.log("here user",user)
     if (user) {
       // Some Android devices can automatically process the verification code (OTP) message, and the user would NOT need to enter the code.
       // Actually, if he/she tries to enter it, he/she will get an error message because the code was already used in the background.
@@ -104,22 +114,19 @@ const Verification = ({navigation, route}) => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
-
-  // Handle the button press
-  async function signInWithPhoneNumber(phoneNumber) {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    console.log("here",confirmation)
-    setConfirm(confirmation);
-
-    //navigation.navigate("Verification",{code:confirmation,country_code:countryCode,phone_number:phone_no})
-  }
-
   async function confirmCode() {
-    try {
-      const res=await confirm.confirm(code);
-      console.log(res)
-    } catch (error) {
-      console.log('Invalid code.');
+    const credential = auth.PhoneAuthProvider.credential(predata.code_confirmation,value);
+    console.log("code",credential)
+    const user=await auth().signInWithCredential(credential);
+    console.log("user",user)
+    //let userData = await auth().currentUser.linkWithCredential(credential);
+    //setUser(userData.user);
+    if (credential.secret == value) {
+      setloading(0);
+      setModalVisible(true);
+    } else {
+      setModalVisible(true);
+      setloading(0);
     }
   }
     //////////////Api Calling////////////////////
@@ -139,24 +146,25 @@ const Verification = ({navigation, route}) => {
           console.log('here id',response.data)
          if (response.data.status === true) {
             const string_id = response.data.result[0].id.toString();
-          //   dispatch(setUserId(response.data.result.id));
-          //   dispatch(setUserEmail(response.data.result.email));
-          //   dispatch(setJWT_Token(JSON.stringify(response.data.jwt_token)));
-          //   dispatch(setUserPassword(password));
+            dispatch(setUserId(response.data.result[0].id));
+            dispatch(setUserPhone_No(response.data.result[0].phone));
+            dispatch(setUserPhone_Country_Code(response.data.result[0].country_code));
+            dispatch(setJWT_Token(JSON.stringify(response.data.jwt_token)));
             await AsyncStorage.setItem('User_id', string_id);
             await AsyncStorage.setItem(
               'JWT_Token',
               JSON.stringify(response.data.token),
             );
             //await AsyncStorage.setItem('User_email', response.data.result.email);
-            //navigation.navigate('CreateProfile');
+            navigation.navigate('CreateProfile');
             //navigation.navigate('BottomTab');
             setloading(0);
             setdisable(0);
-          setModalVisible(true)
+          //setModalVisible(true)
           } else {
             setloading(0);
             setdisable(0);
+            navigation.navigate('CreateProfile');
           }
         })
         .catch(function (error) {
@@ -170,7 +178,7 @@ const Verification = ({navigation, route}) => {
 
     useEffect(() => {
       checkPermission();
-      confirmCode()
+      //confirmCode()
     }, []);
   
   return (
@@ -253,6 +261,7 @@ const Verification = ({navigation, route}) => {
           // loading={loading}
           // disabled={disable}
           onPress={() => 
+            //confirmCode()
             LoginUser()
        
             //verifyno()
@@ -266,9 +275,10 @@ const Verification = ({navigation, route}) => {
         subtext={'Account Verified Successfully'}
         type={'single_btn'}
         onPress={() => {
-          setModalVisible(false);
+          confirmCode()
+          //setModalVisible(false);
           //  navigation.navigate('CreateProfile');
-          navigation.navigate('Drawerroute');
+          //navigation.navigate('Drawerroute');
         }}
       />
     </SafeAreaView>

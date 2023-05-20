@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider} from 'react-redux';
 import {Store} from './src/redux/store';
 
-////////Screens
+//////////////////Screens/////////////////////
 import AuthNav from './src/navigation/AuthNav/AuthNav';
 import Drawerroute from './src/navigation/Drawer/Drawer';
 import CategoryItem from './src/screens/StackScreen/Categories/CategoryItem';
@@ -16,6 +16,8 @@ import OtherProfile from './src/screens/StackScreen/Dashboard/Othersprofile';
 import UploadItem from './src/screens/StackScreen/Sell/UploadItem';
 import ChatScreen from './src/screens/Drawer/Chat/ChatScreen';
 import EditProfile from './src/screens/StackScreen/MyGear/EditProfile';
+import AllFollowers from './src/screens/StackScreen/MyGear/AllFollowers';
+import AllFollowings from './src/screens/StackScreen/MyGear/AllFollowings';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -91,6 +93,20 @@ function App() {
           <Stack.Screen
             name="EditProfile"
             component={EditProfile}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AllFollowers"
+            component={AllFollowers}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AllFollowings"
+            component={AllFollowings}
             options={{
               headerShown: false,
             }}

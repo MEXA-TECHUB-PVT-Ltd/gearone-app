@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState,useEffect} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 
 ///////////////////app pakages///////////////
@@ -17,6 +17,11 @@ import { useDispatch} from 'react-redux';
 import {updateGender} from '../../redux/GenderSlice';
 import Colors from '../../utills/Colors';
 
+////////////////api////////////////
+import axios from 'axios';
+import {BASE_URL} from '../../utills/ApiRootUrl';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Gender_DropDowns = props => {
   /////////////redux states///////
   const dispatch = useDispatch();
@@ -30,7 +35,25 @@ const Gender_DropDowns = props => {
   const handleUpdateGender = (name, value) => {
     dispatch(updateGender({name, value}));
   };
+     /////////////Get Notification/////////////
+     const [categories, setCategories] = useState('');
 
+     const GetCategories= async () => {
+       axios({
+         method: 'GET',
+         url: BASE_URL + 'category/get_all_category',
+       })
+         .then(async function (response) {
+           setCategories(response.data.result);
+         })
+         .catch(function (error) {
+           console.log('error', error);
+         });
+     };
+       useEffect(() => {
+        GetCategories()
+        handleUpdateGender('Select Category','1');
+       }, []);
   return (
     <RBSheet
       ref={props.refRBSheet}
@@ -62,12 +85,12 @@ const Gender_DropDowns = props => {
         <Text style={styles.bottomsheettext}>{'Select Category'}</Text>
       </View>
       <FlatList
-        data={gender_data}
+        data={categories}
         renderItem={({item, index, separators}) => (
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {
-              handleUpdateGender(item.name, item.value);
+              handleUpdateGender(item.name, item.id);
               props.refRBSheet.current.close();
             }}>
             <View style={styles.card}>

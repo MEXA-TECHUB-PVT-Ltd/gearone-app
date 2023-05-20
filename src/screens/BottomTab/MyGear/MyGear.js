@@ -38,59 +38,78 @@ const MyGear = ({navigation}) => {
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
 
-  
-       /////////////Get Notification/////////////
-       const [my_items, setMyItems] = useState('');
+  /////////////Get Notification/////////////
+  const [coverImage, setCoverImage] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+  const [username, setUsername] = useState('');
+  const [followings, setFollowig] = useState('');
+  const [followers, setFollowers] = useState('');
+  const [rattings, setRattings] = useState('');
 
-       const GetMyItems = async () => {
-         var user = await AsyncStorage.getItem('Userid');
-         console.log('order request function', user);
-         axios({
-           method: 'GET',
-           url: BASE_URL + 'auth/specific_user/2',
-           body:
-           {
-            user_ID:"1"
-           }
-         })
-           .then(async function (response) {
-             console.log('list data here ', response.data);
-             setMyItems(response.data.result);
-           })
-           .catch(function (error) {
-             console.log('error', error);
-           });
-       };
-         useEffect(() => {
-          GetMyItems()
-           
-         }, []);
+  const GetProfileData = async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    axios({
+      method: 'GET',
+      url: BASE_URL + 'auth/specific_user/'+user_id,
+    })
+      .then(async function (response) {
+        console.log('list data here ', response.data.result);
+        setCoverImage(response.data.result[0].cover_image);
+        setProfileImage(response.data.result[0].image);
+        setUsername(response.data.result[0].username);
+        setFollowig(response.data.followings);
+        setFollowers(response.data.followers);
+        setRattings(response.data.Total_Ratings);
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+  };
+  useEffect(() => {
+    GetProfileData();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <Header title={'My Gear'} />
-        <View style={{alignItems: 'center'}}>
-          <Image
-            source={require('../../../assets/dummyimages/coverImage.png')}
-            style={{width: wp(95), height: hp(25)}}
-            resizeMode="contain"
-          />
-          <Image
-            source={require('../../../assets/dummyimages/profile_user.png')}
-            style={{
-              width: wp(25),
-              height: hp(12),
-              borderRadius: wp(5),
-              position: 'absolute',
-              bottom: -30,
-            }}
-            resizeMode="contain"
-          />
+        <View
+          style={{
+            alignItems: 'center',
+            width: wp(95),
+            height: hp(25),
+            backgroundColor: 'light_grey',
+            alignSelf: 'center',
+          }}>
+          {coverImage === null ? (
+            <Icon name={'user'} size={20} color={'#F7FF00'} />
+          ) : (
+            <Image
+              source={{uri: BASE_URL + coverImage}}
+              style={{width: wp(98), height: hp(25)}}
+              resizeMode='cover'
+            />
+          )}
+          {profileImage === null ? (
+            <Icon name={'user'} size={20} color={'#F7FF00'} />
+          ) : (
+            <Image
+              source={{uri: BASE_URL + profileImage}}
+              style={{
+                width: wp(25),
+                height: hp(12),
+                borderRadius: wp(15),
+                position: 'absolute',
+                bottom: -30,
+              }}
+              resizeMode="contain"
+            />
+          )}
         </View>
         <View style={{alignItems: 'center', marginTop: hp(5)}}>
-          <Text style={{color: 'white'}}>Username</Text>
+          <Text style={{color: 'white'}}>{username}</Text>
         </View>
         <View
           style={{
@@ -104,28 +123,29 @@ const MyGear = ({navigation}) => {
             width: wp(80),
           }}>
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.verticletoptext}>456</Text>
+            <Text style={styles.verticletoptext}>{followings}</Text>
             <Text
               style={styles.verticletext}
-              onPress={() => navigation.navigate('Followers')}>
+              onPress={() => navigation.navigate('AllFollowings')}>
               Following
             </Text>
           </View>
           <View style={styles.verticleLine}></View>
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.verticletoptext}>234</Text>
+            <Text style={styles.verticletoptext}>{followers}</Text>
             <Text
               style={styles.verticletext}
-              onPress={() => navigation.navigate('Followings')}>
+              onPress={() => navigation.navigate('AllFollowers')}>
               Followers
             </Text>
           </View>
           <View style={styles.verticleLine}></View>
           <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
-            <Icon name={'star'} size={20} color={'#F7FF00'} />
-              <Text style={[styles.verticletoptext,{marginLeft:wp(1)}]}>4.5</Text>
-
+              <Icon name={'star'} size={20} color={'#F7FF00'} />
+              <Text style={[styles.verticletoptext, {marginLeft: wp(1)}]}>
+                {rattings}
+              </Text>
             </View>
             <TouchableOpacity
               style={{
@@ -138,13 +158,19 @@ const MyGear = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{borderBottomWidth:hp(0.15),borderColor:'rgba(255, 255, 255, 0.25)',marginBottom:hp(3),marginTop:hp(0)}}></View>
+        <View
+          style={{
+            borderBottomWidth: hp(0.15),
+            borderColor: 'rgba(255, 255, 255, 0.25)',
+            marginBottom: hp(3),
+            marginTop: hp(0),
+          }}></View>
         <View>
           <SettingsMenu
             label={'My Account'}
             labelPress={() =>
               navigation.navigate('MyAccount', {
-                navplace: 'MyAccount'
+                navplace: 'MyAccount',
               })
             }
           />
@@ -156,15 +182,11 @@ const MyGear = ({navigation}) => {
           />
           <SettingsMenu
             label={'Edit Profile'}
-            labelPress={() =>
-              navigation.navigate('EditProfile')
-            }
+            labelPress={() => navigation.navigate('EditProfile')}
           />
           <SettingsMenu
             label={'Logout'}
-            labelPress={
-              () => setModalVisible(true)
-            }
+            labelPress={() => setModalVisible(true)}
           />
         </View>
       </ScrollView>
