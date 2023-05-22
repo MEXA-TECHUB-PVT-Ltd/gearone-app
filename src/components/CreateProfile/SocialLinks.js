@@ -16,10 +16,16 @@ import Authstyles from '../../styles/Authstyles';
 
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
-import {setLinksMenu,setCoverImageMenu} from '../../redux/CreateProfileSlice';
+import {setLinksMenu, setCoverImageMenu} from '../../redux/CreateProfileSlice';
+
+/////////asyc////////////
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+////////////api//////////
+import axios from 'axios';
+import {BASE_URL} from '../../utills/ApiRootUrl';
 
 const SocialLinks = ({navigation}) => {
-  
   ////////////////redux/////////////////
   const dispatch = useDispatch();
 
@@ -28,13 +34,52 @@ const SocialLinks = ({navigation}) => {
   const ref_input3 = useRef();
   const ref_input4 = useRef();
 
+  ///////////////button states/////////////
+  const [loading, setloading] = useState(0);
+  const [disable, setdisable] = useState(0);
+
   ///////////////data states////////////////////
   const [facebook, setfacebook] = useState('');
   const [insta, setInsta] = useState('');
   const [twitter, setTwitter] = useState('');
   const [linkedIn, setLinkedIn] = useState('');
 
-  ///////////emai
+  //////////////Api Calling////////////////////
+  const CreateSocialLinks = async () => {
+    setloading(1);
+    setdisable(1);
+    const user_id = await AsyncStorage.getItem('User_id');
+    console.log('here user id', user_id);
+    var token = await AsyncStorage.getItem('JWT_Token');
+    let data = JSON.stringify({
+      userID: user_id,
+      facebook: facebook,
+      twitter: twitter,
+      insta: insta,
+      linkedin: linkedIn,
+    });
+
+    let config = {
+      method: 'POST',
+      url: BASE_URL + 'SocialMedia/add_social_media',
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+    axios
+      .request(config)
+      .then(response => {
+        console.log('here data', response.data);
+        setloading(0);
+        setdisable(0);
+        dispatch(setLinksMenu(false)), dispatch(setCoverImageMenu(true));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   return (
     <View>
       <View style={{marginTop: hp(6)}}>
@@ -90,10 +135,10 @@ const SocialLinks = ({navigation}) => {
           title={'Countinue'}
           widthset={80}
           topDistance={23}
-          // loading={loading}
-          // disabled={disable}
-          onPress={() => {dispatch(setLinksMenu(false)),
-            dispatch(setCoverImageMenu(true))
+          loading={loading}
+          disabled={disable}
+          onPress={() => {
+            CreateSocialLinks();
           }}
         />
       </View>

@@ -1,22 +1,15 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  Image,
   View,
   Text,
   TouchableOpacity,
   TextInput,
-  Button
 } from 'react-native';
-
-/////////app icons//////////
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 ///////////////app components////////////////
 import CustomButtonhere from '../../components/Button/CustomButton';
-import CustomTextInput from '../../components/TextInput/CustomTextInput';
 
 ////////////////app pakages////////////
 import {Snackbar} from 'react-native-paper';
@@ -35,32 +28,13 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-//////////////////////////app api/////////////////////////
-import axios from 'axios';
-import {BASE_URL} from '../../utills/ApiRootUrl';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-///////////////redux////////////
-import {useSelector, useDispatch} from 'react-redux';
-import {
-  setUserEmail,
-  setUserId,
-  setJWT_Token,
-  setUserPassword,
-} from '../../redux/AuthSlice';
-
 ///////////////svg///////////
 import Logo from '../../assets/svgs/Logo.svg';
 
+///////////country picker//////////
 import {CountryPicker} from 'react-native-country-codes-picker';
 
 const Login = ({navigation}) => {
-  ////////redux////////////
-  const dispatch = useDispatch();
-  const {_user_email, _user_password} = useSelector(state => state.auth);
-
-  /////////TextInput References///////////
-  const ref_input2 = useRef();
 
   ///////////////button states/////////////
   const [loading, setloading] = useState(0);
@@ -69,140 +43,44 @@ const Login = ({navigation}) => {
   const [snackbarValue, setsnackbarValue] = useState({value: '', color: ''});
   const onDismissSnackBar = () => setVisible(false);
 
-  //password eye function and states
-  const [data, setData] = React.useState({
-    check_textInputChange: false,
-    secureTextEntry: true,
-    isValidUser: true,
-    isValidPassword: true,
-  });
-  const updateSecureTextEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
-  };
-
-  ///////////email//////////////////
-  const handleValidEmail = val => {
-    let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w\w+)+$/;
-    if (reg.test(val)) {
-      console.log('true');
-      return true;
-    } else {
-      console.log('falsse');
-      return false;
-    }
-  };
-
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+92');
 
   ///////////////data states////////////////////
   const [phone_no, setPhoneNo] = React.useState('');
-  const [email, setEmail] = React.useState(_user_email);
-  const [password, setPassword] = React.useState(_user_password);
 
-  //////////////Api Calling////////////////////
-  const LoginUser = async () => {
-    axios({
-      method: 'post',
-      url: BASE_URL + 'Barber/login',
-      data: {
-        email: email.toLowerCase(),
-        password: password,
-      },
-    })
-      .then(async function (response) {
-        if (response.data.status === true) {
-          const string_id = response.data.result.id.toString();
-          dispatch(setUserId(response.data.result.id));
-          dispatch(setUserEmail(response.data.result.email));
-          dispatch(setJWT_Token(JSON.stringify(response.data.jwt_token)));
-          dispatch(setUserPassword(password));
-          await AsyncStorage.setItem('User_id', string_id);
-          await AsyncStorage.setItem(
-            'JWT_Token',
-            JSON.stringify(response.data.jwt_token),
-          );
-          await AsyncStorage.setItem('User_email', response.data.result.email);
-          navigation.navigate('CreateProfile');
-          //navigation.navigate('BottomTab');
-          setloading(0);
-          setdisable(0);
-        } else {
-          setloading(0);
-          setdisable(0);
-        }
-      })
-      .catch(function (error) {
-        setloading(0);
-        setdisable(0);
-        if (error) {
-          console.log('error', error);
-        }
-      });
-  };
   //Api form validation
   const formValidation = async () => {
     // input validation
-    if (email == '') {
-      setsnackbarValue({value: 'Please Enter Email', color: 'red'});
+    if (phone_no == '') {
+      setsnackbarValue({value: 'Please Enter Phone Number', color: 'red'});
       setVisible('true');
-    } else if (!handleValidEmail(email)) {
-      setsnackbarValue({value: 'Incorrect Email', color: 'red'});
-      setVisible('true');
-    } else if (password == '') {
-      setsnackbarValue({value: 'Please Enter Password', color: 'red'});
-      setVisible('true');
-    } else if (password.length <= 5) {
-      setsnackbarValue({
-        value: 'Please Enter 6 digit Password',
-        color: 'red',
-      });
-      setVisible('true');
-    } else {
+    }  else {
       setloading(1);
       setdisable(1);
-      LoginUser();
+      signInWithPhoneNumber(countryCode + phone_no);
+      //final()
     }
   };
-  const [confirm, setConfirm] = useState(null);
 
-  // verification code (OTP - One-Time-Passcode)
-  const [code, setCode] = useState('');
-
-  // Handle login
-  function onAuthStateChanged(user) {
-    if (user) {
-      // Some Android devices can automatically process the verification code (OTP) message, and the user would NOT need to enter the code.
-      // Actually, if he/she tries to enter it, he/she will get an error message because the code was already used in the background.
-      // In this function, make sure you hide the component(s) for entering the code and/or navigate away from this screen.
-      // It is also recommended to display a message to the user informing him/her that he/she has successfully logged in.
-    }
+  const final=()=>{
+    navigation.navigate('Verification', {
+      code_confirmation: confirm,
+      country_code: countryCode,
+      phone_number: phone_no,
+    });
+    setloading(0),
+    setdisable(0)
   }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+  ///////////autn confirmation status/////////////
+  const [confirm, setConfirm] = useState('');
 
   // Handle the button press
   async function signInWithPhoneNumber(phoneNumber) {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    console.log("here",confirmation)
-    setConfirm(confirmation);
-
-    //navigation.navigate("Verification",{code:confirmation,country_code:countryCode,phone_number:phone_no})
-  }
-
-  async function confirmCode() {
-    try {
-      const res=await confirm.confirm(code);
-      console.log(res)
-    } catch (error) {
-      console.log('Invalid code.');
-    }
+    console.log("here data code",confirmation.verificationId)
+    setConfirm(confirmation.verificationId);
+    //final()
   }
 
   return (
@@ -236,13 +114,10 @@ const Login = ({navigation}) => {
               style={[styles.TextField, {width: wp(60)}]}
               placeholder={'Enter Your Phone Number'}
               value={phone_no}
-              onChangeText={(text)=>setPhoneNo(text)}
+              onChangeText={text => setPhoneNo(text)}
               keyboardType={'numeric'}
               placeholderTextColor={'#FFFFFF'}></TextInput>
           </View>
-          <TextInput style={{backgroundColor:'white',color:'black'}} value={code} onChangeText={text => setCode(text)} />
-      <Button title="Confirm Code" onPress={() => confirmCode()} />
-    
           <View style={Authstyles.horizontal_mainview}>
             <View style={Authstyles.horizontal_line} />
             <Text style={Authstyles.horizontal_text}>OR</Text>
@@ -263,14 +138,11 @@ const Login = ({navigation}) => {
             title={'Submit'}
             widthset={80}
             topDistance={18}
-            // loading={loading}
-            // disabled={disable}
+            loading={loading}
+            disabled={disable}
             onPress={() => {
-             // navigation.navigate("Verification",{country_code:countryCode,phone_number:phone_no})
-              //signInWithPhoneNumber(countryCode+phone_no);
-              //navigation.navigate("Verification",{data:'001'});
-              //formValidation();
-              navigation.navigate('Drawerroute')
+              //formValidation()
+              final()
             }}
           />
         </View>

@@ -77,7 +77,7 @@ const CreateProfile = ({navigation}) => {
   //////////////Api Calling////////////////////
   const CreateProfile = async () => {
     const user_id = await AsyncStorage.getItem('User_id');
-    const device_id = await AsyncStorage.getItem('Device_id');
+    console.log('here user id',user_id)
     var token = await AsyncStorage.getItem('JWT_Token');
     let data = JSON.stringify({
       barber_id: user_id,

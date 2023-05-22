@@ -137,7 +137,7 @@ const Home = ({navigation}) => {
   const renderItem = ({item}) => {
     return (
       <DashboardCard
-        image={item.image===[]?require('../../../assets/dummyimages/image_1.png'):item.image}
+        image={item.image===[]?require('../../../assets/dummyimages/image_1.png'):BASE_URL+item.image}
         maintext={item.name}
         subtext={item.location}
         price={item.price}

@@ -97,7 +97,45 @@ const UploadItem = ({navigation}) => {
   const [Item_category, setItemCategory] = useState();
   const [Item_description, setItemDescription] = useState();
 
+  //////////////Api Calling////////////////////
+  const CreateProfile = async () => {
+    const user_id = await AsyncStorage.getItem('User_id');
+    console.log('here user id', user_id);
+    var token = await AsyncStorage.getItem('JWT_Token');
+    let data = JSON.stringify({
+      id: user_id,
+      name:Item_name,
+      price:Item_price,
+      category_id:gender.value,
+      description:Item_description,
+      "location":"Rawalpindi",
+      "promoted":"true",
+      "start_date":"05/17/2023*11:51:11",
+      "end_date":"05/17/2023*11:52:11",
+      "added_by":"user"
+    });
 
+    let config = {
+      method: 'put',
+      url: BASE_URL + 'auth/update_profile',
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+    axios
+      .request(config)
+      .then(response => {
+        setloading(0);
+        setdisable(0);
+        dispatch(setPersonalMenu(false)),
+        dispatch(setLinksMenu(true));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   const renderItem = ({item}) => {
     return (
         <TouchableOpacity
@@ -168,8 +206,8 @@ const UploadItem = ({navigation}) => {
         <CustomTextInput
              dopdownicon={'chevron-down'}
              type={'dropdowniconinput'}
-        term={Item_category}
-          //term={gender.name}
+        //term={Item_category}
+          term={gender.name}
           editable={false}
           disable={false}
           returnType={'next'}
