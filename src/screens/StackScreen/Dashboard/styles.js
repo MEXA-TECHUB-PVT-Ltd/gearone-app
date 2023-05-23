@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.Poppins_Medium,
     fontSize: hp(2),
     color:'white',
-    width: wp(25),
+    width: wp(55),
   },
   ItemPrice_text: {
     fontFamily:  fontFamily.Poppins_Medium,
@@ -105,7 +105,23 @@ textAlign:'right'
     fontFamily: fontFamily.Poppins_Regular,
     fontSize: hp(1.4),
   },
+
+
   /////////////////////Other Profile/////////////////
+
+  coverimage_view:{
+    width: wp(95),
+    backgroundColor: '#444444',
+    height: hp(25),
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  coverimage_text:
+  {
+    color: 'white',fontSize:hp(1.8),
+    fontFamily:fontFamily.Poppins_Bold
+  },
   itemmaintext: {
     color: Colors.Appthemecolor,
     fontSize: hp(2),
@@ -132,6 +148,13 @@ textAlign:'right'
     color: 'white',
     fontSize: hp(1.8),
     fontFamily: fontFamily.Poppins_SemiBold,
+  },
+ noposttext: {
+    color: 'white',
+    fontSize: hp(1.6),
+    fontFamily: fontFamily.Poppins_Regular,
+    marginLeft:wp(5),
+    marginTop:hp(3)
   },
   verticletext: {
     color: Colors.activetextinput,

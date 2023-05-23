@@ -67,21 +67,21 @@ const DATA = [
 const Sell = ({navigation}) => {
 
        /////////////Get Notification/////////////
-       const [my_items, setMyItems] = useState('');
+       const [my_items, setMyItems] = useState();
 
        const GetMyItems = async () => {
-         var user = await AsyncStorage.getItem('Userid');
-         console.log('order request function', user);
+        var user_id = await AsyncStorage.getItem('User_id');
+        console.log("here data",user_id)
          axios({
            method: 'POST',
            url: BASE_URL + 'items/get_items_by_user',
            body:
            {
-            user_ID:"1"
+            user_ID:user_id
            }
          })
            .then(async function (response) {
-             console.log('list data here ', response.data);
+             console.log('list data here im my items ', response.data);
              setMyItems(response.data.result);
            })
            .catch(function (error) {
@@ -109,6 +109,7 @@ const Sell = ({navigation}) => {
       />
     );
   };
+ 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView

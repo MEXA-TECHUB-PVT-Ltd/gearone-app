@@ -130,7 +130,7 @@ const Verification = ({navigation, route}) => {
     }
   }
     //////////////Api Calling////////////////////
-    const LoginUser = async () => {
+    const SigUpUser = async () => {
    const device_id = await AsyncStorage.getItem('Device_id'); 
    console.log("here toke",device_id)
       axios({
@@ -164,7 +164,8 @@ const Verification = ({navigation, route}) => {
           } else {
             setloading(0);
             setdisable(0);
-            navigation.navigate('CreateProfile');
+            SignInUser()
+            //navigation.navigate('CreateProfile');
           }
         })
         .catch(function (error) {
@@ -175,6 +176,52 @@ const Verification = ({navigation, route}) => {
           }
         });
     };
+
+        //////////////Api Calling////////////////////
+        const SignInUser = async () => {
+          const device_id = await AsyncStorage.getItem('Device_id'); 
+          console.log("here toke",device_id)
+             axios({
+               method: 'post',
+               url: BASE_URL + 'auth/sign_in',
+               data: {
+                 phone: predata.phone_number,
+                 country_code: predata.country_code,
+                 deviceToken:device_id
+               },
+             })
+               .then(async function (response) {
+                 console.log('here id',response.data)
+                if (response.data.status === true) {
+                   const string_id = response.data.result[0].id.toString();
+                   dispatch(setUserId(response.data.result[0].id));
+                   dispatch(setUserPhone_No(response.data.result[0].phone));
+                   dispatch(setUserPhone_Country_Code(response.data.result[0].country_code));
+                   dispatch(setJWT_Token(JSON.stringify(response.data.jwt_token)));
+                   await AsyncStorage.setItem('User_id', string_id);
+                   await AsyncStorage.setItem(
+                     'JWT_Token',
+                     JSON.stringify(response.data.token),
+                   );
+                   navigation.navigate('Drawerroute');
+                   setloading(0);
+                   setdisable(0);
+                 //setModalVisible(true)
+                 } else {
+                   setloading(0);
+                   setdisable(0);
+                   signI
+                   //navigation.navigate('CreateProfile');
+                 }
+               })
+               .catch(function (error) {
+                 setloading(0);
+                 setdisable(0);
+                 if (error) {
+                   console.log('error', error);
+                 }
+               });
+           };
 
     useEffect(() => {
       checkPermission();
@@ -262,9 +309,7 @@ const Verification = ({navigation, route}) => {
           // disabled={disable}
           onPress={() => 
             //confirmCode()
-            LoginUser()
-       
-            //verifyno()
+            SigUpUser()
           }
         />
       </View>

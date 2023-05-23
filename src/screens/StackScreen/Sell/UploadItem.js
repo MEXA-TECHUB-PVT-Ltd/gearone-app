@@ -6,7 +6,7 @@ import {
   Text,
   FlatList,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 
 ///////////////app components////////////////
@@ -16,6 +16,9 @@ import CustomButtonhere from '../../../components/Button/CustomButton';
 import CustomModal from '../../../components/Modal/CustomModal';
 import CamerBottomSheet from '../../../components/CameraBottomSheet/CameraBottomSheet';
 import Gender_DropDowns from '../../../components/DropDowns/Gender_DropDowns';
+
+////////////////app pakages////////////
+import {Snackbar} from 'react-native-paper';
 
 /////////////app styles///////////////////
 import styles from './styles';
@@ -32,92 +35,115 @@ import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /////////////svg///////////
-import UploadIcon from '../../../assets/svgs/upload_icon.svg'
-
-
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_1.png'),
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_2.png'),
-    },
-    {
-      id: '58694a0f-3dhjk8a1-471f-bd96-145571e29d72',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_3.png'),
-    },
-    {
-      id: 'bd7acbea-c1b781-46c2-aed5-3ad53abb28ba',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_4.png'),
-    },
-    {
-      id: '3ac68afc-c6bjj705-48d3-a47344f8-fbd91aa97f63',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_5.png'),
-    },
-    {
-      id: '58694a0f-3d78ga1-471f-bdhhffh696-145571e29d72',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_6.png'),
-    },
-  ];
+import UploadIcon from '../../../assets/svgs/upload_icon.svg';
 
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
+import { setItemDetail } from '../../../redux/ItemSlice';
 
 const UploadItem = ({navigation}) => {
+  ////////////redux////////////
+  const dispatch = useDispatch()
   /////////////reducer value////////////
-  const imagePath = useSelector(state => state.image.path);
-    const gender = useSelector((state) => state.gender);
+  const item_images_array = useSelector(
+    state => state.imagesArray.item_images_array,
+  );
+  const gender = useSelector(state => state.gender);
+
+  ///////array limit////////
+  const maxIndex = 5;
 
   //camera and imagepicker
   const refRBSheet = useRef();
 
-    ////DROPDOWNS//////////
-    const refRBGenderDDSheet = useRef();
+  ////DROPDOWNS//////////
+  const refRBGenderDDSheet = useRef();
+
+  /////////TextInput References///////////
+  const ref_input2 = useRef();
+  const ref_input3 = useRef();
+  const ref_input4 = useRef();
+
+  ///////////////button states/////////////
+  const [loading, setloading] = useState(0);
+  const [disable, setdisable] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({value: '', color: ''});
+  const onDismissSnackBar = () => setVisible(false);
 
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
 
   //////////////data states//////////
-  const [Item_name, setItemName] = useState();
-  const [Item_price, setItemPrice] = useState();
-  const [Item_category, setItemCategory] = useState();
-  const [Item_description, setItemDescription] = useState();
+  const [Item_name, setItemName] = useState('');
+  const [Item_price, setItemPrice] = useState('');
+  const [Item_location, setItemLocation] = useState('');
+  const [Item_description, setItemDescription] = useState('');
+
+
+  /////////////image array/////////
+  const post_Item_Images = async (props) => {
+    console.log("here image data",item_images_array)
+    const formData = new FormData();
+    formData.append("id", props);
+    //formData.append("images",item_images_array);
+    if (item_images_array?.length > 0) {
+      for (let i = 0; i < item_images_array?.length; i++) {
+        let url = item_images_array[i];
+        var filename = url?.split('/')?.pop();
+        let obj = {
+          uri: url,
+          name: filename,
+          type: 'image/jpeg',
+        };
+        console.log(obj);
+        formData.append(`images`, obj);
+      }
+    }
+
+    return fetch(BASE_URL + "items/add_item_images", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: formData,
+    })
+    .then(response => response.text())
+    .then(
+      resulthere => console.log('image data',resulthere),
+
+
+     // dispatch(setItemDetail(result.result[0].id, result.result[0].name)),
+      setloading(0),
+      setdisable(0),
+     setModalVisible(true)
+      
+    );
+
+    
+}
 
   //////////////Api Calling////////////////////
-  const CreateProfile = async () => {
+  const CreateItem = async () => {
     const user_id = await AsyncStorage.getItem('User_id');
     console.log('here user id', user_id);
     var token = await AsyncStorage.getItem('JWT_Token');
     let data = JSON.stringify({
-      id: user_id,
-      name:Item_name,
-      price:Item_price,
-      category_id:gender.value,
-      description:Item_description,
-      "location":"Rawalpindi",
-      "promoted":"true",
-      "start_date":"05/17/2023*11:51:11",
-      "end_date":"05/17/2023*11:52:11",
-      "added_by":"user"
+      user_ID: user_id,
+      name: Item_name,
+      price: Item_price,
+      category_id: gender.value,
+      description: Item_description,
+      location: Item_location,
+      // promoted: 'true',
+      // start_date: '05/17/2023*11:51:11',
+      // end_date: '05/17/2023*11:52:11',
+     added_by: 'user',
     });
 
     let config = {
-      method: 'put',
-      url: BASE_URL + 'auth/update_profile',
+      method: 'POST',
+      url: BASE_URL + 'items/add_items',
       headers: {
         Authorization: `Bearer ${JSON.parse(token)}`,
         'Content-Type': 'application/json',
@@ -127,25 +153,59 @@ const UploadItem = ({navigation}) => {
     axios
       .request(config)
       .then(response => {
-        setloading(0);
-        setdisable(0);
-        dispatch(setPersonalMenu(false)),
-        dispatch(setLinksMenu(true));
+        console.log("here item data",response.data)
+        dispatch(setItemDetail(response.data.result[0].id,response.data.result[0].name))
+        post_Item_Images(response.data.result[0].id)
+
       })
       .catch(error => {
         console.log(error);
       });
   };
+  //Api form validation
+  const formValidation = async () => {
+    // input validation
+    if (Item_name == '') {
+      setsnackbarValue({value: 'Please Enter Item Name', color: 'red'});
+      setVisible('true');
+    } else if (Item_price == '') {
+      setsnackbarValue({value: 'Please Enter Item Price', color: 'red'});
+      setVisible('true');
+    } else if (Item_location == '') {
+      setsnackbarValue({value: 'Please Enter Location', color: 'red'});
+      setVisible('true');
+    }else if (gender.name == 'Select Category') {
+      setsnackbarValue({value: 'Please Select Category', color: 'red'});
+      setVisible('true');
+    }else if (Item_description == '') {
+      setsnackbarValue({value: 'Please Enter Description', color: 'red'});
+      setVisible('true');
+    } else {
+      setloading(1);
+      setdisable(1);
+      CreateItem()
+    }
+  };
   const renderItem = ({item}) => {
     return (
-        <TouchableOpacity
-        onPress={() => refRBSheet.current.open()}>
- <View style={{alignSelf: 'center', marginVertical: hp(4)}}>
-          <UploadIcon width={wp(25)} height={hp(11)} />
+      <View
+        style={{
+          alignSelf: 'center',
+          marginVertical: hp(4),
+          borderWidth: hp(0.3),
+          borderColor: 'grey',
+          borderRadius: wp(2),
+          marginHorizontal: wp(1),
+        }}>
+        <Image
+          source={{uri: item}}
+          style={{height: hp(10), width: wp(20), borderRadius: wp(2)}}
+          resizeMode="cover"
+        />
       </View>
-      </TouchableOpacity>
     );
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -158,20 +218,31 @@ const UploadItem = ({navigation}) => {
             navigation.goBack();
           }}
         />
-        {/* <View style={{alignSelf: 'center', marginVertical: hp(2)}}>
-        <Image
-          source={require('../../../assets/dummyimages/banner_1.png')}
-          style={{width: wp(90), height: hp(22)}}
-          resizeMode="contain"
-        />
-      </View> */}
-      <FlatList
-          data={DATA}
-          //numColumns={3}
+        <FlatList
+          data={item_images_array.slice(0, maxIndex)}
           renderItem={renderItem}
+          ListFooterComponent={() => (
+            <TouchableOpacity
+              onPress={() => {
+                if (item_images_array.length > maxIndex) {
+                  setsnackbarValue({
+                    value: 'You can only pick up to 5 images.',
+                    color: 'red',
+                  });
+                  setVisible('true');
+                } else {
+                  // Perform additional logic to load more data if needed
+                  refRBSheet.current.open();
+                }
+              }}>
+              <View style={{alignSelf: 'center', marginVertical: hp(4)}}>
+                <UploadIcon width={wp(20)} height={hp(11)} />
+              </View>
+            </TouchableOpacity>
+          )}
           keyExtractor={(item, index) => index}
-          scrollEnabled={false}
           horizontal={true}
+          showsHorizontalScrollIndicator={false}
         />
         <View style={{marginLeft: wp(12)}}>
           <Text style={styles.textinput_title}>Item Name</Text>
@@ -190,39 +261,51 @@ const UploadItem = ({navigation}) => {
           <Text style={styles.textinput_title}>Item Price</Text>
         </View>
         <CustomTextInput
+          onRef={ref_input2}
           type={'withouticoninput'}
           term={Item_price}
           returnType={'next'}
           onNext={() => {
-            ref_input2.current.focus();
+            ref_input3.current.focus();
           }}
           //placeholder="Enter Username"
           onTermChange={text => setItemPrice(text)}
         />
         <View style={{marginLeft: wp(12)}}>
+          <Text style={styles.textinput_title}>Location</Text>
+        </View>
+        <CustomTextInput
+          onRef={ref_input3}
+          type={'withouticoninput'}
+          term={Item_location}
+          returnType={'next'}
+          onNext={() => {
+            ref_input4.current.focus();
+          }}
+          //placeholder="Enter Username"
+          onTermChange={text => setItemLocation(text)}
+        />
+        <View style={{marginLeft: wp(12)}}>
           <Text style={styles.textinput_title}>Category</Text>
         </View>
         <TouchableOpacity onPress={() => refRBGenderDDSheet.current.open()}>
-        <CustomTextInput
-             dopdownicon={'chevron-down'}
-             type={'dropdowniconinput'}
-        //term={Item_category}
-          term={gender.name}
-          editable={false}
-          disable={false}
-          returnType={'next'}
-          onNext={() => {
-            ref_input2.current.focus();
-          }}
-          placeholder="Select Category"
-          onTermChange={text => setItemCategory(text)}
-        />
-            </TouchableOpacity>
+          <CustomTextInput
+            dopdownicon={'chevron-down'}
+            type={'dropdowniconinput'}
+            //term={Item_category}
+            term={gender.name}
+            editable={false}
+            disable={false}
+            placeholder="Select Category"
+            onTermChange={text => setItemCategory(text)}
+          />
+        </TouchableOpacity>
 
         <View style={{marginLeft: wp(12)}}>
           <Text style={styles.textinput_title}>Description</Text>
         </View>
         <CustomTextInput
+                onRef={ref_input4}
           type={'withouticoninput'}
           texterror={'invalid'}
           term={Item_description}
@@ -235,9 +318,11 @@ const UploadItem = ({navigation}) => {
             title={'Upload Item'}
             widthset={80}
             topDistance={5}
-            // loading={loading}
-            // disabled={disable}
-            onPress={() => setModalVisible(true)}
+            loading={loading}
+            disabled={disable}
+            onPress={() => 
+              formValidation()
+              }
           />
         </View>
         <CustomModal
@@ -248,19 +333,30 @@ const UploadItem = ({navigation}) => {
           type={'single_btn'}
           onPress={() => {
             setModalVisible(false);
-            navigation.navigate('BottomTab');
+            navigation.navigate('ItemDetails');
           }}
         />
-                <CamerBottomSheet
+        <CamerBottomSheet
           refRBSheet={refRBSheet}
           onClose={() => refRBSheet.current.close()}
           title={'From Gallery'}
-          type={'onepic'}
+          type={'multiplepic'}
         />
-                <Gender_DropDowns
+        <Gender_DropDowns
           refRBSheet={refRBGenderDDSheet}
           onClose={() => refRBGenderDDSheet.current.close()}
         />
+        <Snackbar
+          duration={600}
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          style={{
+            backgroundColor: snackbarValue.color,
+            marginBottom: hp(12),
+            zIndex: 999,
+          }}>
+          {snackbarValue.value}
+        </Snackbar>
       </ScrollView>
     </SafeAreaView>
   );

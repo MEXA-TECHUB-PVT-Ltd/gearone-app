@@ -9,6 +9,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+///////////react native paper///////////
+import {Avatar} from 'react-native-paper';
+
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
 import SettingsMenu from '../../../components/SettingsView/SettingsMenu';
@@ -50,7 +53,7 @@ const MyGear = ({navigation}) => {
     var user_id = await AsyncStorage.getItem('User_id');
     axios({
       method: 'GET',
-      url: BASE_URL + 'auth/specific_user/'+user_id,
+      url: BASE_URL + 'auth/specific_user/' + user_id,
     })
       .then(async function (response) {
         console.log('list data here ', response.data.result);
@@ -83,17 +86,30 @@ const MyGear = ({navigation}) => {
             backgroundColor: 'light_grey',
             alignSelf: 'center',
           }}>
-          {coverImage === null ? (
-            <Icon name={'user'} size={20} color={'#F7FF00'} />
+               {coverImage === null ? (
+            <View style={styles.coverimage_view}>
+              <Text style={styles.coverimage_text}>Cover Image</Text>
+            </View>
           ) : (
             <Image
               source={{uri: BASE_URL + coverImage}}
               style={{width: wp(98), height: hp(25)}}
-              resizeMode='cover'
+              resizeMode="cover"
             />
           )}
-          {profileImage === null ? (
-            <Icon name={'user'} size={20} color={'#F7FF00'} />
+           {profileImage === null ? (
+            <Avatar.Text
+              style={{
+                position: 'absolute',
+                bottom: -30,
+              }}
+              size={hp(12)}
+              label={
+                username === null
+                  ? 'UserName'.substring(0, 2)
+                  : username.substring(0, 2)
+              }
+            />
           ) : (
             <Image
               source={{uri: BASE_URL + profileImage}}

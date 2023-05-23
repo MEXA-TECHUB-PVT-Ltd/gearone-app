@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
+import React, {useEffect, useState, useRef,useCallback} from 'react';
+import {SafeAreaView, ScrollView, View, Text, FlatList, TouchableOpacity,Linking } from 'react-native';
 
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
@@ -31,6 +31,12 @@ const MyAccount = ({navigation, route}) => {
   const [phone_number, setPhone_number] = useState('');
   const [phone_countrycode, setPhone_CountryCode] = useState('');
 
+    /////////////links states/////////////
+    const [faceBook, setFaceBook] = useState('');
+    const [insta, setInstagram] = useState('');
+    const [twitter, setTwitter] = useState('');
+    const [linkedIn, setLinkedIn] = useState('');
+
   const GetProfileData = async () => {
     var user_id = await AsyncStorage.getItem('User_id');
     axios({
@@ -49,7 +55,56 @@ const MyAccount = ({navigation, route}) => {
   };
   useEffect(() => {
     GetProfileData();
+    //GetSocialLinksData()
+    GetMyItems()
   }, []);
+
+  /////////socia links////////
+  const GetMyItems =useCallback( async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    console.log("here id",user_id,)
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'SocialMedia/get_social_media', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        userID: user_id,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log('response hgeree are  : ', response.result[0].facebook);
+        setFaceBook(response.result[0].facebook)
+        setLinkedIn(response.result[0].linkedin)
+        setTwitter(response.result[0].twitter)
+        setInstagram(response.result[0].insta)
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, []);
+  const GetSocialLinksData = async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    axios({
+      method: 'POST',
+      url: BASE_URL + 'SocialMedia/get_social_media',
+      body:{
+        user_id,
+      } 
+    })
+      .then(async function (response) {
+        console.log('list data here LINKS', response.data.result);
+
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -72,10 +127,20 @@ const MyAccount = ({navigation, route}) => {
             justifyContent: 'space-between',
             paddingHorizontal: wp(12),
           }}>
-          <Twitter width={wp(10)} height={hp(6)} />
-          <LinkedIn width={wp(15)} height={hp(6)} />
-          <Instagram width={wp(15)} height={hp(6)} />
-          <FaceBook width={wp(8)} height={hp(6)} />
+            <TouchableOpacity onPress={()=>Linking.openURL(twitter)}>
+            <Twitter width={wp(10)} height={hp(6)} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(linkedIn)}>
+            <LinkedIn width={wp(15)} height={hp(6)} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(insta)}>
+            <Instagram width={wp(15)} height={hp(6)} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>Linking.openURL(faceBook)}>
+            <FaceBook width={wp(8)} height={hp(6)} />
+            </TouchableOpacity>
+
+
         </View>
         <View
           style={{marginTop: hp(4), marginLeft: wp(5), marginBottom: hp(3)}}>

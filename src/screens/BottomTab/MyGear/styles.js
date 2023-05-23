@@ -51,5 +51,18 @@ const styles = StyleSheet.create({
     fontSize: hp(1.5),
     fontFamily: fontFamily.Poppins_Medium,
   },
+  coverimage_view:{
+    width: wp(95),
+    backgroundColor: '#444444',
+    height: hp(25),
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  coverimage_text:
+  {
+    color: 'white',fontSize:hp(1.8),
+    fontFamily:fontFamily.Poppins_Bold
+  },
 });
 export default styles;

@@ -28,10 +28,10 @@ const DashboardCard = props => {
       <View style={styles.card}>
         <View
           style={styles.imageView}>
-          <Image
+          {/* <Image
             source={{uri:props.image}}
             style={styles.image}
-            resizeMode="cover"/>
+            resizeMode="cover"/> */}
         </View>
         <View
           style={styles.textView}>

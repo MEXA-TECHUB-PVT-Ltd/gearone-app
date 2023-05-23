@@ -1,85 +1,99 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
-
-import { Snackbar } from "react-native-paper";
+import {useNavigation} from '@react-navigation/native';
 
 //////////////////app components///////////////////
-import CustomModal from "../Modal/CustomModal";
-import CustomTextInput from "../TextInput/CustomTextInput";
-import CustomButtonhere from "../Button/CustomButton";
+import CustomModal from '../Modal/CustomModal';
+import CustomButtonhere from '../Button/CustomButton';
 
 ////////////app icons////////////////
-import Ionicons from "react-native-vector-icons/Ionicons";
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 ////////////////////app pakages////////////////////////
-import {Rating, AirbnbRating} from 'react-native-ratings';
+import {Rating} from 'react-native-ratings';
 
 ///////////////app packages/////////////
-import RBSheet from "react-native-raw-bottom-sheet";
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 ///////////////app styles//////////////////
-import styles from "./styles";
+import styles from './styles';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+} from 'react-native-responsive-screen';
 
 ////////////////////redux////////////
-import { useSelector, useDispatch } from "react-redux";
-
-//////////////////app Images////////////////
-import { appImages } from "../../constant/images";
+import {useSelector, useDispatch} from 'react-redux';
 
 /////////////colors//////////
-import Colors from "../../utills/Colors";
+import Colors from '../../utills/Colors';
 
+////////////////api////////////////
+import axios from 'axios';
+import { BASE_URL } from '../../utills/ApiRootUrl';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const RattingBottomSheet = (props) => {
-
+const RattingBottomSheet = props => {
+  //////////naviagtion variable////////////
   const navigation = useNavigation();
-  //Modal States
+
+  //////////////Modal States/////////////
   const [modalVisible, setModalVisible] = useState(false);
 
   /////////////redux states///////
   const dispatch = useDispatch();
 
-  ////////////////textinput state//////////////
-  const [description, setDescription] = useState("");
+  ///////////////button states/////////////
+  const [loading, setloading] = useState(0);
+  const [disable, setdisable] = useState(0);
 
-    ///////////////button states/////////////
-    const [loading, setloading] = useState(0);
-    const [disable, setdisable] = useState(0);
-    const [visible, setVisible] = useState(false);
-    const [snackbarValue, setsnackbarValue] = useState({ value: "", color: "" });
-    const onDismissSnackBar = () => setVisible(false);
+  ///////////total rattings/////
+  const [total_ratting, setTotal_Ratting] = useState('');
 
+  //////ratting function/////////
+  let ratingCompleted = rating => {
+    setTotal_Ratting(rating);
+  };
 
-    let stars = [];
-    for (var i = 1; i <= 5; i++) {
-      // set the path to filled stars
-      let name = 'star-outline';
-      // If ratings is lower, set the path to unfilled stars
-      if (i > props.ratting) {
-        name = 'ios-star-outline';
-      }
-      stars.push(<Ionicons name={name} size={25} style={styles.star} key={i} />);
-    }
+  //-----------seller ratting///////////
+  const seller_Ratting = async props => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    console.log('params',user_id, token);
+    axios({
+      method: 'POST',
+      url: BASE_URL + 'rate_user/rate_user',
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: {
+        rate_by_user_ID: user_id,
+        user_ID: props.seller_id,
+        rating: total_ratting,
+      },
+    })
+      .then(async function (response) {
+        console.log('list data here in like api', response.data);
+        //setItem_Like_User_id(response.data.id);
+        //navigation.navigate("Drawerroute");
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+  };
   return (
     <RBSheet
-      //sstyle={{flex:1}}
       ref={props.refRBSheet}
       closeOnDragDown={true}
       closeOnPressMask={false}
       openDuration={50}
       closeDuration={50}
       animationType="fade"
-      //height={500}
       customStyles={{
         wrapper: {
-          backgroundColor: "rgba(52, 52, 52, 0.5)",
+          backgroundColor: 'rgba(52, 52, 52, 0.5)',
         },
         draggableIcon: {
           backgroundColor: Colors.AppBckGround_color,
@@ -90,70 +104,70 @@ const RattingBottomSheet = (props) => {
           height: hp(30),
           backgroundColor: Colors.AppBckGround_color,
         },
-      }}
-    >
+      }}>
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           paddingHorizontal: wp(7),
-        }}
-      >
+        }}>
         <Text style={styles.Ratting_maintext}>{props.title}</Text>
         <TouchableOpacity onPress={() => props.refRBSheet.current.close()}>
           <Ionicons
-            name={"close"}
+            name={'close'}
             size={22}
             color={'white'}
             onPress={() => props.refRBSheet.current.close()}
           />
         </TouchableOpacity>
       </View>
-      <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',alignSelf:'center',marginTop:hp(2)}}>
-          <Text style={styles.usertext}>{stars}</Text>
-            </View>
-      <View style={{ marginTop: hp(0) }}>
-          <CustomButtonhere
-            title={"Rate"}
-            widthset={80}
-            topDistance={5}
-            loading={loading}
-            disabled={disable}
-            onPress={() => {
-              //navigation.navigate("Drawerroute");
-              formValidation();
-            }}
-          />
-        </View>
-      <CustomModal
-          modalVisible={modalVisible}
-          CloseModal={() => setModalVisible(false)}
-          Icon={appImages.sucess}
-          text={"Sucess"}
-          subtext={
-            props.btntext === "REPORT"
-              ? "Report Sucessfully"
-              : "Review Added Successfully"
-          }
-          buttontext={"OK"}
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          alignSelf: 'center',
+          marginTop: hp(2),
+        }}>
+        <Rating
+          ratingCount={5}
+          imageSize={40}
+          ratingBackgroundColor={'rgba(52, 52, 52, 0.5)'}
+          tintColor={'rgba(52, 52, 52, 1)'}
+          ratingColor={'orange'}
+          ratingContainerStyle={{backgroundColor: 'black'}}
+          starContainerStyle={{backgroundColor: 'black'}}
+          onFinishRating={ratingCompleted}
+        />
+      </View>
+      <View style={{marginTop: hp(0)}}>
+        <CustomButtonhere
+          title={'Rate'}
+          widthset={80}
+          topDistance={5}
+          loading={loading}
+          disabled={disable}
           onPress={() => {
-            props.onClose()
-         setModalVisible(false)
-//navigation.navigate('CommentsDetails')
+            seller_Ratting();
           }}
         />
-      <Snackbar
-          duration={400}
-          visible={visible}
-          onDismiss={onDismissSnackBar}
-          style={{
-            backgroundColor: snackbarValue.color,
-            marginBottom: hp(9),
-            zIndex: 999,
-          }}
-        >
-          {snackbarValue.value}
-        </Snackbar>
+      </View>
+      <CustomModal
+        modalVisible={modalVisible}
+        CloseModal={() => setModalVisible(false)}
+        text={'Sucess'}
+        subtext={
+          props.btntext === 'REPORT'
+            ? 'Report Sucessfully'
+            : 'Review Added Successfully'
+        }
+        buttontext={'OK'}
+        onPress={() => {
+          props.onClose();
+          setModalVisible(false);
+          //navigation.navigate('CommentsDetails')
+        }}
+      />
     </RBSheet>
   );
 };

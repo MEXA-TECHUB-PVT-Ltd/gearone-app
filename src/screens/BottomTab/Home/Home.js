@@ -1,9 +1,11 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useCallback } from 'react';
 import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
 
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
 import DashboardCard from '../../../components/CustomCards/Dashboard/DashboardCard';
+import Loader from '../../../components/Loader/Loader';
+import NoDataFound from '../../../components/NoDataFound/NoDataFound';
 
 /////////////app styles///////////////////
 import styles from './styles';
@@ -21,6 +23,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 ///////////////////stories///////////////
 import InstaStory from 'react-native-insta-story';
+
+/////////////////redux///////////
+import {useDispatch} from 'react-redux';
+import { setItemDetail } from '../../../redux/ItemSlice';
 
 const data = [
   {
@@ -47,7 +53,7 @@ const data = [
     user_id: 2,
     user_image:
       'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-      user_name: 'Ad name',
+    user_name: 'Ad name',
     stories: [
       {
         story_id: 1,
@@ -66,91 +72,121 @@ const data = [
     ],
   },
 ];
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_1.png'),
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_2.png'),
-  },
-  {
-    id: '58694a0f-3dhjk8a1-471f-bd96-145571e29d72',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_3.png'),
-  },
-  {
-    id: 'bd7acbea-c1b781-46c2-aed5-3ad53abb28ba',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_4.png'),
-  },
-  {
-    id: '3ac68afc-c6bjj705-48d3-a47344f8-fbd91aa97f63',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_5.png'),
-  },
-  {
-    id: '58694a0f-3d78ga1-471f-bdhhffh696-145571e29d72',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_6.png'),
-  },
-];
 
 const Home = ({navigation}) => {
+  ///////redux states/////////
+  const dispatch = useDispatch();
 
-     /////////////Get Notification/////////////
-     const [dashboard_items, setDashboardItems] = useState('');
+  //////////loader state/////
+  const [isLoading,setLoading]=useState(false)
+    /////////////Get Notification/////////////
+    const [dashboard_stories, setDashboardStories] = useState('');
+    const GetDashboardStories =useCallback( async () => {
+      var user_id = await AsyncStorage.getItem('User_id');
+      var token = await AsyncStorage.getItem('JWT_Token');
+      var headers = {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      };
+      await fetch( BASE_URL + 'ads/get_ads_by_screen', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+          screen_id:"1"
+        }),
+      })
+        .then(response => response.json())
+        .then(async response => {
+          console.log('response  : ', response);
+          setDashboardStories(response.result)
+        })
+        .catch(error => {
+          console.log('Error  : ', error);
+        });
+    }, [dashboard_stories]);
 
-     const GetDashboardItems = async () => {
-       var user = await AsyncStorage.getItem('Userid');
-       console.log('order request function', user);
-       axios({
-         method: 'POST',
-         url: BASE_URL + 'items/get_all_items',
-         body:
-         {
-       
-         }
-       })
-         .then(async function (response) {
-           console.log('list data here ', response.data.result);
-           setDashboardItems(response.data.result);
-         })
-         .catch(function (error) {
-           console.log('error', error);
-         });
-     };
-       useEffect(() => {
-        GetDashboardItems()
-         
-       }, []);
+    const GetDashboardStories11 = useCallback( async () => {
+      var user_id = await AsyncStorage.getItem('User_id');
+      axios({
+        method: 'POST',
+        url: BASE_URL + 'ads/get_ads_by_screen',
+        body: {
+          screen_id:"1"
+        },
+      })
+        .then(async function (response) {
+          console.log('here stories data',response.data)
+  if(response.data.status === true)
+  {
+    setDashboardStories(response.data.result);
+    setLoading(false)
+  }else{
+    <NoDataFound title={'No data here'}/>
+    setLoading(false)
+  }
+  
+        })
+        .catch(function (error) {
+          console.log('error', error);
+        });
+      },[dashboard_items])
+
+  /////////////Get Notification/////////////
+  const [dashboard_items, setDashboardItems] = useState('');
+
+  const GetDashboardItems = useCallback( async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    axios({
+      method: 'POST',
+      url: BASE_URL + 'items/get_all_items',
+      body: {},
+    })
+      .then(async function (response) {
+if(response.data.status === true)
+{
+  setDashboardItems(response.data.result);
+  setLoading(false)
+}else{
+  <NoDataFound title={'No data here'}/>
+  setLoading(false)
+}
+
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+    },[dashboard_items])
+  useEffect(() => {
+    setLoading(true)
+    GetDashboardItems();
+    GetDashboardStories()
+  }, []);
 
   const renderItem = ({item}) => {
     return (
       <DashboardCard
-        image={item.image===[]?require('../../../assets/dummyimages/image_1.png'):BASE_URL+item.image}
+        image={
+          item.image === []
+            ? require('../../../assets/dummyimages/image_1.png')
+            : BASE_URL + item.image
+        }
         maintext={item.name}
         subtext={item.location}
         price={item.price}
         onpress={() => {
+          dispatch(setItemDetail(item.id, item.name));
           navigation.navigate('ItemDetails', {
             Item_id: item.id,
           });
+
         }}
       />
     );
   };
   return (
     <SafeAreaView style={styles.container}>
+        <Loader isLoading={isLoading} />
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
@@ -158,11 +194,11 @@ const Home = ({navigation}) => {
           title={'Home'}
           left_icon={'menu'}
           left_iconPress={() => {
-           navigation.toggleDrawer()
+            navigation.toggleDrawer();
           }}
         />
         <InstaStory
-          data={data}
+          data={dashboard_stories}
           duration={10}
           onStart={item => console.log(item)}
           onClose={item => console.log('close: ', item)}

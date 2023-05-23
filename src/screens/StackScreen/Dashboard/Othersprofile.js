@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,9 +9,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+///////////react native paper///////////
+import {Avatar} from 'react-native-paper';
+
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
-import CustomModal from '../../../components/Modal/CustomModal';
 import DashboardCard from '../../../components/CustomCards/Dashboard/DashboardCard';
 import CustomButtonhere from '../../../components/Button/CustomButton';
 import RattingBottomSheet from '../../../components/CustomBottomSheet/RattingBTS';
@@ -33,55 +35,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 ///////////////////icons///////////
 import Icon from 'react-native-vector-icons/Ionicons';
 
-/////////////colors////////////
-import Colors from '../../../utills/Colors';
-
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_1.png'),
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_2.png'),
-    },
-    {
-      id: '58694a0f-3dhjk8a1-471f-bd96-145571e29d72',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_3.png'),
-    },
-    {
-      id: 'bd7acbea-c1b781-46c2-aed5-3ad53abb28ba',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_4.png'),
-    },
-    {
-      id: '3ac68afc-c6bjj705-48d3-a47344f8-fbd91aa97f63',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_5.png'),
-    },
-    {
-      id: '58694a0f-3d78ga1-471f-bdhhffh696-145571e29d72',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_6.png'),
-    },
-  ];
-
-const OtherProfile = ({navigation}) => {
-
+const OtherProfile = ({navigation, route}) => {
   //camera and imagepicker
-  const refRBSheet = useRef();
-
-  ///////////////Modal States///////////////
-  const [modalVisible, setModalVisible] = useState(false);
+  const refRBSheet = useRef()
 
   const renderItem = ({item}) => {
     return (
@@ -98,6 +54,64 @@ const OtherProfile = ({navigation}) => {
       />
     );
   };
+
+  /////////////Get Notification/////////////
+  const [id, setId] = useState('');
+  const [coverImage, setCoverImage] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+  const [username, setUsername] = useState('UserName');
+  const [followings, setFollowig] = useState('');
+  const [followers, setFollowers] = useState('');
+  const [rattings, setRattings] = useState('');
+
+  const GetSellerProfileData = async () => {
+    axios({
+      method: 'GET',
+      url: BASE_URL + 'auth/specific_user/' + route.params.seller_id,
+    })
+      .then(async function (response) {
+        setId(response.data.result[0].id)
+        setCoverImage(response.data.result[0].cover_image);
+        setProfileImage(response.data.result[0].image);
+        setUsername(response.data.result[0].username);
+        setFollowig(response.data.followings);
+        setFollowers(response.data.followers);
+        setRattings(response.data.Total_Ratings);
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+  };
+  useEffect(() => {
+    GetSellerProfileData();
+    GetMyItems();
+  }, []);
+
+  /////////////Get Notification///////////
+  const [my_items, setMyItems] = useState([]);
+  const GetMyItems =useCallback( async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch( BASE_URL + 'items/get_items_by_user', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        Item_ID: user_id,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log('response  : ', response);
+        setMyItems(response.result)
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [my_items]);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -111,25 +125,49 @@ const OtherProfile = ({navigation}) => {
           }}
         />
         <View style={{alignItems: 'center'}}>
-          <Image
-            source={require('../../../assets/dummyimages/otherscover.png')}
-            style={{width: wp(95), height: hp(25)}}
-            resizeMode="contain"
-          />
-          <Image
-            source={require('../../../assets/dummyimages/profile.png')}
-            style={{
-              width: wp(25),
-              height: hp(12),
-              borderRadius: wp(5),
-              position: 'absolute',
-              bottom: -30,
-            }}
-            resizeMode="contain"
-          />
+          {coverImage === null ? (
+            <View style={styles.coverimage_view}>
+              <Text style={styles.coverimage_text}>Cover Image</Text>
+            </View>
+          ) : (
+            <Image
+              source={{uri: BASE_URL + coverImage}}
+              style={{width: wp(95), height: hp(25)}}
+              resizeMode="contain"
+            />
+          )}
+
+          {profileImage === null ? (
+            <Avatar.Text
+              style={{
+                position: 'absolute',
+                bottom: -30,
+              }}
+              size={hp(12)}
+              label={
+                username === null
+                  ? 'UserName'.substring(0, 2)
+                  : username.substring(0, 2)
+              }
+            />
+          ) : (
+            <Image
+              source={{uri: BASE_URL + profileImage}}
+              style={{
+                width: wp(25),
+                height: hp(12),
+                borderRadius: wp(15),
+                position: 'absolute',
+                bottom: -30,
+              }}
+              resizeMode="contain"
+            />
+          )}
         </View>
         <View style={{alignItems: 'center', marginTop: hp(5)}}>
-          <Text style={{color: 'white'}}>Username</Text>
+          <Text style={{color: 'white'}}>
+            {username === null ? 'UserName' : username}
+          </Text>
         </View>
         <View
           style={{
@@ -143,7 +181,7 @@ const OtherProfile = ({navigation}) => {
             //   /width: wp(62),
           }}>
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.verticleToptext}>456</Text>
+            <Text style={styles.verticleToptext}>{followings}</Text>
             <Text
               style={styles.verticletext}
               onPress={() => navigation.navigate('Followers')}>
@@ -152,7 +190,7 @@ const OtherProfile = ({navigation}) => {
           </View>
           <View style={styles.verticleLine}></View>
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.verticleToptext}>234</Text>
+            <Text style={styles.verticleToptext}>{followers}</Text>
             <Text
               style={styles.verticletext}
               onPress={() => navigation.navigate('Followings')}>
@@ -163,7 +201,9 @@ const OtherProfile = ({navigation}) => {
           <View style={{alignItems: 'center'}}>
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
               <Icon name={'star'} size={16} color={'#F7FF00'} />
-              <Text style={[styles.verticleToptext,{marginLeft:wp(1)}]}>4.5</Text>
+              <Text style={[styles.verticleToptext, {marginLeft: wp(1)}]}>
+                {rattings}
+              </Text>
             </View>
             <TouchableOpacity
               style={{
@@ -176,39 +216,45 @@ const OtherProfile = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{marginLeft:wp(5),marginTop:hp(3)}}>
-        <Text style={styles.verticleToptext}>Posts</Text>
+        <View style={{marginLeft: wp(5), marginTop: hp(3)}}>
+          <Text style={styles.verticleToptext}>Posts</Text>
         </View>
- 
-        <FlatList
-          data={DATA}
-          //numColumns={3}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index}
-          scrollEnabled={false}
-          horizontal={true}
-        />
-              <View style={{height:hp(10),marginBottom:hp(5)}}>
-        <CustomButtonhere
-          title={'Rate Profile'}
-          widthset={80}
-          topDistance={5}
-          //loading={loading}
-          //disabled={disable}
-          onPress={() => refRBSheet.current.open()}
-        />
-      </View>
+        {my_items.length === 0 ? (
+          <Text style={styles.noposttext}>No Posts Available</Text>
+        ) : (
+          <FlatList
+            data={my_items}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index}
+            scrollEnabled={false}
+            horizontal={true}
+
+
+
+
+
+
+          />
+        )}
+
+        <View style={{height: hp(10), marginBottom: hp(5)}}>
+          <CustomButtonhere
+            title={'Rate Profile'}
+            widthset={80}
+            topDistance={5}
+            //loading={loading}
+            //disabled={disable}
+            onPress={() => refRBSheet.current.open()}
+          />
+        </View>
       </ScrollView>
-            <RattingBottomSheet
+      <RattingBottomSheet
         refRBSheet={refRBSheet}
         onClose={() => refRBSheet.current.close()}
-        title={"Rate Profile"}
-        subtitle={"Enter Description"}
-        btntext={"REPORT"}
-        onpress={() => {
-          {
-          }
-        }}
+        title={'Rate Profile'}
+        subtitle={'Enter Description'}
+        getData={()=>GetSellerProfileData()}
+        seller_id={id}
       />
     </SafeAreaView>
   );
