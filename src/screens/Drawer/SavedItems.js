@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
 
 ///////////////app components////////////////
@@ -7,12 +7,6 @@ import DashboardCard from '../../components/CustomCards/Dashboard/DashboardCard'
 
 /////////////app styles///////////////////
 import styles from './styles';
-
-//////////height and width/////////////
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
 
 ////////////////api////////////////
 import axios from 'axios';
@@ -58,14 +52,45 @@ const DATA = [
   },
 ];
 
-const SavedItems = ({navigation,route}) => {
+const SavedItems = ({navigation, route}) => {
+  /////////////Get Notification/////////////
+  const [saved_items, setSavedtems] = useState('');
+
+  const GetSaved_Items = useCallback(async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    console.log('hree data', token);
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'save_item/view_save_Item', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        user_ID: '1',
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log('response saved items : ', response);
+        setSavedtems(response.result);
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [saved_items]);
+  useEffect(() => {
+    GetSaved_Items();
+  }, []);
   const renderItem = ({item}) => {
     return (
       <DashboardCard
-        image={item.image}
-        maintext={item.title}
-        subtext={item.location}
-        price={item.price}
+        image={BASE_URL + item?.images[0]}
+        maintext={item?.name}
+        subtext={item?.location}
+        price={item?.price}
         onpress={() => {
           navigation.navigate('MainListingsDetails', {
             listing_id: item.id,
@@ -88,7 +113,7 @@ const SavedItems = ({navigation,route}) => {
         />
 
         <FlatList
-          data={DATA}
+          data={saved_items}
           numColumns={3}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}

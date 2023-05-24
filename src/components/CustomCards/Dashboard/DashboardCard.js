@@ -4,18 +4,6 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 /////////////styles///////////////
 import styles from './styles';
 
-/////////////colors////////////
-import Colors from '../../../utills/Colors';
-
-///////////////height and width/////////
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-
-/////////app imagaes////////
-import {appImages} from '../../../constant/images';
-
 const DashboardCard = props => {
   /////////price formatter
   const formatter = new Intl.NumberFormat('en-US', {
@@ -28,10 +16,10 @@ const DashboardCard = props => {
       <View style={styles.card}>
         <View
           style={styles.imageView}>
-          {/* <Image
+          <Image
             source={{uri:props.image}}
             style={styles.image}
-            resizeMode="cover"/> */}
+            resizeMode="cover"/>
         </View>
         <View
           style={styles.textView}>

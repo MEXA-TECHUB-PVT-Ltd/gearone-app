@@ -79,6 +79,7 @@ const Home = ({navigation}) => {
 
   //////////loader state/////
   const [isLoading,setLoading]=useState(false)
+  
     /////////////Get Notification/////////////
     const [dashboard_stories, setDashboardStories] = useState('');
     const GetDashboardStories =useCallback( async () => {

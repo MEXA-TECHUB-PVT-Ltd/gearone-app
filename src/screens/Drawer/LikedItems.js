@@ -1,69 +1,67 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {SafeAreaView, ScrollView, FlatList} from 'react-native';
 
 ///////////////app components////////////////
 import Header from '../../components/Header/Header';
 import DashboardCard from '../../components/CustomCards/Dashboard/DashboardCard';
+import NoDataFound from '../../components/NoDataFound/NoDataFound';
 
 /////////////app styles///////////////////
 import styles from './styles';
 
-//////////height and width/////////////
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
-
 ////////////////api////////////////
-import axios from 'axios';
 import {BASE_URL} from '../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_1.png'),
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_2.png'),
-  },
-  {
-    id: '58694a0f-3dhjk8a1-471f-bd96-145571e29d72',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_3.png'),
-  },
-  {
-    id: 'bd7acbea-c1b781-46c2-aed5-3ad53abb28ba',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_4.png'),
-  },
-  {
-    id: '3ac68afc-c6bjj705-48d3-a47344f8-fbd91aa97f63',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_5.png'),
-  },
-  {
-    id: '58694a0f-3d78ga1-471f-bdhhffh696-145571e29d72',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_6.png'),
-  },
-];
+const LikedItems = ({navigation, route}) => {
+  //////////loader state/////
+  const [isLoading, setLoading] = useState(false);
 
-const LikedItems = ({navigation,route}) => {
+  /////////////Get Notification/////////////
+  const [liked_items, setLikedItems] = useState('');
+
+  const GetLiked_Items = useCallback(async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'like_item/view_like_Item', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        user_ID: user_id,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log(
+          'response linked items : ',
+          response.AllLikes,
+          response.result.length,
+        );
+        if (response.result.length === 0) {
+          <NoDataFound text={'No data here'} icon={'exclaim'} />;
+          setLoading(false);
+        } else {
+          setLikedItems(response.result);
+          setLoading(false);
+        }
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [liked_items]);
+  useEffect(() => {
+    GetLiked_Items();
+  }, []);
   const renderItem = ({item}) => {
     return (
       <DashboardCard
-        image={item.image}
-        maintext={item.title}
+        image={BASE_URL + item?.images[0]}
+        maintext={item.name}
         subtext={item.location}
         price={item.price}
         onpress={() => {
@@ -88,7 +86,7 @@ const LikedItems = ({navigation,route}) => {
         />
 
         <FlatList
-          data={DATA}
+          data={liked_items}
           numColumns={3}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}

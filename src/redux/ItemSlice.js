@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const ItemSlice = createSlice({
   name: 'item',
   initialState: {
-    name: '',
-    id: ''
+    id: '',
+    navplace:''
   },
   reducers: {
     setItemDetail: (state, action) => {

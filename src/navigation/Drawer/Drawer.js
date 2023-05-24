@@ -9,6 +9,8 @@ import SavedItems from '../../screens/Drawer/SavedItems';
 import AboutUs from '../../screens/Drawer/AboutUs';
 import TermsCondition from '../../screens/Drawer/Terms&Conditions';
 import ChatList from '../../screens/Drawer/ChatList/ChatList';
+import Merchandise from '../../screens/Drawer/Merchandise';
+import MyOrders from '../../screens/Drawer/MyOrders';
 
 const Drawer = createDrawerNavigator();
 
@@ -56,6 +58,20 @@ export default function Drawerroute() {
         }}
         name="ChatList"
         component={ChatList}
+      />
+      <Drawer.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="Merchandise"
+        component={Merchandise}
+      />
+      <Drawer.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="MyOrders"
+        component={MyOrders}
       />
     </Drawer.Navigator>
   );

@@ -81,10 +81,24 @@ export const DrawerContent = props => {
               }}
             />
             <DrawerItem
-              label="Apparel Sale"
+              label="My Order"
+              labelStyle={styles.subtitle}
+              onPress={() => {
+                props.navigation.navigate('MyOrders');
+              }}
+            />
+            <DrawerItem
+              label="Daily Deals"
               labelStyle={styles.subtitle}
               onPress={() => {
                 props.navigation.navigate('Home');
+              }}
+            />
+            <DrawerItem
+              label="Merchandise"
+              labelStyle={styles.subtitle}
+              onPress={() => {
+                props.navigation.navigate('Merchandise');
               }}
             />
             <DrawerItem
@@ -197,7 +211,7 @@ const styles = StyleSheet.create({
     fontSize: hp(1.8),
     fontFamily: fontFamily.Poppins_Regular,
     color: 'white',
-    marginTop: hp(-2.4),
+    marginTop: hp(-2.2),
   },
   bottomDrawerSection: {
     height: hp(35),

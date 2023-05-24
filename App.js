@@ -18,6 +18,7 @@ import ChatScreen from './src/screens/Drawer/Chat/ChatScreen';
 import EditProfile from './src/screens/StackScreen/MyGear/EditProfile';
 import AllFollowers from './src/screens/StackScreen/MyGear/AllFollowers';
 import AllFollowings from './src/screens/StackScreen/MyGear/AllFollowings';
+import MerchandiseDetails from './src/screens/StackScreen/Drawer/MerchandiseDetail';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -107,6 +108,13 @@ function App() {
           <Stack.Screen
             name="AllFollowings"
             component={AllFollowings}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="MerchandiseDetails"
+            component={MerchandiseDetails}
             options={{
               headerShown: false,
             }}

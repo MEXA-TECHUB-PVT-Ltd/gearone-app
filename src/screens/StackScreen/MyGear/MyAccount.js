@@ -55,12 +55,11 @@ const MyAccount = ({navigation, route}) => {
   };
   useEffect(() => {
     GetProfileData();
-    //GetSocialLinksData()
-    GetMyItems()
+    GetSocailLinks()
   }, []);
 
   /////////socia links////////
-  const GetMyItems =useCallback( async () => {
+  const GetSocailLinks =useCallback( async () => {
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
     console.log("here id",user_id,)
@@ -88,23 +87,7 @@ const MyAccount = ({navigation, route}) => {
         console.log('Error  : ', error);
       });
   }, []);
-  const GetSocialLinksData = async () => {
-    var user_id = await AsyncStorage.getItem('User_id');
-    axios({
-      method: 'POST',
-      url: BASE_URL + 'SocialMedia/get_social_media',
-      body:{
-        user_id,
-      } 
-    })
-      .then(async function (response) {
-        console.log('list data here LINKS', response.data.result);
-
-      })
-      .catch(function (error) {
-        console.log('error', error);
-      });
-  };
+ 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
