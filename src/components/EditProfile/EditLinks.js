@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
 import {View, Text} from 'react-native';
 
 ///////////////app components////////////////
@@ -16,10 +16,18 @@ import Authstyles from '../../styles/Authstyles';
 
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
-import { editLinksMenu,editImagesMenu, editPersonalMenu } from '../../redux/EditprofileSlice';
+import {
+  editLinksMenu,
+  editImagesMenu,
+  editPersonalMenu,
+} from '../../redux/EditprofileSlice';
+
+////////////////api////////////////
+import axios from 'axios';
+import {BASE_URL} from '../../utills/ApiRootUrl';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EditSocialLinks = ({navigation}) => {
-  
   ////////////////redux/////////////////
   const dispatch = useDispatch();
 
@@ -29,20 +37,53 @@ const EditSocialLinks = ({navigation}) => {
   const ref_input4 = useRef();
 
   ///////////////data states////////////////////
+  const [social_links_id, setSocial_Links_Id] = useState('');
   const [facebook, setfacebook] = useState('');
   const [insta, setInsta] = useState('');
   const [twitter, setTwitter] = useState('');
   const [linkedIn, setLinkedIn] = useState('');
 
+  /////////socia links////////
+  const GetSocailLinks = useCallback(async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    console.log('here id', user_id);
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'SocialMedia/get_social_media', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        userID: user_id,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log('response hgeree are  : ', response.result[0].facebook);
+        setSocial_Links_Id(response.result[0].id);
+        setfacebook(response.result[0].facebook);
+        setLinkedIn(response.result[0].linkedin);
+        setTwitter(response.result[0].twitter);
+        setInsta(response.result[0].insta);
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, []);
+
   //////////////Api Calling////////////////////
   const EditSocialLinks = async () => {
-    setloading(1);
-    setdisable(1);
+    // setloading(1);
+    // setdisable(1);
     const user_id = await AsyncStorage.getItem('User_id');
     console.log('here user id', user_id);
     var token = await AsyncStorage.getItem('JWT_Token');
     let data = JSON.stringify({
       userID: user_id,
+      SocialMediaID: social_links_id,
       facebook: facebook,
       twitter: twitter,
       insta: insta,
@@ -50,7 +91,7 @@ const EditSocialLinks = ({navigation}) => {
     });
 
     let config = {
-      method: 'POST',
+      method: 'PUT',
       url: BASE_URL + 'SocialMedia/update_social_media',
       headers: {
         Authorization: `Bearer ${JSON.parse(token)}`,
@@ -62,14 +103,18 @@ const EditSocialLinks = ({navigation}) => {
       .request(config)
       .then(response => {
         console.log('here data', response.data);
-        setloading(0);
-        setdisable(0);
-        dispatch(setLinksMenu(false)), dispatch(setCoverImageMenu(true));
+        dispatch(editLinksMenu(false)), dispatch(editImagesMenu(true));
+        // setloading(0);
+        // setdisable(0);
+        //dispatch(setLinksMenu(false)), dispatch(setCoverImageMenu(true));
       })
       .catch(error => {
         console.log(error);
       });
   };
+  useEffect(() => {
+    GetSocailLinks();
+  }, []);
   return (
     <View>
       <View style={{marginTop: hp(6)}}>
@@ -128,9 +173,7 @@ const EditSocialLinks = ({navigation}) => {
           // loading={loading}
           // disabled={disable}
           onPress={() => {
-            EditSocialLinks()
-            dispatch(editLinksMenu(false)),
-            dispatch(editImagesMenu(true))
+            EditSocialLinks();
           }}
         />
       </View>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
 
 ///////////////app components////////////////
@@ -23,30 +23,35 @@ const MyPosts = ({navigation,route}) => {
      /////////////Get Notification/////////////
      const [myposts, setMyPosts] = useState('');
 
-     const GetMyPosts = async () => {
-      var user_id = await AsyncStorage.getItem('User_id');
-       console.log('order request function', user_id);
-       axios({
-         method: 'POST',
-         url: BASE_URL + 'items/get_items_by_user',
-         body:
-         {
-          user_ID:user_id
-         }
-       })
-         .then(async function (response) {
-           console.log('list data here ', response.data.result);
-           setMyPosts(response.data.result);
-         })
-         .catch(function (error) {
-           console.log('error', error);
-         });
-     };
        useEffect(() => {
-        GetMyPosts()
+        GetMyItems()
          
        }, []);
-
+  /////////////Get Notification///////////
+  const GetMyItems =useCallback( async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch( BASE_URL + 'items/get_items_by_user', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        Item_ID: user_id,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log('response  : ', response);
+        setMyPosts(response.result)
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [myposts]);
   const renderItem = ({item}) => {
     return (
       <DashboardCard

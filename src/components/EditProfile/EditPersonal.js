@@ -28,6 +28,9 @@ const EditPersonalDetail = ({navigation}) => {
   ////////////////redux/////////////////
   const dispatch = useDispatch();
 
+    //camera and imagepicker
+    const refRBSheet = useRef();
+
   /////////TextInput References///////////
   const ref_input2 = useRef();
   const ref_input3 = useRef();

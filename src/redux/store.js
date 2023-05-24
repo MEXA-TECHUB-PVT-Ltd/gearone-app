@@ -8,6 +8,8 @@ import ImagePathReducer from './ImagePathSlice'
 import CreateProfileReducer from './CreateProfileSlice'
 import EditProfileReducer from './EditprofileSlice'
 import EmojiReducer from './EmojiSlice'
+import ImageArrayReducer from './ImagesArray'
+import ItemReducer from './ItemSlice'
 
 export const Store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ export const Store = configureStore({
     createProfile:CreateProfileReducer,
     editProfile:EditProfileReducer,
     emoji:EmojiReducer,
+    imagesArray:ImageArrayReducer,
+    ItemDetail:ItemReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware()
 });

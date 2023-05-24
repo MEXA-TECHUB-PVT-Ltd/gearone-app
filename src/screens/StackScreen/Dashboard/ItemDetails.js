@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -35,12 +35,24 @@ import Colors from '../../../utills/Colors';
 /////////////////async/////////////
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+////////////////////redux////////////
+import {useSelector, useDispatch} from 'react-redux';
+import {setItemDetail} from '../../../redux/ItemSlice';
+
+////////////////api////////////////
+import axios from 'axios';
+import {BASE_URL} from '../../../utills/ApiRootUrl';
+
 const ItemDetails = ({navigation, route}) => {
+  ////////////redux////////////
+  const dispatch = useDispatch();
+
+  /////////////reducer value////////////
+  const ItemDetail = useSelector(state => state.ItemDetail);
+  console.log('item id here in redux', ItemDetail);
+
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
-
-  ///////////////PREVIOUS DATA////////////
-  const [predata] = useState(route.params);
 
   ///////////////////loader loading state///////////////
   const [loading, setloading] = useState(true);
@@ -50,22 +62,134 @@ const ItemDetails = ({navigation, route}) => {
 
   ////////////Listing Checks//////////////
   const [Item_like_user_id, setItem_Like_User_id] = useState('');
+  const [Item_like_user_status, setItem_Like_User_Status] = useState('');
 
   /////////////Item Detail states/////////////
-  const [Item_item_title, setItem_Item_Title] = useState('here');
-  const [Item_item_price, setItem_Item_Price] = useState('here');
-  const [Item_comments_count, setItem_Comments_count] = useState('23');
-  const [Item_likes_count, setItem_Likes_count] = useState('23');
-  const [Item_views_count, setItem_Views_count] = useState('56');
-  const [Item_details, setItem_Details] = useState('here deatils');
+  const [Item_Images, setItem_Images] = useState('');
+  const [Item_item_title, setItem_Item_Title] = useState('');
+  const [Item_item_price, setItem_Item_Price] = useState('');
+  const [Item_likes_count, setItem_Likes_count] = useState('');
+  const [Item_description, setItem_Description] = useState('');
 
+  //////////user//////////
+  const [Item_userid, setItem_UserId] = useState('');
+  const [Item_userImage, setItem_UserImage] = useState('User Name');
+  const [Item_userName, setItem_UserName] = useState('User Name');
+  const [Item_user_follower_count, setItem_User_Follower_Count] =
+    useState('4855');
   const [login_user_id, setlogin_user_id] = useState();
+
   const images = [
     require('../../../assets/dummyimages/image_1.png'),
     require('../../../assets/dummyimages/image_2.png'),
     require('../../../assets/dummyimages/image_3.png'),
     require('../../../assets/dummyimages/image_4.png'),
   ];
+  const GetItemDetail = useCallback(async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'items/get_item', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        Item_ID: ItemDetail,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log('heree item detail data', response);
+        setItem_Images(response?.result[0].images);
+        GetUserData(response?.result[0].userid - 0);
+        setItem_Item_Title(response?.result[0].name);
+        setItem_Item_Price(response?.result[0].price);
+        setItem_Comments_count(response?.result[0].username);
+        setItem_Likes_count(response?.liked_by.length);
+        var itemhere = response?.liked_by.find(
+          item => item.likey_by === user_id - 0,
+        );
+        setItem_Like_User_id(itemhere?.likey_by - 0);
+        setItem_Views_count(response?.followers);
+        setItem_Description(response?.description);
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [Item_likes_count]);
+  useEffect(() => {
+    GetItemDetail();
+    getuser();
+  }, []);
+  const getuser = async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    setlogin_user_id(user_id - 0);
+  };
+
+  /////////////Seller data////////////
+  const GetUserData = async props => {
+    axios({
+      method: 'GET',
+      url: BASE_URL + 'auth/specific_user/' + props,
+    })
+      .then(async function (response) {
+        setItem_UserId(response.data?.result[0].id);
+        setItem_UserImage(response.data?.result[0].image);
+        setItem_UserName(response.data?.result[0].username);
+        setItem_User_Follower_Count(response.data.followers);
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+  };
+
+  //-----------like list///////////
+  const ltem_like = async props => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var raw = JSON.stringify({
+      item_ID: ItemDetail,
+      user_ID: user_id,
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        'Content-Type': 'application/json',
+      },
+      body: raw,
+    };
+    fetch(BASE_URL + 'like_item/like_item', requestOptions)
+      .then(response => response.text())
+      .then(result => GetItemDetail())
+      .catch(error => console.log('error', error));
+  };
+  //-----------unlike list
+  const Item_unlike = async props => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var raw = JSON.stringify({
+      item_ID: ItemDetail,
+      user_ID: user_id,
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        'Content-Type': 'application/json',
+      },
+      body: raw,
+    };
+    fetch(BASE_URL + 'like_item/un_like_item', requestOptions)
+      .then(response => response.text())
+      .then(result => GetItemDetail())
+      .catch(error => console.log('error', error));
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -78,9 +202,7 @@ const ItemDetails = ({navigation, route}) => {
             navigation.goBack();
           }}
         />
-        <AutoImageSlider slider_images_array={images} />
-        {/*
-         */}
+        <AutoImageSlider slider_images_array={Item_Images.length===0?images:Item_Images} />
         <View>
           <View
             style={{
@@ -90,28 +212,9 @@ const ItemDetails = ({navigation, route}) => {
               marginTop: hp(5),
               marginHorizontal: wp(5),
             }}>
-            <Text style={styles.ItemName_text}>Item Name</Text>
-            <Text style={styles.ItemPrice_text}>4578 $</Text>
+            <Text style={styles.ItemName_text}>{Item_item_title}</Text>
+            <Text style={styles.ItemPrice_text}>{Item_item_price} $</Text>
           </View>
-
-          <TouchableOpacity
-            style={[styles.iconview, {width: wp(80)}]}
-            onPress={() => {
-              navigation.navigate('CommentsDetails', route.params);
-            }}>
-            <MaterialCommunityIcons
-              name={'share'}
-              size={20}
-              color={'white'}
-              style={{marginRight: wp(1)}}
-              onPress={() => {
-                {
-                  navigation.navigate('CommentsDetails', route.params);
-                }
-              }}
-            />
-            <Text style={styles.icontext}>234 Shares</Text>
-          </TouchableOpacity>
           {Item_like_user_id === login_user_id ? (
             <TouchableOpacity
             //onPress={() => Item_unlike(predata.Item_id)}
@@ -123,7 +226,7 @@ const ItemDetails = ({navigation, route}) => {
                   color={'white'}
                   style={{marginRight: wp(1)}}
                 />
-                <Text style={styles.icontext}>234 Likes</Text>
+                <Text style={styles.icontext}>{Item_likes_count} Likes</Text>
               </View>
             </TouchableOpacity>
           ) : (
@@ -135,10 +238,14 @@ const ItemDetails = ({navigation, route}) => {
                 name={'heart'}
                 //name={'heart-outline'}
                 size={20}
-                color={'white'}
+                color={
+                  Item_like_user_id === login_user_id
+                    ? Colors.Appthemecolor
+                    : 'white'
+                }
                 style={{marginRight: wp(1)}}
               />
-              <Text style={styles.icontext}>234 Likes</Text>
+              <Text style={styles.icontext}>{Item_likes_count} Likes</Text>
             </TouchableOpacity>
           )}
 
@@ -151,7 +258,7 @@ const ItemDetails = ({navigation, route}) => {
               marginTop: hp(1.5),
               marginBottom: hp(1),
               //backgroundColor:"red",
-              //   /width: wp(62),
+              //width: wp(62),
             }}>
             <View style={{alignItems: 'center'}}>
               <MaterialCommunityIcons
@@ -166,14 +273,21 @@ const ItemDetails = ({navigation, route}) => {
               </Text>
             </View>
             <View style={styles.verticleLine}></View>
-            <View style={{alignItems: 'center'}}>
-              <Icon name={'heart'} size={20} color={'white'} />
-              <Text
-                style={styles.verticletext}
-                onPress={() => navigation.navigate('Followings')}>
-                Like
-              </Text>
-            </View>
+            {Item_like_user_id === login_user_id ? (
+              <TouchableOpacity
+                style={{alignItems: 'center'}}
+                onPress={() => Item_unlike()}>
+                <Icon name={'heart'} size={20} color={Colors.Appthemecolor} />
+                <Text style={styles.verticletext}>{'UnLike'}</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={{alignItems: 'center'}}
+                onPress={() => ltem_like()}>
+                <Icon name={'heart'} size={20} color={'white'} />
+                <Text style={styles.verticletext}>{'Like'}</Text>
+              </TouchableOpacity>
+            )}
             <View style={styles.verticleLine}></View>
             <TouchableOpacity
               style={{alignItems: 'center'}}
@@ -195,16 +309,12 @@ const ItemDetails = ({navigation, route}) => {
             </TouchableOpacity>
           </View>
           <View style={{marginVertical: hp(2), marginLeft: wp(5)}}>
-            <Text style={styles.heading_text}>Description</Text>
+            <Text style={styles.heading_text}>
+              Description {Item_userid + '    ' + login_user_id}
+            </Text>
           </View>
           <View style={{paddingHorizontal: wp(5)}}>
-            <Text style={styles.detail_text}>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.
-            </Text>
+            <Text style={styles.detail_text}>{Item_description}</Text>
           </View>
           <View
             style={{
@@ -212,28 +322,38 @@ const ItemDetails = ({navigation, route}) => {
               borderBottomWidth: hp(0.15),
               marginVertical: hp(2),
             }}></View>
-          <View style={{marginVertical: hp(2), marginLeft: wp(5)}}>
-            <Text style={styles.heading_text}>Seller's Detail</Text>
-          </View>
-          <View style={styles.userdeatilview}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                source={require('../../../assets/dummyimages/profile.png')}
-                style={styles.userimage}
-                resizeMode="contain"
-              />
-              <View style={{marginLeft: wp(3)}}>
-                <Text style={styles.user_name}>Username</Text>
-                <Text style={styles.user_followers}>23.4k followers</Text>
+          {Item_userid === login_user_id ? null : (
+            <View>
+              <View style={{marginVertical: hp(2), marginLeft: wp(5)}}>
+                <Text style={styles.heading_text}>Seller's Detail</Text>
+              </View>
+              <View style={styles.userdeatilview}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Image
+                    source={{uri: BASE_URL + Item_userImage}}
+                    style={styles.userimage}
+                    resizeMode="contain"
+                  />
+                  <View style={{marginLeft: wp(3)}}>
+                    <Text style={styles.user_name}>{Item_userName}</Text>
+                    <Text style={styles.user_followers}>
+                      {Item_user_follower_count}k followers
+                    </Text>
+                  </View>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.btn_view}
+                  onPress={() =>
+                    navigation.navigate('OtherProfile', {
+                      seller_id: Item_userid,
+                    })
+                  }>
+                  <Text style={styles.btn_text}>View Profile</Text>
+                </TouchableOpacity>
               </View>
             </View>
-
-            <TouchableOpacity
-              style={styles.btn_view}
-              onPress={() => navigation.navigate('OtherProfile')}>
-              <Text style={styles.btn_text}>View Profile</Text>
-            </TouchableOpacity>
-          </View>
+          )}
         </View>
       </ScrollView>
       <CustomModal
