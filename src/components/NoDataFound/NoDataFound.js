@@ -20,11 +20,12 @@ const NoDataFound = props => {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: hp(20),
+        backgroundColor:'red'
       }}>
       <MaterialCommunityIcons
         name={props.icon}
         size={hp(5)}
-        color={'grey'}
+        color={'white'}
         onPress={props.iconPress}
       />
       <Text style={style.labeltext}>{props.text}</Text>
@@ -33,7 +34,7 @@ const NoDataFound = props => {
 };
 const style = StyleSheet.create({
   labeltext: {
-    color: 'grey',
+    color: 'white',
     fontSize: hp(2.3),
     fontFamily: fontFamily.Poppins_Medium,
     marginTop: hp(2),

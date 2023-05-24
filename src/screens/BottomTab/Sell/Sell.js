@@ -20,77 +20,41 @@ import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_1.png'),
-    desc: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_2.png'),
-    desc: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam',
-  },
-  {
-    id: '58694a0f-3dhjk8a1-471f-bd96-145571e29d72',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_3.png'),
-    desc: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam',
-  },
-  {
-    id: 'bd7acbea-c1b781-46c2-aed5-3ad53abb28ba',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_4.png'),
-    desc: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam',
-  },
-  {
-    id: '3ac68afc-c6bjj705-48d3-a47344f8-fbd91aa97f63',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_5.png'),
-    desc: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam',
-  },
-  {
-    id: '58694a0f-3d78ga1-471f-bdhhffh696-145571e29d72',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../../assets/dummyimages/image_6.png'),
-    desc: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam',
-  },
-];
 const Sell = ({navigation}) => {
 
        /////////////Get Notification/////////////
        const [my_items, setMyItems] = useState();
 
        const GetMyItems = async () => {
+        var token = await AsyncStorage.getItem('JWT_Token');
         var user_id = await AsyncStorage.getItem('User_id');
-        console.log("here data",user_id)
-         axios({
-           method: 'POST',
-           url: BASE_URL + 'items/get_items_by_user',
-           body:
-           {
-            user_ID:user_id
-           }
-         })
-           .then(async function (response) {
-             console.log('list data here im my items ', response.data);
-             setMyItems(response.data.result);
-           })
-           .catch(function (error) {
-             console.log('error', error);
-           });
+        var headers = {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        };
+        let data = JSON.stringify({
+          "user_ID": "1"
+        });
+        
+        let config = {
+          method: 'post',
+          headers:headers,
+          url: BASE_URL+'items/get_items_by_user',
+          data : data
+        };
+        
+        axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data.result));
+          setMyItems(response.data.result)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
        };
          useEffect(() => {
           GetMyItems()
-           
          }, []);
   const renderItem = ({item}) => {
     return (

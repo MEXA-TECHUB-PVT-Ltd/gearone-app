@@ -4,48 +4,68 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 /////////////styles///////////////
 import styles from './styles';
 
-/////////////colors////////////
-import Colors from '../../../utills/Colors';
+//////////lcons//////////
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-///////////////height and width/////////
+//////height and width//////////
 import {
-  widthPercentageToDP as wp,
   heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-/////////app imagaes////////
-import {appImages} from '../../../constant/images';
-
 const SellCard = props => {
+  console.log('here image', props.image);
   /////////price formatter
   const formatter = new Intl.NumberFormat('en-US', {
     notation: 'compact',
     compactDisplay: 'short',
   });
   const formattedLikes = formatter.format(props.price);
+  const originalDate = "2023-05-18T05:29:08.604Z";
+const dateObject = new Date(props.order_date);
+
+const day = String(dateObject.getUTCDate()).padStart(2, "0");
+const month = String(dateObject.getUTCMonth() + 1).padStart(2, "0");
+const year = dateObject.getUTCFullYear();
+
+const formattedDate = day + "/" + month + "/" + year;
+console.log(formattedDate);
   return (
-    <TouchableOpacity onPress={props.onpress} activeOpacity={0.9} 
-    style={styles.card}
-    >
-        <View
-          style={styles.imageView}>
-          <Image
-            source={props.image}
-            style={styles.image}
-            resizeMode="cover"/>
-        </View>
-        <View
-          style={styles.textView}>
-          <Text style={styles.maintext}>
-            {props.maintext}
-          </Text>
-          <Text style={styles.pricetext}>
-        {   'Price: '+formattedLikes === '0' ? 'free' :   'Price: '+ formattedLikes+ '$'}
-          </Text>
-          <Text style={styles.subtext}>
-            {props.description}
-          </Text>
-        </View>
+    <TouchableOpacity
+      onPress={props.onpress}
+      activeOpacity={0.9}
+      style={styles.card}>
+        {props.type === 'orders'?
+             <View
+             style={{
+               backgroundColor: 'red',
+               width: wp(25),
+               position: 'absolute',
+               right: 0,
+               top: 0,
+               borderTopRightRadius: wp(1.5),
+               alignItems:'center',
+               justifyContent:'center'
+             }}>
+             <Text style={{color: 'white'}}>{props.status}</Text>
+           </View>
+      :
+      null}
+ 
+      <View style={styles.imageView}>
+        {props.images_array_length === 0 ? (
+          <Ionicons name={'image'} color={'grey'} size={25} />
+        ) : (
+          <Image source={props.image} style={styles.image} resizeMode="cover" />
+        )}
+      </View>
+      <View style={styles.textView}>
+        <Text style={styles.maintext}>{props.maintext}</Text>
+        <Text style={styles.pricetext}>
+          {props.type === 'orders'?"Date: "+ formattedDate :'Price: ' + props.price}
+        </Text>
+        <Text style={styles.subtext}>{props.description}</Text>
+      </View>
     </TouchableOpacity>
   );
 };

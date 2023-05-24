@@ -24,34 +24,40 @@ const MyPosts = ({navigation,route}) => {
      const [myposts, setMyPosts] = useState('');
 
        useEffect(() => {
-        GetMyItems()
+        GetMyPosts()
          
        }, []);
-  /////////////Get Notification///////////
-  const GetMyItems =useCallback( async () => {
-    var user_id = await AsyncStorage.getItem('User_id');
-    var token = await AsyncStorage.getItem('JWT_Token');
-    var headers = {
-      Authorization: `Bearer ${JSON.parse(token)}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    };
-    await fetch( BASE_URL + 'items/get_items_by_user', {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({
-        Item_ID: user_id,
-      }),
-    })
-      .then(response => response.json())
-      .then(async response => {
-        console.log('response  : ', response);
-        setMyPosts(response.result)
-      })
-      .catch(error => {
-        console.log('Error  : ', error);
-      });
-  }, [myposts]);
+
+       //////////////////my Posts///////////
+         const GetMyPosts = useCallback(async () => {
+          var token = await AsyncStorage.getItem('JWT_Token');
+          var user_id = await AsyncStorage.getItem('User_id');
+          var headers = {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          };
+          let data = JSON.stringify({
+            "user_ID":user_id
+          });
+          
+          let config = {
+            method: 'post',
+            headers:headers,
+            url: BASE_URL+'items/get_items_by_user',
+            data : data
+          };
+          
+          axios.request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data.result));
+            setMyPosts(response.data.result)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }, [myposts]);
+
   const renderItem = ({item}) => {
     return (
       <DashboardCard
