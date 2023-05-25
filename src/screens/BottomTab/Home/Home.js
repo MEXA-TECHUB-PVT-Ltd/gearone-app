@@ -79,9 +79,11 @@ const Home = ({navigation}) => {
 
   //////////loader state/////
   const [isLoading,setLoading]=useState(false)
-  
+  const[page,setPage]=useState(1)
+  const[refreshing,setRefreshing]=useState(false)
+
     /////////////Get Notification/////////////
-    const [dashboard_stories, setDashboardStories] = useState('');
+    const [dashboard_stories, setDashboardStories] = useState([]);
     const GetDashboardStories =useCallback( async () => {
       var user_id = await AsyncStorage.getItem('User_id');
       var token = await AsyncStorage.getItem('JWT_Token');
@@ -99,8 +101,25 @@ const Home = ({navigation}) => {
       })
         .then(response => response.json())
         .then(async response => {
-          console.log('response  : ', response);
-          setDashboardStories(response.result)
+          console.log('response here in stories : ', response);
+         //setDashboardStories(response.result)
+          const outputArray = response.result.map(item => ({
+            user_id: item.id+1,
+            user_image: item.image ? `${BASE_URL+item.image}` : 'path_to_placeholder_image',
+            user_name: 'Ad name',
+            stories: [
+              {
+                story_id: item.id,
+                story_image: item.image ? `${BASE_URL+item.image}` : 'path_to_placeholder_image',
+                swipeText: 'Custom swipe text for this story',
+                onPress: () => console.log(`story ${item.id} swiped`),
+              }
+            ]
+          }));
+          
+          console.log( "heree====",outputArray);
+          setDashboardStories([...dashboard_stories,outputArray]);
+          console.log('response after set in stories : ', dashboard_stories);
         })
         .catch(error => {
           console.log('Error  : ', error);
@@ -117,7 +136,7 @@ const Home = ({navigation}) => {
         },
       })
         .then(async function (response) {
-          console.log('here stories data',response.data)
+          //console.log('here stories data',response.data)
   if(response.data.status === true)
   {
     setDashboardStories(response.data.result);
@@ -144,13 +163,19 @@ const Home = ({navigation}) => {
       body: {},
     })
       .then(async function (response) {
+        console.log("here iem data,",response.data.result)
 if(response.data.status === true)
 {
-  setDashboardItems(response.data.result);
+
+  // setDashboardItems(page === 1 ? dashboard_items : [ ...dashboard_items,response.data.result],) 
   setLoading(false)
+  // setRefreshing(false)
+  setDashboardItems(response.data.result);
+
 }else{
   <NoDataFound title={'No data here'}/>
   setLoading(false)
+  setRefreshing(false)
 }
 
       })
@@ -158,9 +183,21 @@ if(response.data.status === true)
         console.log('error', error);
       });
     },[dashboard_items])
+
+   const  handleEndReached = () => {
+      if (!isLoading) {
+        // Increment the page count and fetch the next page of data
+        setPage( page + 1 )
+        GetDashboardItems();
+      }
+    };
+   const onRefresh = () => {
+    setRefreshing(true)
+    GetDashboardItems();
+    };
   useEffect(() => {
     setLoading(true)
-    GetDashboardItems();
+ GetDashboardItems();
     GetDashboardStories()
   }, []);
 
@@ -176,7 +213,7 @@ if(response.data.status === true)
         subtext={item.location}
         price={item.price}
         onpress={() => {
-          dispatch(setItemDetail(item.id, item.name));
+          dispatch(setItemDetail({id:item.id, navplace:'Home'}));
           navigation.navigate('ItemDetails', {
             Item_id: item.id,
           });
@@ -216,7 +253,17 @@ if(response.data.status === true)
         <FlatList
           data={dashboard_items}
           numColumns={3}
+          inverted
           renderItem={renderItem}
+          initialNumToRender={10}
+          maxToRenderPerBatch={10}
+          removeClippedSubviews={true} // Unmount components when outside of window
+          updateCellsBatchingPeriod={100} // Increase time between renders
+          windowSize={7} // Reduce the window size
+          // onEndReached={()=>handleEndReached()}
+          // onEndReachedThreshold={0.5} // Configure the threshold as needed
+          // refreshing={refreshing}
+          // onRefresh={()=>onRefresh()}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
         />

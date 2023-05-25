@@ -2,74 +2,74 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {SafeAreaView, ScrollView, FlatList} from 'react-native';
 
 ///////////////app components////////////////
-import Header from '../../../components/Header/Header';
-import DashboardCard from '../../../components/CustomCards/Dashboard/DashboardCard';
+import Header from '../../components/Header/Header';
+import NoDataFound from '../../components/NoDataFound/NoDataFound';
+import SellCard from '../../components/CustomCards/SellCards/SellCards';
 
 /////////////app styles///////////////////
 import styles from './styles';
 
 ////////////////api////////////////
 import axios from 'axios';
-import {BASE_URL} from '../../../utills/ApiRootUrl';
+import {BASE_URL} from '../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-/////////////////redux///////////
+/////////////redux/////////
 import {useDispatch} from 'react-redux';
-import {setItemDetail} from '../../../redux/ItemSlice';
+import {setItemDetail} from '../../redux/ItemSlice';
 
-const MyPosts = ({navigation, route}) => {
-  /////redux variable///////////
+const DailyDeals = ({navigation, route}) => {
+  //////redux variable/////////
   const dispatch = useDispatch();
 
   /////////////Get Notification/////////////
-  const [myposts, setMyPosts] = useState('');
+  const [daily_deals, setDailyDeals] = useState('');
 
-  useEffect(() => {
-    GetMyPosts();
-  }, []);
-
-  //////////////////my Posts///////////
-  const GetMyPosts = useCallback(async () => {
+  const Get_DailyDeals = useCallback(async () => {
     var token = await AsyncStorage.getItem('JWT_Token');
-    var user_id = await AsyncStorage.getItem('User_id');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
       Accept: 'application/json',
       'Content-Type': 'application/json',
     };
-    let data = JSON.stringify({
-      user_ID: user_id,
-    });
-
     let config = {
       method: 'post',
+      url: BASE_URL+'dailydeals/get_all_daily_deals',
       headers: headers,
-      url: BASE_URL + 'items/get_items_by_user',
-      data: data,
+      data: {},
     };
 
     axios
       .request(config)
       .then(response => {
-        console.log(JSON.stringify(response.data.result));
-        setMyPosts(response.data.result);
+        if (response.data.result.length === 0) {
+          <NoDataFound text={'No data here'} icon={'exclaim'} />;
+        } else {
+          setDailyDeals(response.data.result);
+        }
       })
       .catch(error => {
         console.log(error);
       });
-  }, [myposts]);
-
+  }, [daily_deals]);
+  useEffect(() => {
+    Get_DailyDeals();
+  }, []);
   const renderItem = ({item}) => {
     return (
-      <DashboardCard
-        image={item.image}
-        maintext={item.name}
-        subtext={item.location}
-        price={item.price}
+      <SellCard
+        image={BASE_URL + item.image}
+        maintext={item.title}
+        subtext={item.ends_at}
+        subtext_Text={'Expiry Date: '}
+        subtext_Content={item.ends_at}
+        price={item.ends_at}
+        type={'deals'}
+        description={item.description}
+        images_array_length={item.image === null?0:1}
         onpress={() => {
-          dispatch(setItemDetail({id: item.id, navplace: 'login_user_items'}));
-          navigation.navigate('ItemDetails', {
-            Item_id: item.id,
+          navigation.navigate('MerchandiseDetails', {
+            merchandise_id: item.id,
           });
         }}
       />
@@ -81,15 +81,14 @@ const MyPosts = ({navigation, route}) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <Header
-          title={'My Posts'}
+          title={'Daily Deals'}
           left_icon={'chevron-back-sharp'}
           left_iconPress={() => {
             navigation.goBack();
           }}
         />
-
         <FlatList
-          data={myposts}
+          data={daily_deals}
           numColumns={3}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
@@ -100,4 +99,4 @@ const MyPosts = ({navigation, route}) => {
   );
 };
 
-export default MyPosts;
+export default DailyDeals;
