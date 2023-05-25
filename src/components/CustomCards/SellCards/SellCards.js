@@ -21,8 +21,7 @@ const SellCard = props => {
     compactDisplay: 'short',
   });
   const formattedLikes = formatter.format(props.price);
-  const originalDate = "2023-05-18T05:29:08.604Z";
-const dateObject = new Date(props.order_date);
+const dateObject = new Date(props.subtext_Content);
 
 const day = String(dateObject.getUTCDate()).padStart(2, "0");
 const month = String(dateObject.getUTCMonth() + 1).padStart(2, "0");
@@ -62,7 +61,7 @@ console.log(formattedDate);
       <View style={styles.textView}>
         <Text style={styles.maintext}>{props.maintext}</Text>
         <Text style={styles.pricetext}>
-          {props.type === 'orders'?"Date: "+ formattedDate :'Price: ' + props.price}
+          {props.type === 'orders' || props.type === 'deals'?props.subtext_Text + formattedDate :'Price: ' + props.price}
         </Text>
         <Text style={styles.subtext}>{props.description}</Text>
       </View>

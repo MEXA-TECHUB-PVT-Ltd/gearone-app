@@ -58,31 +58,18 @@ const Login = ({navigation}) => {
     }  else {
       setloading(1);
       setdisable(1);
-      signInWithPhoneNumber(countryCode + phone_no);
-      //final()
+    //signInWithPhoneNumber(countryCode + phone_no);
+      final()
     }
   };
-
   const final=()=>{
     navigation.navigate('Verification', {
-      code_confirmation: confirm,
       country_code: countryCode,
       phone_number: phone_no,
     });
     setloading(0),
     setdisable(0)
   }
-  ///////////autn confirmation status/////////////
-  const [confirm, setConfirm] = useState('');
-
-  // Handle the button press
-  async function signInWithPhoneNumber(phoneNumber) {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    console.log("here data code",confirmation.verificationId)
-    setConfirm(confirmation.verificationId);
-    //final()
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -141,8 +128,8 @@ const Login = ({navigation}) => {
             loading={loading}
             disabled={disable}
             onPress={() => {
-              //formValidation()
-              final()
+              formValidation()
+              //final()
             }}
           />
         </View>

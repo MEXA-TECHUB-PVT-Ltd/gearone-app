@@ -11,6 +11,7 @@ import TermsCondition from '../../screens/Drawer/Terms&Conditions';
 import ChatList from '../../screens/Drawer/ChatList/ChatList';
 import Merchandise from '../../screens/Drawer/Merchandise';
 import MyOrders from '../../screens/Drawer/MyOrders';
+import DailyDeals from '../../screens/Drawer/DailyDeals';
 
 const Drawer = createDrawerNavigator();
 
@@ -72,6 +73,13 @@ export default function Drawerroute() {
         }}
         name="MyOrders"
         component={MyOrders}
+      />
+      <Drawer.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="DailyDeals"
+        component={DailyDeals}
       />
     </Drawer.Navigator>
   );

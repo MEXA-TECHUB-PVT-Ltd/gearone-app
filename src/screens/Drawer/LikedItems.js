@@ -13,7 +13,14 @@ import styles from './styles';
 import {BASE_URL} from '../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/////////////////redux///////////
+import {useDispatch} from 'react-redux';
+import {setItemDetail} from '../../redux/ItemSlice';
+
 const LikedItems = ({navigation, route}) => {
+  ///////////redux variable////////
+  const dispatch = useDispatch();
+
   //////////loader state/////
   const [isLoading, setLoading] = useState(false);
 
@@ -37,11 +44,6 @@ const LikedItems = ({navigation, route}) => {
     })
       .then(response => response.json())
       .then(async response => {
-        console.log(
-          'response linked items : ',
-          response.AllLikes,
-          response.result.length,
-        );
         if (response.result.length === 0) {
           <NoDataFound text={'No data here'} icon={'exclaim'} />;
           setLoading(false);
@@ -65,8 +67,9 @@ const LikedItems = ({navigation, route}) => {
         subtext={item.location}
         price={item.price}
         onpress={() => {
-          navigation.navigate('MainListingsDetails', {
-            listing_id: item.id,
+          dispatch(setItemDetail({id: item.id, navplace: 'login_user_items'}));
+          navigation.navigate('ItemDetails', {
+            Item_id: item.id,
           });
         }}
       />

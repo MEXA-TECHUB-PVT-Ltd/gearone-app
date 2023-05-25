@@ -47,7 +47,6 @@ const MyOrders = ({navigation, route}) => {
       
       axios.request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data.result));
         setMyOrderItems(response.data.result)
       })
       .catch((error) => {
@@ -64,10 +63,11 @@ const MyOrders = ({navigation, route}) => {
         maintext={item.merchandise_name}
         subtext={item.location}
         price={item.price}
-        description={item.description}
+        description={item.merchandise_description}
         status={item.status}
         type={'orders'}
-        order_date={item.createdat}
+        subtext_Content={item.createdat}
+        subtext_Text={'Date: '}
         //images_array_length={item.images.length}
         onpress={() => {
           navigation.navigate('MerchandiseDetails', {

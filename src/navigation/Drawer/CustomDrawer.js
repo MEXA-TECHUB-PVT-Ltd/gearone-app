@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {useTheme, Drawer, Text, Avatar, Title} from 'react-native-paper';
+import React, {useState} from 'react';
+import {View, StyleSheet,TouchableOpacity,Linking} from 'react-native';
+import { Drawer, Text} from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 
 ///////navigation////////
@@ -33,9 +33,14 @@ export const DrawerContent = props => {
 
   //////logout function//////
   const logout = async () => {
-    //await AsyncStorage.removeItem('Userid');
-    props.navigation.navigate('Login');
+    await AsyncStorage.removeItem('User_id');
+    await AsyncStorage.removeItem('JWT_Token');
+    navigation.navigate('Login');
   };
+    //////logout function//////
+    // const links = async () => {
+    //   Linking.openURL(twitter)
+    // };
 
   return (
     <View style={{flex: 1, backgroundColor: Colors.AppBckGround_color}}>
@@ -91,7 +96,7 @@ export const DrawerContent = props => {
               label="Daily Deals"
               labelStyle={styles.subtitle}
               onPress={() => {
-                props.navigation.navigate('Home');
+                props.navigation.navigate('DailyDeals');
               }}
             />
             <DrawerItem
@@ -168,8 +173,7 @@ export const DrawerContent = props => {
         type={'confirmation'}
         onPress_yes={() => {
           setModalVisible(false);
-          navigation.navigate('Login');
-          //logout()
+          logout()
         }}
         onPress_cancel={() => {
           setModalVisible(false);

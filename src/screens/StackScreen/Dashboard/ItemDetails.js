@@ -109,7 +109,7 @@ const ItemDetails = ({navigation, route}) => {
           item => item.likey_by === user_id - 0,
         );
         setItem_Like_User_id(itemhere?.likey_by - 0);
-        setItem_Description(response?.description);
+        setItem_Description(response?.result[0].description);
       })
       .catch(error => {
         console.log('Error  : ', error);
@@ -160,7 +160,8 @@ const ItemDetails = ({navigation, route}) => {
     };
     fetch(BASE_URL + 'like_item/like_item', requestOptions)
       .then(response => response.text())
-      .then(result => GetItemDetail())
+      .then(result => 
+        GetItemDetail())
       .catch(error => console.log('error', error));
   };
   //-----------unlike list
@@ -187,32 +188,88 @@ const ItemDetails = ({navigation, route}) => {
   };
 
   //----------save Item ///////////
-  const Save_like = async props => {
+  const Save_Item = async props => {
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
     var raw = JSON.stringify({
       item_ID: ItemDetail.id,
       user_ID: user_id,
     });
-
-    var requestOptions = {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${JSON.parse(token)}`,
-        'Content-Type': 'application/json',
-      },
-      body: raw,
+var headers={
+  Authorization: `Bearer ${JSON.parse(token)}`,
+  'Content-Type': 'application/json',
+}
+    let data = JSON.stringify({
+      "item_ID":ItemDetail.id,
+      "user_ID":user_id
+    });
+    
+    let config = {
+      method: 'post',
+      url: BASE_URL+'save_item/save_item',
+      headers:headers,
+      data : data
     };
-    fetch(BASE_URL + 'save_item/save_item', requestOptions)
-      .then(response => response.text())
-      .then(
-        res => console.log('here data', res.status),
-        //setItem_Save_User_id(result.result[0].user_id)
+    
+    axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data.status));
+      if(response.data.status === true)
+      {
+     setItem_Save_User_id(response.data.result[0].user_id)
         //setModalVisible(true),
         //GetItemDetail()
-      )
-      .catch(error => console.log('error', error));
+      }
+      else{
+
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   };
+  //----------save Item ///////////
+  const UnSave_Item = async props => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var raw = JSON.stringify({
+      item_ID: ItemDetail.id,
+      user_ID: user_id,
+    });
+var headers={
+  Authorization: `Bearer ${JSON.parse(token)}`,
+  'Content-Type': 'application/json',
+}
+    let data = JSON.stringify({
+      "item_ID":ItemDetail.id,
+      "user_ID":user_id
+    });
+    
+    let config = {
+      method: 'post',
+      url: BASE_URL+'save_item/un_save_item',
+      headers:headers,
+      data : data
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      if(response.data.status === true)
+      {
+     setItem_Save_User_id(response.data.result[0].user_id)
+        //setModalVisible(true),
+        //GetItemDetail()
+      }
+      else{
+
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -240,20 +297,7 @@ const ItemDetails = ({navigation, route}) => {
             <Text style={styles.ItemName_text}>{Item_item_title}</Text>
             <Text style={styles.ItemPrice_text}>{Item_item_price} $</Text>
           </View>
-          {ItemDetail.navplace === 'merchandise' ? (
-            <View
-              style={{
-                marginBottom: hp(2),
-                marginTop: hp(0),
-                marginHorizontal: wp(5),
-              }}>
-              <Text style={styles.ItemName_text}>
-                Category: {Item_item_title}
-              </Text>
-            </View>
-          ) : (
-            <View>
-              {Item_like_user_id === login_user_id ? (
+          {Item_like_user_id === login_user_id ? (
                 <TouchableOpacity
                 //onPress={() => Item_unlike(predata.Item_id)}
                 >
@@ -288,6 +332,9 @@ const ItemDetails = ({navigation, route}) => {
                   <Text style={styles.icontext}>{Item_likes_count} Likes</Text>
                 </TouchableOpacity>
               )}
+          {ItemDetail.navplace === 'login_user_items' ? null : (
+            <View>
+       
 
               <View
                 style={{
@@ -336,14 +383,14 @@ const ItemDetails = ({navigation, route}) => {
                 {Item_save_user_id === login_user_id ? (
                   <TouchableOpacity
                     style={{alignItems: 'center'}}
-                    onPress={() => Save_like()}>
+                    onPress={() => UnSave_Item()}>
                     <Icon name={'bookmark'} size={20} color={'red'} />
                     <Text style={styles.verticletext}>Save</Text>
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity
                     style={{alignItems: 'center'}}
-                    onPress={() => Save_like()}>
+                    onPress={() => Save_Item()}>
                     <Icon name={'bookmark'} size={20} color={'white'} />
                     <Text style={styles.verticletext}>Save</Text>
                   </TouchableOpacity>
@@ -366,26 +413,14 @@ const ItemDetails = ({navigation, route}) => {
 
           <View style={{marginVertical: hp(2), marginLeft: wp(5)}}>
             <Text style={styles.heading_text}>
-              Description {Item_userid + '    ' + login_user_id}
+              Description 
             </Text>
           </View>
           <View style={{paddingHorizontal: wp(5)}}>
             <Text style={styles.detail_text}>{Item_description}</Text>
           </View>
-          {ItemDetail.navplace === 'merchandise' ? (
-            <View style={{height:hp(20),alignItems:'center',justifyContent:'center'}}>
-            <CustomButtonhere
-              title={'Create Order'}
-              widthset={80}
-              topDistance={0}
-              loading={loading}
-              disabled={disable}
-              onPress={() => {
-                //formValidation()
-                final();
-              }}
-            />
-            </View>
+          {ItemDetail.navplace === 'login_user_items' ? (
+        null
           ) : (
             <View>
               <View

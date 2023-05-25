@@ -20,7 +20,13 @@ import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/////////////////redux///////////
+import {useDispatch} from 'react-redux';
+import { setItemDetail } from '../../../redux/ItemSlice';
+
 const Sell = ({navigation}) => {
+  //////redux variable//////////
+  const dispatch=useDispatch()
 
        /////////////Get Notification/////////////
        const [my_items, setMyItems] = useState();
@@ -65,9 +71,9 @@ const Sell = ({navigation}) => {
         price={item.price}
         description={item.description}
         onpress={() => {
-          navigation.navigate('CategoryItem', {
-            listing_id: item.id,
-            categoryname: item.title,
+          dispatch(setItemDetail({id:item.id, navplace:'login_user_items'}));
+          navigation.navigate('ItemDetails', {
+            Item_id: item.id,
           });
         }}
       />

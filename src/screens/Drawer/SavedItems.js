@@ -13,46 +13,14 @@ import axios from 'axios';
 import {BASE_URL} from '../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_1.png'),
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_2.png'),
-  },
-  {
-    id: '58694a0f-3dhjk8a1-471f-bd96-145571e29d72',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_3.png'),
-  },
-  {
-    id: 'bd7acbea-c1b781-46c2-aed5-3ad53abb28ba',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_4.png'),
-  },
-  {
-    id: '3ac68afc-c6bjj705-48d3-a47344f8-fbd91aa97f63',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_5.png'),
-  },
-  {
-    id: '58694a0f-3d78ga1-471f-bdhhffh696-145571e29d72',
-    title: 'Item Name',
-    price: '45',
-    image: require('../../assets/dummyimages/image_6.png'),
-  },
-];
+/////////////////redux///////////
+import {useDispatch} from 'react-redux';
+import {setItemDetail} from '../../redux/ItemSlice';
 
 const SavedItems = ({navigation, route}) => {
+  ///////////redux variable////////
+  const dispatch = useDispatch();
+
   /////////////Get Notification/////////////
   const [saved_items, setSavedtems] = useState('');
 
@@ -69,12 +37,11 @@ const SavedItems = ({navigation, route}) => {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({
-        user_ID: '1',
+        user_ID: user_id,
       }),
     })
       .then(response => response.json())
       .then(async response => {
-        console.log('response saved items : ', response);
         setSavedtems(response.result);
       })
       .catch(error => {
@@ -92,8 +59,9 @@ const SavedItems = ({navigation, route}) => {
         subtext={item?.location}
         price={item?.price}
         onpress={() => {
-          navigation.navigate('MainListingsDetails', {
-            listing_id: item.id,
+          dispatch(setItemDetail({id: item.id, navplace: 'login_user_items'}));
+          navigation.navigate('ItemDetails', {
+            Item_id: item.id,
           });
         }}
       />
@@ -111,7 +79,6 @@ const SavedItems = ({navigation, route}) => {
             navigation.goBack();
           }}
         />
-
         <FlatList
           data={saved_items}
           numColumns={3}

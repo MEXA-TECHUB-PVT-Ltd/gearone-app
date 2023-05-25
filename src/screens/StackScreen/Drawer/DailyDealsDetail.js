@@ -1,5 +1,10 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, View, Text} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+} from 'react-native';
 
 ////////////////////app components//////////////
 import CustomModal from '../../../components/Modal/CustomModal';
@@ -16,7 +21,7 @@ import {
 } from 'react-native-responsive-screen';
 
 /////////////////////app styles////////////
-import styles from './styles';
+import styles from './styles'
 
 /////////////////async/////////////
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,8 +30,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 
-const MerchandiseDetails = ({navigation, route}) => {
-  ////////previous screen data//////////
+const DailyDealsDetails = ({navigation, route}) => {
+  console.log('item id here in redux', route.params);
   const [predata] = useState(route.params);
 
   ///////////////Modal States///////////////
@@ -50,22 +55,23 @@ const MerchandiseDetails = ({navigation, route}) => {
     require('../../../assets/dummyimages/image_3.png'),
     require('../../../assets/dummyimages/image_4.png'),
   ];
-  const GetMerchandiseDetail = useCallback(async () => {
+  const Get_DailyDealsDetail = useCallback(async () => {
     var token = await AsyncStorage.getItem('JWT_Token');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
       Accept: 'application/json',
       'Content-Type': 'application/json',
     };
-    await fetch(BASE_URL + 'merchandise/get_merchandise', {
+    await fetch(BASE_URL + 'dailydeals/get_a_daily_deals', {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({
-        Merchandise_ID: predata.merchandise_id,
+        DailyDeal_ID: predata.merchandise_id,
       }),
     })
       .then(response => response.json())
       .then(async response => {
+        console.log('here response data', response);
         setItem_Images(response?.result[0].images);
         setItem_Item_Title(response?.result[0].name);
         setItem_Item_Price(response?.result[0].price);
@@ -77,19 +83,14 @@ const MerchandiseDetails = ({navigation, route}) => {
       });
   }, [Item_likes_count]);
   useEffect(() => {
-    GetMerchandiseDetail();
+    Get_DailyDealsDetail();
   }, []);
 
-  //---------Order Place on Merchnadise Item ///////////
+  //----------save Item ///////////
   const Merchnadise_Order = async props => {
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
-
-    var headers = {
-      Authorization: `Bearer ${JSON.parse(token)}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    };
+    console.log('here data', token);
 
     let data = JSON.stringify({
       user_id: user_id,
@@ -101,16 +102,20 @@ const MerchandiseDetails = ({navigation, route}) => {
     let config = {
       method: 'post',
       url: BASE_URL + 'orders/add_orders',
-      headers: headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       data: data,
     };
 
     axios
       .request(config)
       .then(response => {
+        console.log(JSON.stringify(response.data.status));
         if (response.data.status == true) {
           setModalVisible(true);
         } else {
+          console.log('here data no');
           //setModalVisible(true)
         }
       })
@@ -195,4 +200,4 @@ const MerchandiseDetails = ({navigation, route}) => {
   );
 };
 
-export default MerchandiseDetails;
+export default DailyDealsDetails;

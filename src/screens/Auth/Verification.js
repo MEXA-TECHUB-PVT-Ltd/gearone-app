@@ -1,5 +1,8 @@
-import React, {useState,useEffect} from 'react';
-import { View, Text, SafeAreaView} from 'react-native';
+import React, {useState, useEffect, useLayoutEffect, useRef} from 'react';
+import {View, Text, SafeAreaView} from 'react-native';
+
+//////////////////firebase////////////////
+import firestore from '@react-native-firebase/firestore';
 
 ///////////////app code fields/////////////
 import {
@@ -15,6 +18,7 @@ import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
 /////////////////app components/////////////////
 import CustomButtonhere from '../../components/Button/CustomButton';
 import CustomModal from '../../components/Modal/CustomModal';
+import Loader from '../../components/Loader/Loader';
 
 /////////////////////app styles/////////////////////
 import Authstyles from '../../styles/Authstyles';
@@ -28,36 +32,41 @@ import {
 } from 'react-native-responsive-screen';
 
 //////////////svgs/////////////
-import Logo from '../../assets/svgs/Logo.svg'
+import Logo from '../../assets/svgs/Logo.svg';
 
 ///////////token function//////////
-import { checkPermission } from '../../api/FCMToken';
+import {checkPermission} from '../../api/FCMToken';
 
 /////////asyc////////////
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 ////////////api//////////
 import axios from 'axios';
-import { BASE_URL } from '../../utills/ApiRootUrl';
+import {BASE_URL} from '../../utills/ApiRootUrl';
 
 ///////////firebase auth/////////////
 import auth from '@react-native-firebase/auth';
 
 ///////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
-import {setUserPhone_No, setUserId, setJWT_Token,setUserPhone_Country_Code} from '../../redux/AuthSlice';
+import {
+  setUserPhone_No,
+  setUserId,
+  setJWT_Token,
+  setUserPhone_Country_Code,
+} from '../../redux/AuthSlice';
 
 const Verification = ({navigation, route}) => {
+  //////////loader state/////
+  const [isLoading, setLoading] = useState(false);
 
-    ////////redux////////////
-    const dispatch = useDispatch();
-    const { } = useSelector(
-      state => state.auth,
-    );
+  ////////redux////////////
+  const dispatch = useDispatch();
+  const {} = useSelector(state => state.auth);
   /////////////previous data state///////////////
   const [predata] = useState(route.params);
 
-  console.log(predata)
+  console.log(predata);
 
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
@@ -87,38 +96,46 @@ const Verification = ({navigation, route}) => {
   const [loading, setloading] = useState(0);
   const [disable, setdisable] = useState(0);
 
-  //check OTP Code
-  const verifyno = () => {
-    setloading(1);
-    if (predata.otp == value) {
-      setloading(0);
-      setModalVisible(true);
-    } else {
-      setModalVisible(true);
-      setloading(0);
-    }
-  };
-
   // Handle login
   function onAuthStateChanged(user) {
-    console.log("here user",user)
     if (user) {
-      // Some Android devices can automatically process the verification code (OTP) message, and the user would NOT need to enter the code.
-      // Actually, if he/she tries to enter it, he/she will get an error message because the code was already used in the background.
-      // In this function, make sure you hide the component(s) for entering the code and/or navigate away from this screen.
-      // It is also recommended to display a message to the user informing him/her that he/she has successfully logged in.
     }
   }
+  const [count, setCount] = useState(0);
+  useLayoutEffect(() => {
+    if (count === 0) {
+      setLoading(true);
+      signInWithPhoneNumber(predata.country_code + predata.phone_number);
+      return;
+    } else {
+      console.log('here no function');
+    }
+  });
 
+  ///////////autn confirmation status/////////////
+  const [confirm, setConfirm] = useState();
+
+  // Handle the button press
+  async function signInWithPhoneNumber(phoneNumber) {
+    setCount(count + 1);
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    console.log('here data code', confirmation.verificationId);
+    setConfirm(confirmation.verificationId);
+    setLoading(false);
+  }
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
   async function confirmCode() {
-    const credential = auth.PhoneAuthProvider.credential(predata.code_confirmation,value);
-    console.log("code",credential)
-    const user=await auth().signInWithCredential(credential);
-    console.log("user",user)
+    setCount(count + 1);
+    const credential = auth.PhoneAuthProvider.credential(
+      confirm.verificationId,
+      value,
+    );
+    console.log('code', credential);
+    const user = await auth().signInWithCredential(credential);
+    console.log('user', user);
     //let userData = await auth().currentUser.linkWithCredential(credential);
     //setUser(userData.user);
     if (credential.secret == value) {
@@ -129,114 +146,131 @@ const Verification = ({navigation, route}) => {
       setloading(0);
     }
   }
-    //////////////Api Calling////////////////////
-    const SigUpUser = async () => {
-   const device_id = await AsyncStorage.getItem('Device_id'); 
-   console.log("here toke",device_id)
-      axios({
-        method: 'post',
-        url: BASE_URL + 'auth/sign_up',
-        data: {
-          phone: predata.phone_number,
-          country_code: predata.country_code,
-          deviceToken:device_id
-        },
-      })
-        .then(async function (response) {
-          console.log('here id',response.data)
-         if (response.data.status === true) {
-            const string_id = response.data.result[0].id.toString();
-            dispatch(setUserId(response.data.result[0].id));
-            dispatch(setUserPhone_No(response.data.result[0].phone));
-            dispatch(setUserPhone_Country_Code(response.data.result[0].country_code));
-            dispatch(setJWT_Token(JSON.stringify(response.data.jwt_token)));
-            await AsyncStorage.setItem('User_id', string_id);
-            await AsyncStorage.setItem(
-              'JWT_Token',
-              JSON.stringify(response.data.token),
-            );
-            //await AsyncStorage.setItem('User_email', response.data.result.email);
-            navigation.navigate('CreateProfile');
-            //navigation.navigate('BottomTab');
-            setloading(0);
-            setdisable(0);
-          //setModalVisible(true)
-          } else {
-            setloading(0);
-            setdisable(0);
-            SignInUser()
-            //navigation.navigate('CreateProfile');
-          }
-        })
-        .catch(function (error) {
+  //////////////Api Calling////////////////////
+  const SigUpUser = async () => {
+    const device_id = await AsyncStorage.getItem('Device_id');
+    console.log('here toke', device_id);
+    axios({
+      method: 'post',
+      url: BASE_URL + 'auth/sign_up',
+      data: {
+        phone: predata.phone_number,
+        country_code: predata.country_code,
+        deviceToken: device_id,
+      },
+    })
+      .then(async function (response) {
+        console.log('here id', response.data);
+        if (response.data.status === true) {
+          const string_id = response.data.result[0].id.toString();
+          dispatch(setUserId(response.data.result[0].id));
+          dispatch(setUserPhone_No(response.data.result[0].phone));
+          dispatch(
+            setUserPhone_Country_Code(response.data.result[0].country_code),
+          );
+          dispatch(setJWT_Token(JSON.stringify(response.data.jwt_token)));
+          await AsyncStorage.setItem('User_id', string_id);
+          await AsyncStorage.setItem(
+            'JWT_Token',
+            JSON.stringify(response.data.token),
+          );
+          firebase_store_user(response.data.result[0].id);
+          //navigation.navigate('CreateProfile');
           setloading(0);
           setdisable(0);
-          if (error) {
-            console.log('error', error);
-          }
-        });
-    };
+          //setModalVisible(true)
+        } else {
+          setloading(0);
+          setdisable(0);
+          SignInUser();
+        }
+      })
+      .catch(function (error) {
+        setloading(0);
+        setdisable(0);
+        if (error) {
+          console.log('error', error);
+        }
+      });
+  };
 
-        //////////////Api Calling////////////////////
-        const SignInUser = async () => {
-          const device_id = await AsyncStorage.getItem('Device_id'); 
-          console.log("here toke",device_id)
-             axios({
-               method: 'post',
-               url: BASE_URL + 'auth/sign_in',
-               data: {
-                 phone: predata.phone_number,
-                 country_code: predata.country_code,
-                 deviceToken:device_id
-               },
-             })
-               .then(async function (response) {
-                 console.log('here id',response.data)
-                if (response.data.status === true) {
-                   const string_id = response.data.result[0].id.toString();
-                   dispatch(setUserId(response.data.result[0].id));
-                   dispatch(setUserPhone_No(response.data.result[0].phone));
-                   dispatch(setUserPhone_Country_Code(response.data.result[0].country_code));
-                   dispatch(setJWT_Token(JSON.stringify(response.data.jwt_token)));
-                   await AsyncStorage.setItem('User_id', string_id);
-                   await AsyncStorage.setItem(
-                     'JWT_Token',
-                     JSON.stringify(response.data.token),
-                   );
-                   navigation.navigate('Drawerroute');
-                   setloading(0);
-                   setdisable(0);
-                 //setModalVisible(true)
-                 } else {
-                   setloading(0);
-                   setdisable(0);
-                   signI
-                   //navigation.navigate('CreateProfile');
-                 }
-               })
-               .catch(function (error) {
-                 setloading(0);
-                 setdisable(0);
-                 if (error) {
-                   console.log('error', error);
-                 }
-               });
-           };
+  //////////////Api Calling////////////////////
+  const SignInUser = async () => {
+    const device_id = await AsyncStorage.getItem('Device_id');
+    console.log('here toke', device_id);
+    axios({
+      method: 'post',
+      url: BASE_URL + 'auth/sign_in',
+      data: {
+        phone: predata.phone_number,
+        country_code: predata.country_code,
+        deviceToken: device_id,
+      },
+    })
+      .then(async function (response) {
+        console.log('here id', response.data);
+        if (response.data.status === true) {
+          const string_id = response.data.result[0].id.toString();
+          dispatch(setUserId(response.data.result[0].id));
+          dispatch(setUserPhone_No(response.data.result[0].phone));
+          dispatch(
+            setUserPhone_Country_Code(response.data.result[0].country_code),
+          );
+          dispatch(setJWT_Token(JSON.stringify(response.data.jwt_token)));
+          await AsyncStorage.setItem('User_id', string_id);
+          await AsyncStorage.setItem(
+            'JWT_Token',
+            JSON.stringify(response.data.token),
+          );
+          //firebase_store_user(response.data.result.customer_id);
+          navigation.navigate('Drawerroute');
+          setloading(0);
+          setdisable(0);
+          //setModalVisible(true)
+        } else {
+          setloading(0);
+          setdisable(0);
+          signI;
+          //navigation.navigate('CreateProfile');
+        }
+      })
+      .catch(function (error) {
+        setloading(0);
+        setdisable(0);
+        if (error) {
+          console.log('error', error);
+        }
+      });
+  };
 
-    useEffect(() => {
-      checkPermission();
-      //confirmCode()
-    }, []);
-  
+  ////////////firebase store function/////////////////
+  const firebase_store_user = props => {
+    firestore().collection('Users').add({
+      id: props,
+      phoneNo: predata.phone_number,
+      country_code: predata.country_code,
+    });
+    // .then(() => {
+    //   setEmail('');
+    //   setPassword('');
+    //   navigation.navigate('Login');
+    // });
+  };
+  useEffect(() => {
+    checkPermission();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
+      <Loader isLoading={isLoading} />
       <View style={[Logostyles.Logoview, {marginTop: hp(10)}]}>
-      <Logo width={wp(45)} height={hp(11)} />
+        <Logo width={wp(45)} height={hp(11)} />
       </View>
       <View style={[Authstyles.textview, {marginBottom: hp(0)}]}>
         <Text style={Authstyles.maintext}>Verification</Text>
         <Text style={Authstyles.subtext}>
-        Enter 6-digit code that you received on your phone number
+          Enter 6-digit code that you received on your phone number {count}{' '}
+          times
         </Text>
       </View>
       <View style={styles.Cellview}>
@@ -307,7 +341,7 @@ const Verification = ({navigation, route}) => {
           topDistance={35}
           // loading={loading}
           // disabled={disable}
-          onPress={() => 
+          onPress={() =>
             //confirmCode()
             SigUpUser()
           }
@@ -320,7 +354,7 @@ const Verification = ({navigation, route}) => {
         subtext={'Account Verified Successfully'}
         type={'single_btn'}
         onPress={() => {
-          confirmCode()
+          confirmCode();
           //setModalVisible(false);
           //  navigation.navigate('CreateProfile');
           //navigation.navigate('Drawerroute');
