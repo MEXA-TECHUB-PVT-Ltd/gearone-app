@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
   image: {
     height: hp(12),
     width: wp(30),
-    borderTopRightRadius:wp(3),
-    borderTopLeftRadius:wp(3)
+    borderTopRightRadius:wp(2),
+    borderTopLeftRadius:wp(2)
   },
   textView:
   {

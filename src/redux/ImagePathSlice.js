@@ -4,10 +4,12 @@ const imageSlice = createSlice({
   name: 'image',
   initialState: {
     path: '',
+    Profilepath: '',
+    Coverpath: '',
   },
   reducers: {
     updateImagePath(state, action) {
-      state.path = action.payload;
+      return action.payload;
     },
   },
 });

@@ -120,15 +120,29 @@ const Verification = ({navigation, route}) => {
     setCount(count + 1);
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     console.log('here data code', confirmation.verificationId);
-    setConfirm(confirmation.verificationId);
+    setConfirm(confirmation);
     setLoading(false);
   }
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
+  const extractOTPFromVerificationId = (verificationId) => {
+    const match = verificationId.match(/\d{6}$/);
+    if (match) {
+      return match[0];
+    }
+    return null;
+  };
   async function confirmCode() {
     setCount(count + 1);
+//     const otpCode = extractOTPFromVerificationId(confirm.verificationId);
+// console.log(otpCode);
+    // try {
+    //   await confirm.confirm(value);
+    // } catch (error) {
+    //   console.log('Invalid code.');
+    // }
     const credential = auth.PhoneAuthProvider.credential(
       confirm.verificationId,
       value,
@@ -136,14 +150,18 @@ const Verification = ({navigation, route}) => {
     console.log('code', credential);
     const user = await auth().signInWithCredential(credential);
     console.log('user', user);
-    //let userData = await auth().currentUser.linkWithCredential(credential);
-    //setUser(userData.user);
+    let userData = await auth().currentUser.linkWithCredential(credential);
+    console.log('user userData', userData);
+    SigUpUser()
+  //  / setUser(userData.user);
     if (credential.secret == value) {
       setloading(0);
-      setModalVisible(true);
+      console.log('here match code')
+      //setModalVisible(false);
     } else {
-      setModalVisible(true);
+     //setModalVisible(true);
       setloading(0);
+      console.log('here not match code')
     }
   }
   //////////////Api Calling////////////////////
@@ -175,7 +193,7 @@ const Verification = ({navigation, route}) => {
             JSON.stringify(response.data.token),
           );
           firebase_store_user(response.data.result[0].id);
-          //navigation.navigate('CreateProfile');
+          navigation.navigate('CreateProfile');
           setloading(0);
           setdisable(0);
           //setModalVisible(true)
@@ -258,6 +276,7 @@ const Verification = ({navigation, route}) => {
   };
   useEffect(() => {
     checkPermission();
+    setLoading(false);
   }, []);
 
   return (
@@ -269,8 +288,7 @@ const Verification = ({navigation, route}) => {
       <View style={[Authstyles.textview, {marginBottom: hp(0)}]}>
         <Text style={Authstyles.maintext}>Verification</Text>
         <Text style={Authstyles.subtext}>
-          Enter 6-digit code that you received on your phone number {count}{' '}
-          times
+          Enter 6-digit code that you received on your phone number
         </Text>
       </View>
       <View style={styles.Cellview}>
@@ -342,8 +360,8 @@ const Verification = ({navigation, route}) => {
           // loading={loading}
           // disabled={disable}
           onPress={() =>
-            //confirmCode()
-            SigUpUser()
+            confirmCode()
+            //SigUpUser()
           }
         />
       </View>

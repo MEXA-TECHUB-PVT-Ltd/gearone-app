@@ -82,6 +82,29 @@ const ChatScreen = ({route, navigation}) => {
   /////////////login user//////////
   const [login_user, setLoginUser] = useState('');
 
+  /////////////Get Notification/////////////
+  const [profileImage, setProfileImage] = useState('');
+  const [username, setUsername] = useState('');
+
+  const GetProfileData = async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    axios({
+      method: 'GET',
+      url: BASE_URL + 'auth/specific_user/' + user_id,
+    })
+      .then(async function (response) {
+        console.log('list data here ', response.data.result);
+        setProfileImage(response.data.result[0].image);
+        setUsername(response.data.result[0].username);
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+  };
+  useEffect(() => {
+    GetProfileData();
+  }, []);
+
   /////////get login user//////////
   const getUserMessages = async () => {
     var user = await AsyncStorage.getItem('Userid');
@@ -306,6 +329,8 @@ const ChatScreen = ({route, navigation}) => {
         left_iconPress={() => {
           navigation.goBack();
         }}
+        username={username}
+        userimage={profileImage}
       />
 {/* <View style={{height:hp(79.6),marginTop:hp(4.5)}}>
 </View> */}

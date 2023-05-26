@@ -49,7 +49,6 @@ const SocialLinks = ({navigation}) => {
     setloading(1);
     setdisable(1);
     const user_id = await AsyncStorage.getItem('User_id');
-    console.log('here user id', user_id);
     var token = await AsyncStorage.getItem('JWT_Token');
     let data = JSON.stringify({
       userID: user_id,
@@ -71,7 +70,6 @@ const SocialLinks = ({navigation}) => {
     axios
       .request(config)
       .then(response => {
-        console.log('here data', response.data);
         setloading(0);
         setdisable(0);
         dispatch(setLinksMenu(false)), dispatch(setCoverImageMenu(true));

@@ -35,7 +35,6 @@ import Logo from '../../assets/svgs/Logo.svg';
 import {CountryPicker} from 'react-native-country-codes-picker';
 
 const Login = ({navigation}) => {
-
   ///////////////button states/////////////
   const [loading, setloading] = useState(0);
   const [disable, setdisable] = useState(0);
@@ -43,6 +42,14 @@ const Login = ({navigation}) => {
   const [snackbarValue, setsnackbarValue] = useState({value: '', color: ''});
   const onDismissSnackBar = () => setVisible(false);
 
+  /////////////picker states and functions////////////
+  const openPicker = () => {
+    setShow(true);
+  };
+
+  const closePicker = () => {
+    setShow(false);
+  };
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('+92');
 
@@ -55,21 +62,20 @@ const Login = ({navigation}) => {
     if (phone_no == '') {
       setsnackbarValue({value: 'Please Enter Phone Number', color: 'red'});
       setVisible('true');
-    }  else {
+    } else {
       setloading(1);
       setdisable(1);
-    //signInWithPhoneNumber(countryCode + phone_no);
-      final()
+      //signInWithPhoneNumber(countryCode + phone_no);
+      final();
     }
   };
-  const final=()=>{
+  const final = () => {
     navigation.navigate('Verification', {
       country_code: countryCode,
       phone_number: phone_no,
     });
-    setloading(0),
-    setdisable(0)
-  }
+    setloading(0), setdisable(0);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -90,7 +96,7 @@ const Login = ({navigation}) => {
           </View>
 
           <View style={styles.TextFieldView}>
-            <TouchableOpacity onPress={() => setShow(true)} style={{}}>
+            <TouchableOpacity onPress={() => openPicker()} style={{}}>
               <TextInput
                 style={[styles.TextField, {width: wp(15)}]}
                 value={countryCode}
@@ -128,7 +134,7 @@ const Login = ({navigation}) => {
             loading={loading}
             disabled={disable}
             onPress={() => {
-              formValidation()
+              formValidation();
               //final()
             }}
           />
@@ -145,37 +151,51 @@ const Login = ({navigation}) => {
         }}>
         {snackbarValue.value}
       </Snackbar>
-      <CountryPicker
-        show={show}
-        style={{
-          modal: {
-            height: 500,
-            backgroundColor: '#444444',
-          },
-          // Styles for input [TextInput]
-          textInput: {
-            height: hp(6.5),
-            borderRadius: wp(2),
-          },
-          // Dial code styles [Text]
-          dialCode: {
-            color: 'black',
-          },
-          // Country name styles [Text]
-          countryName: {
-            color: 'black',
-          },
-          // Styles for search message [Text]
-          searchMessageText: {
-            color: 'black',
-          },
-        }}
-        // when picker button press you will get the country object with dial code
-        pickerButtonOnPress={item => {
-          setCountryCode(item.dial_code);
-          setShow(false);
-        }}
-      />
+      {show && (
+  // <View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 10 ,height:hp(20) }}>
+  //        <TouchableOpacity onPress={closePicker}>
+  //         <Text style={{ fontSize: 18, color: 'blue' }}>Close</Text>
+  //       </TouchableOpacity>
+  //         </View> 
+          <CountryPicker
+            show={show}
+            //disableBackdrop={true}
+            onBackdropPress={() => setShow(false)}
+            enableModalAvoiding={true}
+            searchMessage={'Please Choose Your Country Code'}
+            //inputPlaceholder={'Please Choose Your Country Code'}
+            // when picker button press you will get the country object with dial code
+            pickerButtonOnPress={item => {
+              setCountryCode(item.dial_code);
+              setShow(false);
+            }}
+            style={{
+              modal: {
+                height:hp(45),
+                backgroundColor: '#444444',
+              },
+              // Styles for input [TextInput]
+              textInput: {
+                height: hp(6.5),
+                borderRadius: wp(2),
+                color:'black'
+              },
+              // Dial code styles [Text]
+              dialCode: {
+                color: 'black',
+              },
+              // Country name styles [Text]
+              countryName: {
+                color: 'black',
+              },
+              // Styles for search message [Text]
+              searchMessageText: {
+                color: 'black',
+              },
+   
+            }}
+          />
+       )}
     </SafeAreaView>
   );
 };

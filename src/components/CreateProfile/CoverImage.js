@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {View, Text, Image,TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 ///////////componetes///////////
 import CustomButtonhere from '../Button/CustomButton';
@@ -63,8 +63,7 @@ const CoverImage = ({navigation}) => {
     })
       .then(response => response.text())
       .then(
-        result => console.log(result),
-        dispatch(updateImagePath('')),
+        result => dispatch(updateImagePath('')),
         dispatch(setCoverImageMenu(false)),
         dispatch(setProfileImageMenu(true)),
       );
@@ -73,7 +72,7 @@ const CoverImage = ({navigation}) => {
   return (
     <View style={{marginTop: hp(20)}}>
       <View
-       // onPress={() => refRBSheet.current.open()}
+        // onPress={() => refRBSheet.current.open()}
         style={{
           width: wp(85),
           height: hp(20),
@@ -101,32 +100,30 @@ const CoverImage = ({navigation}) => {
         )}
       </View>
       {imagePath != '' ? (
-      <TouchableOpacity
-        onPress={() => refRBSheet.current.open()}
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: hp(3),
-          backgroundColor:Colors.Appthemecolor,
-          width:wp(35),
-          alignSelf:'center',
-          borderRadius:wp(1),
-          alignItems:'center',
-          justifyContent:'center',
-          height:hp(4)
-        }}
-        >
-                  <Text
+        <TouchableOpacity
+          onPress={() => refRBSheet.current.open()}
           style={{
-            color: 'white',
-            fontFamily: fontFamily.Poppins_SemiBold,
-            fontSize: hp(1.6),
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: hp(3),
+            backgroundColor: Colors.Appthemecolor,
+            width: wp(35),
+            alignSelf: 'center',
+            borderRadius: wp(1),
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: hp(4),
           }}>
-         Edit Cover Image
-        </Text>
-          </TouchableOpacity>
-      )
-      :null}
+          <Text
+            style={{
+              color: 'white',
+              fontFamily: fontFamily.Poppins_SemiBold,
+              fontSize: hp(1.6),
+            }}>
+            Edit Cover Image
+          </Text>
+        </TouchableOpacity>
+      ) : null}
       <View
         style={{
           alignItems: 'center',

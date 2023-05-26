@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
+////////////icon///////////
+import Ionicons from 'react-native-vector-icons/Ionicons'
+
 /////////////styles///////////////
 import styles from './styles';
 
@@ -16,10 +19,15 @@ const DashboardCard = props => {
       <View style={styles.card}>
         <View
           style={styles.imageView}>
-          <Image
+          {/* <Image
             source={{uri:props.image}}
             style={styles.image}
-            resizeMode="cover"/>
+            resizeMode="cover"/> */}
+        {props.images_array_length === 0 ? (
+          <Ionicons name={'image'} color={'red'} size={25} />
+        ) : (
+          <Image source={{uri:props.image}} style={styles.image} resizeMode="cover" />
+        )}
         </View>
         <View
           style={styles.textView}>

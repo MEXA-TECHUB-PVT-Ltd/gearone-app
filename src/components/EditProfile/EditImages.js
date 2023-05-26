@@ -1,12 +1,13 @@
-import React, {useState, useRef,useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 ///////navigation variable///////////
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 ///////////componetes///////////
 import CustomButtonhere from '../Button/CustomButton';
 import CustomModal from '../Modal/CustomModal';
+import CamerBottomSheet from '../CameraBottomSheet/CameraBottomSheet';
 
 //////////height and width/////////////
 import {
@@ -23,6 +24,7 @@ import {
   setCoverImageMenu,
   setProfileImageMenu,
 } from '../../redux/CreateProfileSlice';
+import {updateImagePath} from '../../redux/ImagePathSlice';
 
 /////app colors////////////
 import Colors from '../../utills/Colors';
@@ -33,31 +35,33 @@ import {BASE_URL} from '../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EditImages = ({}) => {
+  /////////////reducer value////////////
+  const dispatch = useDispatch();
+  const imagePath = useSelector(state => state.image);
 
-    /////////////reducer value////////////
-    const dispatch = useDispatch();
-    const imagePath = useSelector(state => state.image.path);
-
-///////navigation//////  
- const navigation = useNavigation();
+  ///////navigation//////
+  const navigation = useNavigation();
 
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
 
-  /////////////Get Notification/////////////
-  const [coverImage, setCoverImage] = useState('');
-  const [profileImage, setProfileImage] = useState('');
-
+  ///////////get images//////////
   const GetProfileData = async () => {
     var user_id = await AsyncStorage.getItem('User_id');
     axios({
       method: 'GET',
-      url: BASE_URL + 'auth/specific_user/'+user_id,
+      url: BASE_URL + 'auth/specific_user/' + user_id,
     })
       .then(async function (response) {
-        console.log('list data here ', response.data.result);
-        setCoverImage(response.data.result[0].cover_image);
-        setProfileImage(response.data.result[0].image);
+        console.log('list data here ', response.data);
+        
+        dispatch(
+          updateImagePath({
+            path: '',
+            Profilepath: BASE_URL + response.data.result[0].image,
+            Coverpath: BASE_URL + response.data.result[0].cover_image,
+          }),
+        );
       })
       .catch(function (error) {
         console.log('error', error);
@@ -67,10 +71,12 @@ const EditImages = ({}) => {
     GetProfileData();
   }, []);
   //camera and imagepicker
-  const refRBSheet = useRef();
+  const refRBSheet_Profile = useRef();
+  const refRBSheet_Cover = useRef();
 
   /////////////////image api calling///////////////
   const Edit_CoverImage = async props => {
+    console.log('here image of cover', props);
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
     const formData = new FormData();
@@ -90,7 +96,9 @@ const EditImages = ({}) => {
     })
       .then(response => response.text())
       .then(
-        result => console.log(result),
+        result => {
+          console.log('here coveer image upload', result), GetProfileData();
+        },
         dispatch(updateImagePath('')),
         dispatch(setCoverImageMenu(false)),
         dispatch(setProfileImageMenu(true)),
@@ -98,6 +106,7 @@ const EditImages = ({}) => {
   };
   /////////////////image api calling///////////////
   const Edit_ProfileImage = async props => {
+    console.log('here image of profile', props);
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
     const formData = new FormData();
@@ -117,12 +126,15 @@ const EditImages = ({}) => {
     })
       .then(response => response.text())
       .then(
-        result => console.log(result),
-        dispatch(updateImagePath('')),
-        dispatch(setProfileImageMenu(false)),
-        navigation.navigate('Drawerroute')
+        result => {
+          console.log('here profile image upload', result), GetProfileData();
+        },
+        // dispatch(updateImagePath('')),
+        // dispatch(setProfileImageMenu(false)),
+        // navigation.navigate('Drawerroute'),
       );
   };
+
   return (
     <View style={{marginTop: hp(2)}}>
       <View style={{marginLeft: wp(3), marginTop: hp(3)}}>
@@ -145,16 +157,15 @@ const EditImages = ({}) => {
           alignSelf: 'center',
         }}>
         <Image
-          source={{uri:BASE_URL+profileImage}}
+          source={{uri: imagePath.Profilepath}}
           style={{width: wp(30), height: hp(15), borderRadius: wp(15)}}
           resizeMode={'contain'}
         />
       </View>
       <TouchableOpacity
-            onPress={() => 
-  {            refRBSheet.current.open(),
-              Edit_ProfileImage(imagePath)}
-            }
+        onPress={() => {
+          refRBSheet_Profile.current.open();
+        }}
         style={{
           height: hp(5),
           width: wp(35),
@@ -164,7 +175,7 @@ const EditImages = ({}) => {
           borderRadius: wp(2),
           alignSelf: 'center',
           marginTop: hp(2),
-          marginBottom:hp(3)
+          marginBottom: hp(3),
         }}>
         <Text
           style={{
@@ -190,23 +201,21 @@ const EditImages = ({}) => {
           width: wp(85),
           height: hp(25),
           borderRadius: wp(1),
-          backgroundColor: 'red',
           alignItems: 'center',
           justifyContent: 'center',
           alignSelf: 'center',
-          marginTop:hp(2)
+          marginTop: hp(2),
         }}>
         <Image
-          source={{uri:BASE_URL+coverImage}}
+          source={{uri: imagePath.Coverpath}}
           style={{width: wp(85), height: hp(25), borderRadius: wp(1)}}
           resizeMode={'cover'}
         />
       </View>
       <TouchableOpacity
-            onPress={() => 
-      {        refRBSheet.current.open()
-            Edit_CoverImage(imagePath)}
-            }
+        onPress={() => {
+           refRBSheet_Cover.current.open();
+        }}
         style={{
           height: hp(5),
           width: wp(35),
@@ -234,7 +243,7 @@ const EditImages = ({}) => {
           // loading={loading}
           // disabled={disable}
           onPress={() => {
-              setModalVisible(true)
+            setModalVisible(true);
           }}
         />
       </View>
@@ -247,8 +256,30 @@ const EditImages = ({}) => {
         onPress={() => {
           setModalVisible(false);
           dispatch(setCoverImageMenu(false)),
-          dispatch(setProfileImageMenu(true)),
-          navigation.navigate('BottomTab');
+            dispatch(setProfileImageMenu(true)),
+            navigation.navigate('BottomTab');
+        }}
+      />
+      <CamerBottomSheet
+        refRBSheet={refRBSheet_Profile}
+        onClose={() => refRBSheet_Profile.current.close()}
+        title={'From Gallery'}
+        type={'onepic'}
+        from={'profile'}
+        onpress={() => {
+          Edit_ProfileImage(imagePath.Profilepath),
+          refRBSheet_Profile.current.close();
+        }}
+      />
+      <CamerBottomSheet
+        refRBSheet={refRBSheet_Cover}
+        onClose={() => refRBSheet_Cover.current.close()}
+        title={'From Gallery'}
+        type={'onepic'}
+        from={'cover'}
+        onpress={() => {
+          Edit_CoverImage(imagePath.Coverpath),
+            refRBSheet_Cover.current.close();
         }}
       />
     </View>

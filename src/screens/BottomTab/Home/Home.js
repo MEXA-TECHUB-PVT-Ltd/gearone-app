@@ -204,14 +204,11 @@ if(response.data.status === true)
   const renderItem = ({item}) => {
     return (
       <DashboardCard
-        image={
-          item.image === []
-            ? require('../../../assets/dummyimages/image_1.png')
-            : BASE_URL + item.image
-        }
+        image={ BASE_URL + item.images[0] }
         maintext={item.name}
         subtext={item.location}
         price={item.price}
+        images_array_length={item.images.length}
         onpress={() => {
           dispatch(setItemDetail({id:item.id, navplace:'Home'}));
           navigation.navigate('ItemDetails', {

@@ -77,7 +77,7 @@ const MyAccount = ({navigation, route}) => {
     })
       .then(response => response.json())
       .then(async response => {
-        console.log('response hgeree are  : ', response.result[0].facebook);
+        console.log('response hgeree are  : ', response.result);
         setFaceBook(response.result[0].facebook)
         setLinkedIn(response.result[0].linkedin)
         setTwitter(response.result[0].twitter)
@@ -102,7 +102,7 @@ const MyAccount = ({navigation, route}) => {
         />
         <View
           style={{marginTop: hp(3), marginLeft: wp(5), marginBottom: hp(4)}}>
-          <Text style={styles.account_text}>Linked Account:</Text>
+          <Text style={styles.account_text}>Linked Account:{twitter}{linkedIn}</Text>
         </View>
         <View
           style={{

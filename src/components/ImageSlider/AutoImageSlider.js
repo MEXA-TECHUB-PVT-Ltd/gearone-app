@@ -9,13 +9,15 @@ const imageWidth = width ;
 ////////////////////height and width//////////////////
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Colors from '../../utills/Colors';
-import { IMAGE_URL } from '../../utills/ApiRootUrl';
+import { BASE_URL, IMAGE_URL } from '../../utills/ApiRootUrl';
 const images = [
   appImages.BagsIcon,
 appImages.ClothIcon,
 ];
 
 const AutoImageSlider = (props) => {
+
+  console.log("here data",props.slider_images_array)
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
@@ -56,9 +58,10 @@ const AutoImageSlider = (props) => {
     </SkeletonPlaceholder>
                    ):
                    ( */}
+                   <Text style={{color:'black'}}>{BASE_URL+image}</Text>
                     <Image
                     key={index}
-                    source={ image}
+                    source={{uri:BASE_URL+image}}
                     style={styles.image}
                     resizeMode={'contain'}
                   />

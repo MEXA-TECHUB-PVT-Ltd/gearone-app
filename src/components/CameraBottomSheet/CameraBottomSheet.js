@@ -17,10 +17,8 @@ import {
 
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  updateImagePath,
-} from '../../redux/ImagePathSlice';
-import { updateImagesArrayPath } from '../../redux/ImagesArray';
+import {updateImagePath} from '../../redux/ImagePathSlice';
+import {updateImagesArrayPath} from '../../redux/ImagesArray';
 
 //////////////app pakages//////////////////
 import ImagePicker from 'react-native-image-crop-picker';
@@ -33,7 +31,7 @@ const CamerBottomSheet = props => {
 
   /////////////redux states///////
   const dispatch = useDispatch();
-    const imagearray= useSelector(state => state.imagesArray.item_images_array);
+  const imagearray = useSelector(state => state.imagesArray.item_images_array);
 
   //////////////////////cameraimage//////////////////
   const takePhotoFromCamera = () => {
@@ -42,19 +40,42 @@ const CamerBottomSheet = props => {
       compressImageMaxHeight: 300,
       //cropping: true,
       compressImageQuality: 0.7,
-      multiple:       props.type === 'multiplepic'?true:false,
+      multiple: props.type === 'multiplepic' ? true : false,
       maxFiles: 5 - imagearray.length,
     }).then(image => {
-      {props.type === 'multiplepic'?
-      dispatch(
-        updateImagesArrayPath([
-          ...imagearray,image.path
-        ])
-      )
-    :
-    dispatch(updateImagePath(image.path));
-  }
-      props.refRBSheet.current.close();
+      {
+        props.type === 'multiplepic'
+          ? dispatch(updateImagesArrayPath([...imagearray, image.path]))
+          : props.type === 'onepic' && props.from === 'profile'
+          ? dispatch(
+              updateImagePath({
+                path: '',
+                Profilepath: image.path,
+              }),
+            )
+          : props.type === 'onepic' && props.from === 'cover'
+          ? dispatch(
+              updateImagePath({
+                path: '',
+                Coverpath: image.path,
+              }),
+            )
+          : dispatch(
+              updateImagePath({
+                path: image.path,
+                Profilepath: image.path,
+                Coverpath: image.path,
+              }),
+            );
+      }
+
+      {
+        props.type === 'onepic' && props.from === 'profile'
+          ? props.onpress()
+          : props.type === 'onepic' && props.from === 'cover'
+          ? props.onpress()
+          : props.refRBSheet.current.close();
+      }
     });
   };
   ////////////////////library image//////////////////
@@ -65,16 +86,40 @@ const CamerBottomSheet = props => {
       //cropping: true,
       compressImageQuality: 0.7,
     }).then(image => {
-      {props.type === 'multiplepic'?
-      dispatch(
-        updateImagesArrayPath([
-          ...imagearray, image.path
-        ])
-      )
-    :
-      dispatch(updateImagePath(image.path))
+      {
+        props.type === 'multiplepic'
+          ? dispatch(updateImagesArrayPath([...imagearray, image.path]))
+          : props.type === 'onepic' && props.from === 'profile'
+          ? dispatch(
+              updateImagePath({
+                path: '',
+                Profilepath: image.path,
+                Coverpath: '',
+              }),
+            )
+          : props.type === 'onepic' && props.from === 'cover'
+          ? dispatch(
+              updateImagePath({
+                path: '',
+                Profilepath: '',
+                Coverpath: image.path,
+              }),
+            )
+          : dispatch(
+              updateImagePath({
+                path: image.path,
+                Profilepath: image.path,
+                Coverpath: image.path,
+              }),
+            );
       }
-      props.refRBSheet.current.close();
+      {
+        props.type === 'onepic' && props.from === 'profile'
+          ? props.onpress()
+          : props.type === 'onepic' && props.from === 'cover'
+          ? props.onpress()
+          : props.refRBSheet.current.close();
+      }
     });
   };
   return (

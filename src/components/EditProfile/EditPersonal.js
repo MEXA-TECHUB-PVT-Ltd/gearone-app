@@ -84,6 +84,7 @@ const EditPersonalDetail = ({navigation}) => {
       .request(config)
       .then(response => {
         console.log("here data",response.data)
+        GetProfileData()
         // setloading(0);
         // setdisable(0);
         dispatch(editPersonalMenu(false)),
@@ -107,7 +108,7 @@ const EditPersonalDetail = ({navigation}) => {
           onNext={() => {
             ref_input2.current.focus();
           }}
-          placeholder="0000 0000000"
+          //placeholder="0000 0000000"
           onTermChange={username => setPhoneNumber(username)}
         />
         <View style={{marginLeft: wp(12)}}>
@@ -117,7 +118,7 @@ const EditPersonalDetail = ({navigation}) => {
           onRef={ref_input2}
           type={'withouticoninput'}
           term={email}
-          placeholder="example@gmail.com"
+          placeholder="Enter Your Email"
           onTermChange={experience => setEmail(experience)}
         />
       </View>
@@ -128,7 +129,7 @@ const EditPersonalDetail = ({navigation}) => {
           onRef={ref_input3}
           type={'withouticoninput'}
           term={username}
-          //placeholder="Enter your experience"
+          placeholder="Enter your Name"
           onTermChange={text => setUserName(text)}
         />
       

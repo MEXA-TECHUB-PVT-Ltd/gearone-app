@@ -66,6 +66,7 @@ const LikedItems = ({navigation, route}) => {
         maintext={item.name}
         subtext={item.location}
         price={item.price}
+        images_array_length={item.images.length}
         onpress={() => {
           dispatch(setItemDetail({id: item.id, navplace: 'login_user_items'}));
           navigation.navigate('ItemDetails', {
