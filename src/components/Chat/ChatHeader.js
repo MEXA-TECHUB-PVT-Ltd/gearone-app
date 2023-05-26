@@ -59,7 +59,7 @@ const ChatHeader = ({
       <View style={styles.profileOptions}>
         <TouchableOpacity style={styles.profile}>
           <View>
-            <Image source={picture} style={styles.image} resizeMode="contain" />
+            <Image source={{uri:picture}} style={styles.image} resizeMode="contain" />
             <View style={{ position: "absolute", right: wp(1), bottom: hp(0.) }}>
             <Octicons
        name={"dot-fill"}

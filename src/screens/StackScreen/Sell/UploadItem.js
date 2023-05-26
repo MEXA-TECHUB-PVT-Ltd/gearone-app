@@ -39,11 +39,11 @@ import UploadIcon from '../../../assets/svgs/upload_icon.svg';
 
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
-import { setItemDetail } from '../../../redux/ItemSlice';
+import {setItemDetail} from '../../../redux/ItemSlice';
 
 const UploadItem = ({navigation}) => {
   ////////////redux////////////
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   /////////////reducer value////////////
   const item_images_array = useSelector(
     state => state.imagesArray.item_images_array,
@@ -80,12 +80,11 @@ const UploadItem = ({navigation}) => {
   const [Item_location, setItemLocation] = useState('');
   const [Item_description, setItemDescription] = useState('');
 
-
   /////////////image array/////////
-  const post_Item_Images = async (props) => {
-    console.log("here image data",item_images_array)
+  const post_Item_Images = async props => {
+    console.log('here image data', item_images_array);
     const formData = new FormData();
-    formData.append("id", props);
+    formData.append('id', props);
     //formData.append("images",item_images_array);
     if (item_images_array?.length > 0) {
       for (let i = 0; i < item_images_array?.length; i++) {
@@ -101,33 +100,65 @@ const UploadItem = ({navigation}) => {
       }
     }
 
-    return fetch(BASE_URL + "items/add_item_images", {
-      method: "PUT",
+    return fetch(BASE_URL + 'items/add_item_images', {
+      method: 'PUT',
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
       body: formData,
     })
-    .then(response => response.text())
-    .then(
-      resulthere => console.log('image data',resulthere),
+      .then(response => response.text())
+      .then(
+        resulthere => console.log('image data', resulthere),
 
-
-     // dispatch(setItemDetail(result.result[0].id, result.result[0].name)),
-      setloading(0),
-      setdisable(0),
-     setModalVisible(true)
-      
-    );
-
-    
-}
+        // dispatch(setItemDetail(result.result[0].id, result.result[0].name)),
+        setloading(0),
+        setdisable(0),
+        setModalVisible(true),
+      );
+  };
 
   //////////////Api Calling////////////////////
   const CreateItem = async () => {
     const user_id = await AsyncStorage.getItem('User_id');
     console.log('here user id', user_id);
     var token = await AsyncStorage.getItem('JWT_Token');
+    const currentDate = new Date();
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      'Content-Type': 'application/json',
+    };
+    // var raw = JSON.stringify({
+    //   user_ID: user_id,
+    //   name: Item_name,
+    //   price: Item_price,
+    //   category_id: gender.value,
+    //   description: Item_description,
+    //   location: Item_location,
+    //   promoted: 'false',
+    //   start_date: currentDate,
+    //   end_date: currentDate,
+    //   added_by: 'user',
+    // });
+
+    // var requestOptions = {
+    //   method: 'POST',
+    //   headers: headers,
+    //   body: raw,
+    //   redirect: 'follow',
+    // };
+
+    // fetch(
+    //   BASE_URL+'items/add_items',
+    //   requestOptions,
+    // )
+    //   .then(response => response.text())
+    //   .then(response => {
+    //     console.log('here item data', response.result);
+    //     dispatch(setItemDetail({id:response.result[0].id, navplace: 'login_user_items'}));
+    //     post_Item_Images(response.result[0].id);
+    //   })
+    //   .catch(error => console.log('error', error));
     let data = JSON.stringify({
       user_ID: user_id,
       name: Item_name,
@@ -135,11 +166,11 @@ const UploadItem = ({navigation}) => {
       category_id: gender.value,
       description: Item_description,
       location: Item_location,
-      // promoted: 'true',
-      // start_date: '05/17/2023*11:51:11',
-      // end_date: '05/17/2023*11:52:11',
-     added_by: 'user',
-    });
+      promoted: 'false',
+      start_date: currentDate,
+      end_date: currentDate,
+      added_by: 'user',
+     });
 
     let config = {
       method: 'POST',
@@ -153,10 +184,9 @@ const UploadItem = ({navigation}) => {
     axios
       .request(config)
       .then(response => {
-        console.log("here item data",response.data)
-        dispatch(setItemDetail(response.data.result[0].id,response.data.result[0].name))
-        post_Item_Images(response.data.result[0].id)
-
+        console.log('here item data', response.data);
+        dispatch(setItemDetail({id:response.data.result[0].id, navplace: 'login_user_items'}));
+        post_Item_Images(response.data.result[0].id);
       })
       .catch(error => {
         console.log(error);
@@ -174,16 +204,16 @@ const UploadItem = ({navigation}) => {
     } else if (Item_location == '') {
       setsnackbarValue({value: 'Please Enter Location', color: 'red'});
       setVisible('true');
-    }else if (gender.name == 'Select Category') {
+    } else if (gender.name == 'Select Category') {
       setsnackbarValue({value: 'Please Select Category', color: 'red'});
       setVisible('true');
-    }else if (Item_description == '') {
+    } else if (Item_description == '') {
       setsnackbarValue({value: 'Please Enter Description', color: 'red'});
       setVisible('true');
     } else {
       setloading(1);
       setdisable(1);
-      CreateItem()
+      CreateItem();
     }
   };
   const renderItem = ({item}) => {
@@ -305,7 +335,7 @@ const UploadItem = ({navigation}) => {
           <Text style={styles.textinput_title}>Description</Text>
         </View>
         <CustomTextInput
-                onRef={ref_input4}
+          onRef={ref_input4}
           type={'withouticoninput'}
           texterror={'invalid'}
           term={Item_description}
@@ -320,9 +350,7 @@ const UploadItem = ({navigation}) => {
             topDistance={5}
             loading={loading}
             disabled={disable}
-            onPress={() => 
-              formValidation()
-              }
+            onPress={() => formValidation()}
           />
         </View>
         <CustomModal

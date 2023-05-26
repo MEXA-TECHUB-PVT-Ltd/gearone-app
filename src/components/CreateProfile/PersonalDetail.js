@@ -26,7 +26,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 ////////////api//////////
 import axios from 'axios';
-import { BASE_URL } from '../../utills/ApiRootUrl';
+import {BASE_URL} from '../../utills/ApiRootUrl';
 
 const PersonalDetail = ({navigation}) => {
   ////////////////redux/////////////////
@@ -55,10 +55,8 @@ const PersonalDetail = ({navigation}) => {
   const handleValidEmail = val => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w\w+)+$/;
     if (reg.test(val)) {
-      console.log('true');
       return true;
     } else {
-      console.log('falsse');
       return false;
     }
   };
@@ -86,7 +84,6 @@ const PersonalDetail = ({navigation}) => {
   //////////////Api Calling////////////////////
   const CreateProfile = async () => {
     const user_id = await AsyncStorage.getItem('User_id');
-    console.log('here user id', user_id);
     var token = await AsyncStorage.getItem('JWT_Token');
     let data = JSON.stringify({
       id: user_id,
@@ -108,8 +105,7 @@ const PersonalDetail = ({navigation}) => {
       .then(response => {
         setloading(0);
         setdisable(0);
-        dispatch(setPersonalMenu(false)),
-        dispatch(setLinksMenu(true));
+        dispatch(setPersonalMenu(false)), dispatch(setLinksMenu(true));
       })
       .catch(error => {
         console.log(error);
@@ -165,7 +161,7 @@ const PersonalDetail = ({navigation}) => {
           loading={loading}
           disabled={disable}
           onPress={() => {
-            formValidation()
+            formValidation();
             console.log('here'), CreateProfile();
             //dispatch(setPersonalMenu(false)),
             //dispatch(setLinksMenu(true));

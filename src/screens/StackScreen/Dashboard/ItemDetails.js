@@ -100,6 +100,7 @@ const ItemDetails = ({navigation, route}) => {
     })
       .then(response => response.json())
       .then(async response => {
+        console.log("here data",response.result[0].images)
         setItem_Images(response?.result[0].images);
         GetUserData(response?.result[0].userid - 0);
         setItem_Item_Title(response?.result[0].name);
@@ -401,7 +402,7 @@ var headers={
                   onPress={() =>
                     navigation.navigate('ChatScreen', {
                       navtype: 'chatlist',
-                      userid: '1',
+                      userid:Item_userid,
                     })
                   }>
                   <MaterialIcons name={'chat'} size={20} color={'white'} />

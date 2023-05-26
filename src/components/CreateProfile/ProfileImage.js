@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {View, Text, TouchableOpacity,Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 
 //////////navigation///////////
 import {useNavigation} from '@react-navigation/native';
@@ -66,10 +66,9 @@ const ProfileImage = ({}) => {
     })
       .then(response => response.text())
       .then(
-        result => console.log(result),
-        dispatch(updateImagePath('')),
+        result => dispatch(updateImagePath('')),
         dispatch(setProfileImageMenu(false)),
-        navigation.navigate('Drawerroute')
+        navigation.navigate('Drawerroute'),
       );
   };
   return (
@@ -97,38 +96,36 @@ const ProfileImage = ({}) => {
         ) : (
           <Image
             source={{uri: imagePath}}
-            style={{height: hp(13), width: wp(27),borderRadius:wp(15)}}
+            style={{height: hp(13), width: wp(27), borderRadius: wp(15)}}
             resizeMode="cover"
           />
         )}
       </View>
       {imagePath != '' ? (
-      <TouchableOpacity
-        onPress={() => refRBSheet.current.open()}
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: hp(3),
-          backgroundColor:Colors.Appthemecolor,
-          width:wp(35),
-          alignSelf:'center',
-          borderRadius:wp(1),
-          alignItems:'center',
-          justifyContent:'center',
-          height:hp(4)
-        }}
-        >
-                  <Text
+        <TouchableOpacity
+          onPress={() => refRBSheet.current.open()}
           style={{
-            color: 'white',
-            fontFamily: fontFamily.Poppins_SemiBold,
-            fontSize: hp(1.6),
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: hp(3),
+            backgroundColor: Colors.Appthemecolor,
+            width: wp(35),
+            alignSelf: 'center',
+            borderRadius: wp(1),
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: hp(4),
           }}>
-         Edit Profile Image
-        </Text>
-          </TouchableOpacity>
-      )
-      :null}
+          <Text
+            style={{
+              color: 'white',
+              fontFamily: fontFamily.Poppins_SemiBold,
+              fontSize: hp(1.6),
+            }}>
+            Edit Profile Image
+          </Text>
+        </TouchableOpacity>
+      ) : null}
 
       <View
         style={{
@@ -154,7 +151,7 @@ const ProfileImage = ({}) => {
           // loading={loading}
           // disabled={disable}
           onPress={() => {
-            Upload_ProfileImage(imagePath)
+            Upload_ProfileImage(imagePath);
           }}
         />
       </View>

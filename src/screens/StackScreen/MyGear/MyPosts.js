@@ -62,10 +62,11 @@ const MyPosts = ({navigation, route}) => {
   const renderItem = ({item}) => {
     return (
       <DashboardCard
-        image={item.image}
+        image={BASE_URL+ item.images[0]}
         maintext={item.name}
         subtext={item.location}
         price={item.price}
+        images_array_length={item.images.length}
         onpress={() => {
           dispatch(setItemDetail({id: item.id, navplace: 'login_user_items'}));
           navigation.navigate('ItemDetails', {

@@ -55,7 +55,7 @@ console.log(formattedDate);
         {props.images_array_length === 0 ? (
           <Ionicons name={'image'} color={'grey'} size={25} />
         ) : (
-          <Image source={props.image} style={styles.image} resizeMode="cover" />
+          <Image source={{uri:props.image}} style={styles.image} resizeMode="cover" />
         )}
       </View>
       <View style={styles.textView}>
