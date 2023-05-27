@@ -136,13 +136,12 @@ const Verification = ({navigation, route}) => {
   };
   async function confirmCode() {
     setCount(count + 1);
-//     const otpCode = extractOTPFromVerificationId(confirm.verificationId);
-// console.log(otpCode);
-    // try {
-    //   await confirm.confirm(value);
-    // } catch (error) {
-    //   console.log('Invalid code.');
-    // }
+    try {
+      await confirm.confirm(value);
+      SigUpUser()
+    } catch (error) {
+      console.log('Invalid code.');
+    }
     const credential = auth.PhoneAuthProvider.credential(
       confirm.verificationId,
       value,
@@ -152,17 +151,7 @@ const Verification = ({navigation, route}) => {
     console.log('user', user);
     let userData = await auth().currentUser.linkWithCredential(credential);
     console.log('user userData', userData);
-    SigUpUser()
-  //  / setUser(userData.user);
-    if (credential.secret == value) {
-      setloading(0);
-      console.log('here match code')
-      //setModalVisible(false);
-    } else {
-     //setModalVisible(true);
-      setloading(0);
-      console.log('here not match code')
-    }
+    //SigUpUser()
   }
   //////////////Api Calling////////////////////
   const SigUpUser = async () => {
