@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -41,6 +41,32 @@ const MyGear = ({navigation}) => {
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
 
+    /////////////Get Screen Logo/////////////
+    const [logo, setLogo] = useState([]);
+    const GetLogo = useCallback(async () => {
+      var token = await AsyncStorage.getItem('JWT_Token');
+      var headers = {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      };
+      await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+          screen_id: '7',
+        }),
+      })
+        .then(response => response.json())
+        .then(async response => {
+          console.log('response here in logos : ', response);
+          setLogo(response.result[0].image)
+        })
+        .catch(error => {
+          console.log('Error  : ', error);
+        });
+    }, [logo]);
+
   /////////////Get Notification/////////////
   const [coverImage, setCoverImage] = useState('');
   const [profileImage, setProfileImage] = useState('');
@@ -70,6 +96,7 @@ const MyGear = ({navigation}) => {
   };
   useEffect(() => {
     GetProfileData();
+    GetLogo()
   }, []);
 
   return (
@@ -77,7 +104,9 @@ const MyGear = ({navigation}) => {
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-        <Header title={'My Gear'} />
+        <Header title={'My Gear'} 
+        right_logo={BASE_URL+logo}
+        />
         <View
           style={{
             alignItems: 'center',

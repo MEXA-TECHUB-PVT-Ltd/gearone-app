@@ -20,6 +20,7 @@ import AllFollowers from './src/screens/StackScreen/MyGear/AllFollowers';
 import AllFollowings from './src/screens/StackScreen/MyGear/AllFollowings';
 import MerchandiseDetails from './src/screens/StackScreen/Drawer/MerchandiseDetail';
 import DailyDealsDetails from './src/screens/StackScreen/Drawer/DailyDealsDetail';
+import SearchResults from './src/screens/StackScreen/Search/SearchResults';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -123,6 +124,13 @@ function App() {
           <Stack.Screen
             name="DailyDealsDetails"
             component={DailyDealsDetails}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="SearchResults"
+            component={SearchResults}
             options={{
               headerShown: false,
             }}

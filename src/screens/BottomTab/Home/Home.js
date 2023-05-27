@@ -1,5 +1,14 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  Linking
+} from 'react-native';
 
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
@@ -73,16 +82,43 @@ const data = [
   },
 ];
 
+import Lightbox from 'react-native-lightbox-v2';
+import Colors from '../../../utills/Colors';
+
 const Home = ({navigation}) => {
   ///////redux states/////////
   const dispatch = useDispatch();
 
   //////////loader state/////
   const [isLoading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [refreshing, setRefreshing] = useState(false);
+  /////////////Get Screen Logo/////////////
+  const [dashboard_logo, setDashboardLogo] = useState([]);
+  const GetDashboardLogo = useCallback(async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        screen_id: '3',
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log('response here in logos : ', response);
+        setDashboardLogo(response.result[0].image)
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [dashboard_logo]);
 
-  /////////////Get Notification/////////////
+
+  /////////////Get Stories/////////////
   const [dashboard_stories, setDashboardStories] = useState([]);
   const GetDashboardStories = useCallback(async () => {
     var user_id = await AsyncStorage.getItem('User_id');
@@ -96,65 +132,19 @@ const Home = ({navigation}) => {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({
-        screen_id: '1',
+        screen_id: '3',
       }),
     })
       .then(response => response.json())
       .then(async response => {
-        console.log('response here in stories : ', response);
-        //setDashboardStories(response.result)
-        const outputArray = response.result.map(item => ({
-          user_id: item.id + 1,
-          user_image: item.image
-            ? `${BASE_URL + item.image}`
-            : 'path_to_placeholder_image',
-          user_name: 'Ad name',
-          stories: [
-            {
-              story_id: item.id,
-              story_image: item.image
-                ? `${BASE_URL + item.image}`
-                : 'path_to_placeholder_image',
-              swipeText: 'Custom swipe text for this story',
-              onPress: () => console.log(`story ${item.id} swiped`),
-            },
-          ],
-        }));
-
-        console.log('heree====', outputArray);
-        setDashboardStories([...dashboard_stories, outputArray]);
-        console.log('response after set in stories : ', dashboard_stories);
+        setDashboardStories(response.result)
       })
       .catch(error => {
         console.log('Error  : ', error);
       });
   }, [dashboard_stories]);
 
-  const GetDashboardStories11 = useCallback(async () => {
-    var user_id = await AsyncStorage.getItem('User_id');
-    axios({
-      method: 'POST',
-      url: BASE_URL + 'ads/get_ads_by_screen',
-      body: {
-        screen_id: '1',
-      },
-    })
-      .then(async function (response) {
-        //console.log('here stories data',response.data)
-        if (response.data.status === true) {
-          setDashboardStories(response.data.result);
-          setLoading(false);
-        } else {
-          <NoDataFound title={'No data here'} />;
-          setLoading(false);
-        }
-      })
-      .catch(function (error) {
-        console.log('error', error);
-      });
-  }, [dashboard_items]);
-
-  /////////////Get Notification/////////////
+  /////////////Get Items/////////////
   const [dashboard_items, setDashboardItems] = useState('');
 
   const GetDashboardItems = useCallback(async () => {
@@ -165,16 +155,14 @@ const Home = ({navigation}) => {
       body: {},
     })
       .then(async function (response) {
-        console.log('here iem data,', response.data.result);
         if (response.data.status === true) {
-          // setDashboardItems(page === 1 ? dashboard_items : [ ...dashboard_items,response.data.result],)
           setLoading(false);
-          // setRefreshing(false)
+          setCount(1)
           setDashboardItems(response.data.result);
         } else {
           <NoDataFound title={'No data here'} />;
           setLoading(false);
-          setRefreshing(false);
+          setCount(1)
         }
       })
       .catch(function (error) {
@@ -182,21 +170,16 @@ const Home = ({navigation}) => {
       });
   }, [dashboard_items]);
 
-  const handleEndReached = () => {
-    if (!isLoading) {
-      // Increment the page count and fetch the next page of data
-      setPage(page + 1);
-      GetDashboardItems();
-    }
-  };
-  const onRefresh = () => {
-    setRefreshing(true);
-    GetDashboardItems();
-  };
+  const [count, setCount] = useState(0);
   useEffect(() => {
-    setLoading(true);
+    if(count===0)
+    {
+      setLoading(true);
+    }
+
     GetDashboardItems();
     GetDashboardStories();
+    GetDashboardLogo()
   }, []);
 
   const renderItem = ({item}) => {
@@ -216,17 +199,54 @@ const Home = ({navigation}) => {
       />
     );
   };
+  const [isLarge, setIsLarge] = useState(false);
   const storyrenderItem = ({item}) => {
     return (
-      <Lightbox navigator={navigator}>
-        <Image
-          style={{height: 300}}
-          source={{
-            uri: 'http://knittingisawesome.com/wp-content/uploads/2012/12/cat-wearing-a-reindeer-hat1.jpg',
-          }}
-        />
-        <Text style={{color: 'black'}}>Visit here</Text>
-      </Lightbox>
+      <View style={{}}>
+        <Lightbox
+          activeProps={{resizeMode: 'contain'}}
+          onLongPress={()=>setIsLarge(true)}
+          //longPressGapTimer={500}
+          //onClose={()=>setIsLarge(false)}
+          onOpen={()=>setIsLarge(true)}
+          willClose={()=>setIsLarge(false)}
+          >
+          {isLarge === true?
+          <View style={{alignContent:'center',justifyContent:'center'}}>
+
+                         <Image
+               source={{
+                 uri:
+                   BASE_URL +item.image,
+               }}
+               style={ styles.imageLarge}
+               resizeMode= 'cover'
+             />
+               <TouchableOpacity onPress={()=>Linking.openURL(item.link)}>
+               <Text style={styles.Visit_btn}>Visit</Text>
+               </TouchableOpacity>
+
+          </View>
+
+             :
+             <>
+                     <View style={styles.imageroundview}>
+          <Image
+             source={{
+               uri:
+               BASE_URL +item.image,
+             }}
+             style={ styles.image}
+             resizeMode= 'cover'
+           />
+             </View>
+                           <Text style={styles.stories_user}>Username</Text>
+             </>
+   
+             }
+    
+        </Lightbox>
+      </View>
     );
   };
   return (
@@ -241,11 +261,12 @@ const Home = ({navigation}) => {
           left_iconPress={() => {
             navigation.toggleDrawer();
           }}
+          right_logo={BASE_URL+ dashboard_logo}
         />
         <FlatList
-          data={dashboard_items}
+          data={dashboard_stories}
           horizontal={true}
-          renderItem={renderItem}
+          renderItem={storyrenderItem}
           initialNumToRender={10}
           maxToRenderPerBatch={10}
           removeClippedSubviews={true} // Unmount components when outside of window

@@ -37,7 +37,33 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const OtherProfile = ({navigation, route}) => {
   //camera and imagepicker
-  const refRBSheet = useRef()
+  const refRBSheet = useRef();
+
+  /////////////Get Screen Logo/////////////
+  const [dashboard_logo, setDashboardLogo] = useState([]);
+  const GetDashboardLogo = useCallback(async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        screen_id: '3',
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log('response here in logos : ', response);
+        setDashboardLogo(response.result[0].image);
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [dashboard_logo]);
 
   const renderItem = ({item}) => {
     return (
@@ -70,7 +96,7 @@ const OtherProfile = ({navigation, route}) => {
       url: BASE_URL + 'auth/specific_user/' + route.params.seller_id,
     })
       .then(async function (response) {
-        setId(response.data.result[0].id)
+        setId(response.data.result[0].id);
         setCoverImage(response.data.result[0].cover_image);
         setProfileImage(response.data.result[0].image);
         setUsername(response.data.result[0].username);
@@ -85,17 +111,18 @@ const OtherProfile = ({navigation, route}) => {
   useEffect(() => {
     GetSellerProfileData();
     GetMyItems();
+    GetDashboardLogo();
   }, []);
 
   /////////////Get Notification///////////
   const [my_items, setMyItems] = useState([]);
-  const GetMyItems =useCallback( async () => {
+  const GetMyItems = useCallback(async () => {
     var user_id = await AsyncStorage.getItem('User_id');
     var headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     };
-    await fetch( BASE_URL + 'items/get_items_by_user', {
+    await fetch(BASE_URL + 'items/get_items_by_user', {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({
@@ -105,7 +132,7 @@ const OtherProfile = ({navigation, route}) => {
       .then(response => response.json())
       .then(async response => {
         console.log('response  : ', response);
-        setMyItems(response.result)
+        setMyItems(response.result);
       })
       .catch(error => {
         console.log('Error  : ', error);
@@ -123,6 +150,7 @@ const OtherProfile = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_logo={BASE_URL + logo}
         />
         <View style={{alignItems: 'center'}}>
           {coverImage === null ? (
@@ -228,12 +256,6 @@ const OtherProfile = ({navigation, route}) => {
             keyExtractor={(item, index) => index}
             scrollEnabled={false}
             horizontal={true}
-
-
-
-
-
-
           />
         )}
 
@@ -253,7 +275,7 @@ const OtherProfile = ({navigation, route}) => {
         onClose={() => refRBSheet.current.close()}
         title={'Rate Profile'}
         subtitle={'Enter Description'}
-        getData={()=>GetSellerProfileData()}
+        getData={() => GetSellerProfileData()}
         seller_id={id}
       />
     </SafeAreaView>
