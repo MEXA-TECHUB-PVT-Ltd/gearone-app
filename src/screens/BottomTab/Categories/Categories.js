@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -66,6 +66,36 @@ const data = [
   },
 ];
 const Categories = ({navigation}) => {
+
+        /////////////Get Screen Logo/////////////
+        const [logo, setLogo] = useState([]);
+        const GetLogo = useCallback(async () => {
+          var token = await AsyncStorage.getItem('JWT_Token');
+          var headers = {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          };
+          await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({
+              screen_id: '4',
+            }),
+          })
+            .then(response => response.json())
+            .then(async response => {
+              setLogo(response.result[0].image)
+            })
+            .catch(error => {
+              console.log('Error  : ', error);
+            });
+        }, [logo]);
+
+        useEffect(() => {
+          GetLogo()
+        }, []);
+
   const renderItem = ({item}) => {
     return (
       <CategoryCard
@@ -92,6 +122,7 @@ const Categories = ({navigation}) => {
         // left_iconPress={() => {
         //   navigation.goBack();
         // }}
+        right_logo={BASE_URL+logo}
       />
       <View style={{alignSelf: 'center', marginVertical: hp(2)}}>
         <Image

@@ -29,6 +29,7 @@ const SearchTextInput = ({
   secureTextEntry,
   keyboard_type,
   searchiconpress,
+  onSubmitEditing
 }) => {
   return (
     <View>
@@ -53,7 +54,7 @@ const SearchTextInput = ({
           keyboardType={keyboard_type}
           placeholderTextColor={'white'}
           onChangeText={onTermChange}
-          onSubmitEditing={onNext}
+          onSubmitEditing={onSubmitEditing}
           secureTextEntry={secureTextEntry}
         ></TextInput>
 

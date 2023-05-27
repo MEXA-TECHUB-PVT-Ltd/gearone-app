@@ -25,7 +25,7 @@ stories_user:
   fontFamily:fontFamily.Poppins_Regular,
   fontSize:hp(1.6),
   width:wp(20),
-  fontWeight:'600'
+  textAlign:'center'
 },
 bottomlineview:
 {
@@ -35,6 +35,38 @@ bottomlineview:
   width:wp(100),
   marginTop:hp(1),
   marginBottom:hp(2)
+},
+
+image: {
+  width: wp(16),
+  height: hp(8),
+  borderRadius:wp(10),
+  resizeMode: 'cover',
+},
+imageLarge: {
+  width: wp(95),
+  height: hp(75),
+  resizeMode:'contain',
+  alignSelf:'center',
+  borderRadius:wp(2),
+},
+Visit_btn:
+{alignSelf:'center',
+color:'white',
+fontFamily:fontFamily.Poppins_Bold,
+fontSize:hp(2),
+marginTop:hp(2)
+},
+imageroundview:
+{
+  borderColor:Colors.Appthemecolor,
+  borderRadius:wp(10),
+  borderWidth:hp(0.3),
+  width: wp(19),
+  height: hp(9.1),
+  margin:wp(1),
+  alignItems:'center',
+  justifyContent:'center'
 }
 });
 export default styles;

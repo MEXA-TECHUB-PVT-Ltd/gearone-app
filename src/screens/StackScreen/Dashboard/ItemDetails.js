@@ -83,6 +83,34 @@ const ItemDetails = ({navigation, route}) => {
     require('../../../assets/dummyimages/image_3.png'),
     require('../../../assets/dummyimages/image_4.png'),
   ];
+
+    /////////////Get Screen Logo/////////////
+    const [dashboard_logo, setDashboardLogo] = useState([]);
+    const GetDashboardLogo = useCallback(async () => {
+      var token = await AsyncStorage.getItem('JWT_Token');
+      var headers = {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      };
+      await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+          screen_id: '3',
+        }),
+      })
+        .then(response => response.json())
+        .then(async response => {
+          console.log('response here in logos : ', response);
+          setDashboardLogo(response.result[0].image)
+        })
+        .catch(error => {
+          console.log('Error  : ', error);
+        });
+    }, [dashboard_logo]);
+
+    ///////Item Detail////
   const GetItemDetail = useCallback(async () => {
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
@@ -119,6 +147,7 @@ const ItemDetails = ({navigation, route}) => {
   useEffect(() => {
     GetItemDetail();
     getuser();
+    GetDashboardLogo()
   }, []);
   const getuser = async () => {
     var user_id = await AsyncStorage.getItem('User_id');
@@ -282,6 +311,7 @@ var headers={
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_logo={BASE_URL+dashboard_logo}
         />
         <AutoImageSlider
           slider_images_array={Item_Images.length === 0 ? images : Item_Images}

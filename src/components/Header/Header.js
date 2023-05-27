@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet,Image} from 'react-native';
 
 ////////////////height width///////////////
 import {
@@ -33,6 +33,7 @@ const Header = ({
   username,
   userimage,
   type,
+  right_logo
 }) => {
   return (
     <View
@@ -64,7 +65,16 @@ const Header = ({
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <YourLogo width={wp(30)} height={hp(6.5)} />
+            {
+              right_logo===null?
+                    <Logo width={wp(30)} height={hp(7)} />:
+                    <Image
+                    source={{uri:right_logo}}
+                    style={{height:hp(15),width:wp(15)}}
+                    resizeMode='contain'
+                    />
+            }
+
         </View>
       </View>
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {SafeAreaView, ScrollView, View, Text} from 'react-native';
 
 ///////////////app components////////////////
@@ -42,6 +42,33 @@ const EditProfile = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [snackbarValue, setsnackbarValue] = useState({value: '', color: ''});
   const onDismissSnackBar = () => setVisible(false);
+
+   /////////////Get Screen Logo/////////////
+   const [logo, setLogo] = useState([]);
+   const GetLogo = useCallback(async () => {
+     var token = await AsyncStorage.getItem('JWT_Token');
+     var headers = {
+       Authorization: `Bearer ${JSON.parse(token)}`,
+       Accept: 'application/json',
+       'Content-Type': 'application/json',
+     };
+     await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+       method: 'POST',
+       headers: headers,
+       body: JSON.stringify({
+         screen_id: '7',
+       }),
+     })
+       .then(response => response.json())
+       .then(async response => {
+         console.log('response here in logos : ', response);
+         setLogo(response.result[0].image)
+       })
+       .catch(error => {
+         console.log('Error  : ', error);
+       });
+   }, [logo]);
+ 
 
   //Api form validation
   const formValidation = async () => {
@@ -99,9 +126,9 @@ const EditProfile = ({navigation}) => {
       });
   };
   useEffect(() => {
+    GetLogo()
     //checkPermission()
   }, []);
-  ///////////emai
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -113,6 +140,7 @@ const EditProfile = ({navigation}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_logo={BASE_URL+logo}
         />
 
         {edit_personal === true ? (

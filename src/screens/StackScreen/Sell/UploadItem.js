@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef,useCallback} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -80,9 +80,37 @@ const UploadItem = ({navigation}) => {
   const [Item_location, setItemLocation] = useState('');
   const [Item_description, setItemDescription] = useState('');
 
+        /////////////Get Screen Logo/////////////
+        const [logo, setLogo] = useState([]);
+        const GetLogo = useCallback(async () => {
+          var token = await AsyncStorage.getItem('JWT_Token');
+          var headers = {
+            Authorization: `Bearer ${JSON.parse(token)}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          };
+          await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({
+              screen_id: '5',
+            }),
+          })
+            .then(response => response.json())
+            .then(async response => {
+              setLogo(response.result[0].image)
+            })
+            .catch(error => {
+              console.log('Error  : ', error);
+            });
+        }, [logo]);
+
+        useEffect(() => {
+          GetLogo()
+        }, []);
+
   /////////////image array/////////
   const post_Item_Images = async props => {
-    console.log('here image data', item_images_array);
     const formData = new FormData();
     formData.append('id', props);
     //formData.append("images",item_images_array);
@@ -247,6 +275,7 @@ const UploadItem = ({navigation}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_logo={BASE_URL+logo}
         />
         <FlatList
           data={item_images_array.slice(0, maxIndex)}
