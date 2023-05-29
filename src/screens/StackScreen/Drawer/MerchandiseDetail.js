@@ -28,12 +28,21 @@ import {BASE_URL} from '../../../utills/ApiRootUrl';
 ////////////screen id/////////////////
 import ScreensNames from '../../../data/ScreensNames';
 
+/////////////redux/////////
+import {useDispatch, useSelector} from 'react-redux';
+
 const MerchandiseDetails = ({navigation, route}) => {
   ////////previous screen data//////////
   const [predata] = useState(route.params);
 
+  //////redux variable//////////
+  const dispatch = useDispatch();
+  const join_as_guest = useSelector(state => state.auth.join_as_guest);
+  console.log('hre guest sattus', join_as_guest);
+
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
+  const [guest_modalVisible, setGuestModalVisible] = useState(false);
 
   ///////////////button states/////////////
   const [loading, setloading] = useState(0);
@@ -54,31 +63,31 @@ const MerchandiseDetails = ({navigation, route}) => {
     require('../../../assets/dummyimages/image_4.png'),
   ];
 
-    /////////////Get Screen Logo/////////////
-    const [logo, setLogo] = useState([]);
-    const GetLogo = useCallback(async () => {
-      var token = await AsyncStorage.getItem('JWT_Token');
-      var headers = {
-        Authorization: `Bearer ${JSON.parse(token)}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      };
-      await fetch(BASE_URL + 'logos/get_logos_by_screen', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({
-          screen_id: ScreensNames.MyGear_Screen,
-        }),
+  /////////////Get Screen Logo/////////////
+  const [logo, setLogo] = useState([]);
+  const GetLogo = useCallback(async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        screen_id: ScreensNames.MyGear_Screen,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log('response here in logos : ', response);
+        setLogo(response.result[0].image);
       })
-        .then(response => response.json())
-        .then(async response => {
-          console.log('response here in logos : ', response);
-          setLogo(response.result[0].image)
-        })
-        .catch(error => {
-          console.log('Error  : ', error);
-        });
-    }, [logo]);
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [logo]);
 
   const GetMerchandiseDetail = useCallback(async () => {
     var token = await AsyncStorage.getItem('JWT_Token');
@@ -108,7 +117,7 @@ const MerchandiseDetails = ({navigation, route}) => {
   }, [Item_likes_count]);
   useEffect(() => {
     GetMerchandiseDetail();
-    GetLogo()
+    GetLogo();
   }, []);
 
   //---------Order Place on Merchnadise Item ///////////
@@ -160,7 +169,7 @@ const MerchandiseDetails = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
-          right_icon={BASE_URL+logo}
+          right_icon={BASE_URL + logo}
         />
         <AutoImageSlider
           slider_images_array={Item_Images.length === 0 ? images : Item_Images}
@@ -207,7 +216,9 @@ const MerchandiseDetails = ({navigation, route}) => {
               loading={loading}
               disabled={disable}
               onPress={() => {
-                Merchnadise_Order();
+                join_as_guest === true
+                  ? setGuestModalVisible(true)
+                  : Merchnadise_Order();
               }}
             />
           </View>
@@ -221,6 +232,21 @@ const MerchandiseDetails = ({navigation, route}) => {
         type={'single_btn'}
         onPress={() => {
           setModalVisible(false), navigation.navigate('MyOrders');
+        }}
+      />
+      <CustomModal
+        modalVisible={guest_modalVisible}
+        onClose={() => {
+          setGuestModalVisible(false), navigation.navigate('Home');
+        }}
+        text={'Alert'}
+        btn_text={'Go to Login'}
+        subtext={'Login First To See Content'}
+        type={'single_btn'}
+        guest={'confirmation'}
+        onPress={() => {
+          setGuestModalVisible(false);
+          navigation.navigate('Login');
         }}
       />
     </SafeAreaView>

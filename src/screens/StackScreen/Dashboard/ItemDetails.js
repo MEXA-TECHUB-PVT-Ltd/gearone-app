@@ -47,14 +47,16 @@ import {BASE_URL} from '../../../utills/ApiRootUrl';
 import ScreensNames from '../../../data/ScreensNames';
 
 const ItemDetails = ({navigation, route}) => {
-  ////////////redux////////////
+  //////redux variable//////////
   const dispatch = useDispatch();
+  const join_as_guest = useSelector(state => state.auth.join_as_guest);
 
   /////////////reducer value////////////
   const ItemDetail = useSelector(state => state.ItemDetail);
 
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
+  const [guest_modalVisible, setGuestModalVisible] = useState(false);
 
   ////////////Listing Checks//////////////
   const [Item_like_user_id, setItem_Like_User_id] = useState('');
@@ -82,32 +84,32 @@ const ItemDetails = ({navigation, route}) => {
     require('../../../assets/dummyimages/image_4.png'),
   ];
 
-    /////////////Get Screen Logo/////////////
-    const [dashboard_logo, setDashboardLogo] = useState([]);
-    const GetDashboardLogo = useCallback(async () => {
-      var token = await AsyncStorage.getItem('JWT_Token');
-      var headers = {
-        Authorization: `Bearer ${JSON.parse(token)}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      };
-      await fetch(BASE_URL + 'logos/get_logos_by_screen', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({
-          screen_id:ScreensNames.Dashboard_Screen,
-        }),
+  /////////////Get Screen Logo/////////////
+  const [dashboard_logo, setDashboardLogo] = useState([]);
+  const GetDashboardLogo = useCallback(async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        screen_id: ScreensNames.Dashboard_Screen,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        setDashboardLogo(response.result[0].image);
       })
-        .then(response => response.json())
-        .then(async response => {
-          setDashboardLogo(response.result[0].image)
-        })
-        .catch(error => {
-          console.log('Error  : ', error);
-        });
-    }, [dashboard_logo]);
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [dashboard_logo]);
 
-    ///////Item Detail////
+  ///////Item Detail////
   const GetItemDetail = useCallback(async () => {
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
@@ -125,7 +127,7 @@ const ItemDetails = ({navigation, route}) => {
     })
       .then(response => response.json())
       .then(async response => {
-        console.log("here data",response.result[0].images)
+        console.log('here data', response.result[0].images);
         setItem_Images(response?.result[0].images);
         GetUserData(response?.result[0].userid - 0);
         setItem_Item_Title(response?.result[0].name);
@@ -144,7 +146,7 @@ const ItemDetails = ({navigation, route}) => {
   useEffect(() => {
     GetItemDetail();
     getuser();
-    GetDashboardLogo()
+    GetDashboardLogo();
   }, []);
   const getuser = async () => {
     var user_id = await AsyncStorage.getItem('User_id');
@@ -187,8 +189,7 @@ const ItemDetails = ({navigation, route}) => {
     };
     fetch(BASE_URL + 'like_item/like_item', requestOptions)
       .then(response => response.text())
-      .then(result => 
-        GetItemDetail())
+      .then(result => GetItemDetail())
       .catch(error => console.log('error', error));
   };
   //-----------unlike list
@@ -222,38 +223,36 @@ const ItemDetails = ({navigation, route}) => {
       item_ID: ItemDetail.id,
       user_ID: user_id,
     });
-var headers={
-  Authorization: `Bearer ${JSON.parse(token)}`,
-  'Content-Type': 'application/json',
-}
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      'Content-Type': 'application/json',
+    };
     let data = JSON.stringify({
-      "item_ID":ItemDetail.id,
-      "user_ID":user_id
+      item_ID: ItemDetail.id,
+      user_ID: user_id,
     });
-    
+
     let config = {
       method: 'post',
-      url: BASE_URL+'save_item/save_item',
-      headers:headers,
-      data : data
+      url: BASE_URL + 'save_item/save_item',
+      headers: headers,
+      data: data,
     };
-    
-    axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data.status));
-      if(response.data.status === true)
-      {
-     setItem_Save_User_id(response.data.result[0].user_id)
-        //setModalVisible(true),
-        //GetItemDetail()
-      }
-      else{
 
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    axios
+      .request(config)
+      .then(response => {
+        console.log(JSON.stringify(response.data.status));
+        if (response.data.status === true) {
+          setItem_Save_User_id(response.data.result[0].user_id);
+          //setModalVisible(true),
+          //GetItemDetail()
+        } else {
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   //----------save Item ///////////
   const UnSave_Item = async props => {
@@ -263,38 +262,36 @@ var headers={
       item_ID: ItemDetail.id,
       user_ID: user_id,
     });
-var headers={
-  Authorization: `Bearer ${JSON.parse(token)}`,
-  'Content-Type': 'application/json',
-}
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      'Content-Type': 'application/json',
+    };
     let data = JSON.stringify({
-      "item_ID":ItemDetail.id,
-      "user_ID":user_id
+      item_ID: ItemDetail.id,
+      user_ID: user_id,
     });
-    
+
     let config = {
       method: 'post',
-      url: BASE_URL+'save_item/un_save_item',
-      headers:headers,
-      data : data
+      url: BASE_URL + 'save_item/un_save_item',
+      headers: headers,
+      data: data,
     };
-    
-    axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-      if(response.data.status === true)
-      {
-     setItem_Save_User_id(response.data.result[0].user_id)
-        //setModalVisible(true),
-        //GetItemDetail()
-      }
-      else{
 
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    axios
+      .request(config)
+      .then(response => {
+        console.log(JSON.stringify(response.data));
+        if (response.data.status === true) {
+          setItem_Save_User_id(response.data.result[0].user_id);
+          //setModalVisible(true),
+          //GetItemDetail()
+        } else {
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
@@ -308,7 +305,7 @@ var headers={
           left_iconPress={() => {
             navigation.goBack();
           }}
-          right_logo={BASE_URL+dashboard_logo}
+          right_logo={BASE_URL + dashboard_logo}
         />
         <AutoImageSlider
           slider_images_array={Item_Images.length === 0 ? images : Item_Images}
@@ -326,44 +323,40 @@ var headers={
             <Text style={styles.ItemPrice_text}>{Item_item_price} $</Text>
           </View>
           {Item_like_user_id === login_user_id ? (
-                <TouchableOpacity
-                //onPress={() => Item_unlike(predata.Item_id)}
-                >
-                  <View style={styles.iconview}>
-                    <Icon
-                      name={'heart'}
-                      size={20}
-                      color={'white'}
-                      style={{marginRight: wp(1)}}
-                    />
-                    <Text style={styles.icontext}>
-                      {Item_likes_count} Likes
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  activeOpacity={0.2}
-                  //onPress={() => Item_like(predata.Item_id)}
-                  style={[styles.iconview, {width: wp(30)}]}>
-                  <Icon
-                    name={'heart'}
-                    //name={'heart-outline'}
-                    size={20}
-                    color={
-                      Item_like_user_id === login_user_id
-                        ? Colors.Appthemecolor
-                        : 'white'
-                    }
-                    style={{marginRight: wp(1)}}
-                  />
-                  <Text style={styles.icontext}>{Item_likes_count} Likes</Text>
-                </TouchableOpacity>
-              )}
+            <TouchableOpacity
+            //onPress={() => Item_unlike(predata.Item_id)}
+            >
+              <View style={styles.iconview}>
+                <Icon
+                  name={'heart'}
+                  size={20}
+                  color={'white'}
+                  style={{marginRight: wp(1)}}
+                />
+                <Text style={styles.icontext}>{Item_likes_count} Likes</Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.2}
+              //onPress={() => Item_like(predata.Item_id)}
+              style={[styles.iconview, {width: wp(30)}]}>
+              <Icon
+                name={'heart'}
+                //name={'heart-outline'}
+                size={20}
+                color={
+                  Item_like_user_id === login_user_id
+                    ? Colors.Appthemecolor
+                    : 'white'
+                }
+                style={{marginRight: wp(1)}}
+              />
+              <Text style={styles.icontext}>{Item_likes_count} Likes</Text>
+            </TouchableOpacity>
+          )}
           {ItemDetail.navplace === 'login_user_items' ? null : (
             <View>
-       
-
               <View
                 style={{
                   flexDirection: 'row',
@@ -383,7 +376,12 @@ var headers={
                   />
                   <Text
                     style={styles.verticletext}
-                    onPress={() => navigation.navigate('Followers')}>
+                    onPress={() =>{ join_as_guest === true
+                      ? setGuestModalVisible(true)
+                      : null
+                      //navigation.navigate('Followers')
+                    }}
+                      >
                     Share
                   </Text>
                 </View>
@@ -391,7 +389,11 @@ var headers={
                 {Item_like_user_id === login_user_id ? (
                   <TouchableOpacity
                     style={{alignItems: 'center'}}
-                    onPress={() => Item_unlike()}>
+                    onPress={() => {
+                      join_as_guest === true
+                        ? setGuestModalVisible(true)
+                        : Item_unlike();
+                    }}>
                     <Icon
                       name={'heart'}
                       size={20}
@@ -402,7 +404,11 @@ var headers={
                 ) : (
                   <TouchableOpacity
                     style={{alignItems: 'center'}}
-                    onPress={() => ltem_like()}>
+                    onPress={() => {
+                      join_as_guest === true
+                        ? setGuestModalVisible(true)
+                        : ltem_like();
+                    }}>
                     <Icon name={'heart'} size={20} color={'white'} />
                     <Text style={styles.verticletext}>{'Like'}</Text>
                   </TouchableOpacity>
@@ -411,14 +417,22 @@ var headers={
                 {Item_save_user_id === login_user_id ? (
                   <TouchableOpacity
                     style={{alignItems: 'center'}}
-                    onPress={() => UnSave_Item()}>
+                    onPress={() => {
+                      join_as_guest === true
+                        ? setGuestModalVisible(true)
+                        : UnSave_Item();
+                    }}>
                     <Icon name={'bookmark'} size={20} color={'red'} />
                     <Text style={styles.verticletext}>Save</Text>
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity
                     style={{alignItems: 'center'}}
-                    onPress={() => Save_Item()}>
+                    onPress={() => {
+                      join_as_guest === true
+                        ? setGuestModalVisible(true)
+                        : Save_Item();
+                    }}>
                     <Icon name={'bookmark'} size={20} color={'white'} />
                     <Text style={styles.verticletext}>Save</Text>
                   </TouchableOpacity>
@@ -426,12 +440,14 @@ var headers={
                 <View style={styles.verticleLine}></View>
                 <TouchableOpacity
                   style={{alignItems: 'center'}}
-                  onPress={() =>
-                    navigation.navigate('ChatScreen', {
-                      navtype: 'chatlist',
-                      userid:Item_userid,
-                    })
-                  }>
+                  onPress={() => {
+                    join_as_guest === true
+                      ? setGuestModalVisible(true)
+                      : navigation.navigate('ChatScreen', {
+                          navtype: 'chatlist',
+                          userid: Item_userid,
+                        });
+                  }}>
                   <MaterialIcons name={'chat'} size={20} color={'white'} />
                   <Text style={styles.verticletext}>Messages</Text>
                 </TouchableOpacity>
@@ -440,16 +456,12 @@ var headers={
           )}
 
           <View style={{marginVertical: hp(2), marginLeft: wp(5)}}>
-            <Text style={styles.heading_text}>
-              Description 
-            </Text>
+            <Text style={styles.heading_text}>Description</Text>
           </View>
           <View style={{paddingHorizontal: wp(5)}}>
             <Text style={styles.detail_text}>{Item_description}</Text>
           </View>
-          {ItemDetail.navplace === 'login_user_items' ? (
-        null
-          ) : (
+          {ItemDetail.navplace === 'login_user_items' ? null : (
             <View>
               <View
                 style={{
@@ -479,11 +491,13 @@ var headers={
 
                     <TouchableOpacity
                       style={styles.btn_view}
-                      onPress={() =>
-                        navigation.navigate('OtherProfile', {
-                          seller_id: Item_userid,
-                        })
-                      }>
+                      onPress={() => {
+                        join_as_guest === true
+                          ? setGuestModalVisible(true)
+                          : navigation.navigate('OtherProfile', {
+                              seller_id: Item_userid,
+                            });
+                      }}>
                       <Text style={styles.btn_text}>View Profile</Text>
                     </TouchableOpacity>
                   </View>
@@ -501,6 +515,21 @@ var headers={
         type={'single_btn'}
         onPress={() => {
           setModalVisible(false), navigation.navigate('BottomTab');
+        }}
+      />
+      <CustomModal
+        modalVisible={guest_modalVisible}
+        onClose={() => {
+          setGuestModalVisible(false), navigation.navigate('Home');
+        }}
+        text={'Alert'}
+        btn_text={'Go to Login'}
+        subtext={'Login First To See Content'}
+        type={'single_btn'}
+        guest={'confirmation'}
+        onPress={() => {
+          setGuestModalVisible(false);
+          navigation.navigate('Login');
         }}
       />
     </SafeAreaView>

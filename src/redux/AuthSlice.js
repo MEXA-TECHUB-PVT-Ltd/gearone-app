@@ -7,6 +7,7 @@ const AuthSlice = createSlice({
     _user_phone_no:'',
     phone_country_code:'',
     _jwt_token:'',
+    join_as_guest:false
   },
   reducers: {
     updateAuth: (state, action) => {
@@ -24,8 +25,11 @@ const AuthSlice = createSlice({
       setJWT_Token(state, action) {
         state._jwt_token = action.payload;
       },
+      setJoin_as_Guest(state, action) {
+        state.join_as_guest = action.payload;
+      },
   },
 });
 
-export const { setUserId,setUserPhone_No,setJWT_Token,setDevice_Token,setUserPhone_Country_Code} = AuthSlice.actions;
+export const { setUserId,setUserPhone_No,setJWT_Token,setDevice_Token,setUserPhone_Country_Code,setJoin_as_Guest} = AuthSlice.actions;
 export default AuthSlice.reducer;

@@ -9,6 +9,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+////////////naviagtion///////////////
+import { useIsFocused } from '@react-navigation/native';
+
 ///////////react native paper///////////
 import {Avatar} from 'react-native-paper';
 
@@ -37,9 +40,21 @@ import Icon from 'react-native-vector-icons/Ionicons';
 ////////screen id///////////
 import ScreensNames from '../../../data/ScreensNames';
 
+//////redux////////////////
+import { useSelector } from 'react-redux';
+
 const MyGear = ({navigation}) => {
+
+  ///////////////redux variable ///////
+   const join_as_guest=useSelector(state => state.auth.join_as_guest)
+  console.log("here user status",join_as_guest)
+
+  /////////navigation variable/////////////
+  const isFocused = useIsFocused();
+
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
+  const [guest_modalVisible, setGuestModalVisible] = useState(false);
 
     /////////////Get Screen Logo/////////////
     const [logo, setLogo] = useState([]);
@@ -94,9 +109,13 @@ const MyGear = ({navigation}) => {
       });
   };
   useEffect(() => {
+    if (isFocused && join_as_guest) {
+      setGuestModalVisible(true)
+       // You can customize the a message as per your needs
+     }
     GetProfileData();
     GetLogo()
-  }, []);
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -252,6 +271,19 @@ const MyGear = ({navigation}) => {
         onPress_back={() => {
           setModalVisible(false);
           navigation.navigate('Login');
+        }}
+      />
+          <CustomModal
+        modalVisible={guest_modalVisible}
+        onClose={()=>{setGuestModalVisible(false), navigation.navigate('Home')}}
+        text={'Alert'}
+        btn_text={'Go to Login'}
+        subtext={'Login First To See Content'}
+        type={'single_btn'}
+        guest={'confirmation'}
+        onPress={() => {
+          setGuestModalVisible(false);
+           navigation.navigate('Login');
         }}
       />
     </SafeAreaView>

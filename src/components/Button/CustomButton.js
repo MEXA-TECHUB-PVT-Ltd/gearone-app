@@ -14,7 +14,6 @@ const CustomButtonhere = ({
     disable,
     widthset,
     iscolor,
-    image,
     topDistance
 }) => {
     return(

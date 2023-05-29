@@ -7,7 +7,8 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  Linking
+  Linking,
+  RefreshControl,
 } from 'react-native';
 
 ///////////////app components////////////////
@@ -25,7 +26,7 @@ import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /////////////////redux///////////
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {setItemDetail} from '../../../redux/ItemSlice';
 
 ////////story package//////////
@@ -37,6 +38,7 @@ import ScreensNames from '../../../data/ScreensNames';
 const Home = ({navigation}) => {
   ///////redux states/////////
   const dispatch = useDispatch();
+  const join_as_guest=useSelector(state => state.auth.join_as_guest)
 
   //////////loader state/////
   const [isLoading, setLoading] = useState(false);
@@ -58,14 +60,12 @@ const Home = ({navigation}) => {
     })
       .then(response => response.json())
       .then(async response => {
-        console.log('response here in logos : ', response);
         setDashboardLogo(response.result[0].image)
       })
       .catch(error => {
         console.log('Error  : ', error);
       });
   }, [dashboard_logo]);
-
 
   /////////////Get Stories/////////////
   const [dashboard_stories, setDashboardStories] = useState([]);
@@ -93,31 +93,71 @@ const Home = ({navigation}) => {
       });
   }, [dashboard_stories]);
 
+  ///////////data states/////////
+  const[refresh,setRefresh]=useState(false)
+  const[page,setPage]=useState(1)
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+  const handleRefresh = () => {
+    setRefreshing(true);
+    setPage(1); // Reset page to 1 when refreshing
+    fetchData().then(() => setRefreshing(false));
+  };
+
+
   /////////////Get Items/////////////
-  const [dashboard_items, setDashboardItems] = useState('');
+  const [dashboard_items, setDashboardItems] = useState([]);
 
   const GetDashboardItems = useCallback(async () => {
-    var user_id = await AsyncStorage.getItem('User_id');
-    axios({
-      method: 'POST',
-      url: BASE_URL + 'items/get_all_items',
-      body: {},
-    })
-      .then(async function (response) {
-        if (response.data.status === true) {
-          setLoading(false);
-          setCount(1)
-          setDashboardItems(response.data.result);
-        } else {
-          <NoDataFound title={'No data here'} />;
-          setLoading(false);
-          setCount(1)
-        }
-      })
-      .catch(function (error) {
-        console.log('error', error);
+    console.log("here page",page)
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+
+      let data = JSON.stringify({
+        page: page
       });
+      
+      let config = {
+        method: 'post',
+        url: BASE_URL+'items/get_all_items',
+        headers: headers,
+        data : data
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        if (response.data.status === true) {
+                setLoading(false);
+                setCount(1)
+                var recent_data=response.data.result
+                var newArray = recent_data.concat(dashboard_items);
+                setDashboardItems(newArray);
+              } else {
+                <NoDataFound title={'No data here'} />;
+                setLoading(false);
+                setCount(1)
+              }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
+
   }, [dashboard_items]);
+  useEffect(() => {
+    GetDashboardItems()
+  }, [page]);
 
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -130,7 +170,19 @@ const Home = ({navigation}) => {
     GetDashboardStories();
     GetDashboardLogo()
   }, []);
-
+  const Refresh = () => {
+    setPage(page+1)
+   // clearproductlist(page);
+    setRefresh(true);
+    GetDashboardItems();
+    setRefresh(false);
+     };
+     useEffect(() => {
+      if (refreshing && refreshing) {
+        Refresh();
+        console.log("i run");
+      }
+      }, [refreshing]);
   const renderItem = ({item}) => {
     return (
       <DashboardCard
@@ -198,12 +250,20 @@ const Home = ({navigation}) => {
       </View>
     );
   };
+
+
+
+
   return (
     <SafeAreaView style={styles.container}>
       <Loader isLoading={isLoading} />
       <ScrollView
         showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={()=>onRefresh()} />
+        }
+        >
         <Header
           title={'Home'}
           left_icon={'menu'}
@@ -221,6 +281,11 @@ const Home = ({navigation}) => {
           removeClippedSubviews={true} // Unmount components when outside of window
           updateCellsBatchingPeriod={100} // Increase time between renders
           windowSize={7} // Reduce the window size
+          onEndReachedThreshold={0.7}
+          estimatedItemSize={50}
+          onEndReached={()=>GetDashboardItems()}
+          refreshing={refresh}
+          onRefresh={()=>Refresh()}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
         />
@@ -242,7 +307,7 @@ const Home = ({navigation}) => {
         <FlatList
           data={dashboard_items}
           numColumns={3}
-          inverted
+          // /inverted
           renderItem={renderItem}
           initialNumToRender={10}
           maxToRenderPerBatch={10}
@@ -255,6 +320,7 @@ const Home = ({navigation}) => {
           // onRefresh={()=>onRefresh()}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
+
         />
       </ScrollView>
     </SafeAreaView>
