@@ -1,10 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Image, Text} from 'react-native';
+import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-//////////////app icons///////////
-import Entypo from 'react-native-vector-icons/Entypo';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //////////////////app styles///////////////////
 import Colors from '../../utills/Colors';
@@ -25,9 +21,16 @@ import Sell from '../../screens/BottomTab/Sell/Sell';
 import Search from '../../screens/BottomTab/Search/Search';
 import MyGear from '../../screens/BottomTab/MyGear/MyGear';
 
+/////////////redux////////////
+import {useDispatch, useSelector} from 'react-redux';
+
 function BottomTab() {
+  ///////////redux variable/////////////
+  const dispatch = useDispatch();
+  const join_as_guest = useSelector(state => state.auth.join_as_guest);
+
   return (
-    <Tab.Navigator
+        <Tab.Navigator
       labeled={false}
       activeColor={Colors.Appthemecolor}
       screenOptions={{
@@ -56,11 +59,14 @@ function BottomTab() {
           headerShown: false,
 
           tabBarIcon: ({color, focused}) => (
-            <View style={style.maintabview}>
+       
+
+              <View style={style.maintabview}>
                 <View style={[style.tab]}>
                   <Text style={style.tabtextcolor}>{'Home'}</Text>
                 </View>
-            </View>
+              </View>
+
           ),
         }}
       />
@@ -71,11 +77,14 @@ function BottomTab() {
           headerShown: false,
 
           tabBarIcon: ({color, focused}) => (
+            <>
+    
             <View style={style.maintabview}>
               <View style={[style.tab]}>
                 <Text style={style.tabtextcolor}>{'Categories'}</Text>
               </View>
             </View>
+            </>
           ),
         }}
       />
@@ -88,7 +97,11 @@ function BottomTab() {
           tabBarIcon: ({color, focused}) => (
             <View style={style.maintabview}>
               <View style={[style.tab]}>
-                <View style={[style.tabview,focused ? style.selectedtabview : null]}>
+                <View
+                  style={[
+                    style.tabview,
+                    focused ? style.selectedtabview : null,
+                  ]}>
                   <Text
                     style={[
                       style.tabtextcolor,
@@ -130,8 +143,11 @@ function BottomTab() {
           ),
         }}
       />
+
     </Tab.Navigator>
+    
   );
+  
 }
 const style = StyleSheet.create({
   maintabview: {
@@ -158,9 +174,8 @@ const style = StyleSheet.create({
     color: 'grey',
     fontSize: hp(1.4),
     fontFamily: fontFamily.Poppins_Extra_Light,
-    width: wp(19),    
-    textAlign:'center'
-
+    width: wp(19),
+    textAlign: 'center',
   },
 });
 export default BottomTab;

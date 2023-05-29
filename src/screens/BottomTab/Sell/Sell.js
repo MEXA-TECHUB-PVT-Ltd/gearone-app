@@ -1,10 +1,14 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
 
+////////////naviagtion///////////////
+import { useIsFocused } from '@react-navigation/native';
+
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
 import SellCard from '../../../components/CustomCards/SellCards/SellCards';
 import CustomButtonhere from '../../../components/Button/CustomButton';
+import CustomModal from '../../../components/Modal/CustomModal';
 
 /////////////app styles///////////////////
 import styles from './styles';
@@ -21,7 +25,7 @@ import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /////////////////redux///////////
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {setItemDetail} from '../../../redux/ItemSlice';
 
 ////////////screen id///////////////
@@ -30,6 +34,14 @@ import ScreensNames from '../../../data/ScreensNames';
 const Sell = ({navigation}) => {
   //////redux variable//////////
   const dispatch = useDispatch();
+  const join_as_guest=useSelector(state => state.auth.join_as_guest)
+  console.log("here user status",join_as_guest)
+
+  /////////navigation variable/////////////
+  const isFocused = useIsFocused();
+
+  ///////////////Modal States///////////////
+  const [modalVisible, setModalVisible] = useState(false);
 
       /////////////Get Screen Logo/////////////
       const [logo, setLogo] = useState([]);
@@ -89,9 +101,15 @@ const Sell = ({navigation}) => {
       });
   }, [my_items]);
   useEffect(() => {
+    if (isFocused && join_as_guest) {
+     setModalVisible(true)
+      // You can customize the a message as per your needs
+    }
     GetMyItems();
     GetLogo()
-  }, []);
+  }, [isFocused]);
+
+
   const renderItem = ({item}) => {
     return (
       <SellCard
@@ -142,6 +160,19 @@ const Sell = ({navigation}) => {
           />
         </View>
       </ScrollView>
+      <CustomModal
+        modalVisible={modalVisible}
+        onClose={()=>{setModalVisible(false), navigation.navigate('Home')}}
+        text={'Alert'}
+        btn_text={'Go to Login'}
+        subtext={'Login First To See Content'}
+        type={'single_btn'}
+        guest={'confirmation'}
+        onPress={() => {
+          setModalVisible(false);
+           navigation.navigate('Login');
+        }}
+      />
     </SafeAreaView>
   );
 };

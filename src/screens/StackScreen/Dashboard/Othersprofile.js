@@ -60,7 +60,6 @@ const OtherProfile = ({navigation, route}) => {
     })
       .then(response => response.json())
       .then(async response => {
-        console.log('response here in logos : ', response);
         setDashboardLogo(response.result[0].image);
       })
       .catch(error => {
@@ -141,7 +140,35 @@ const OtherProfile = ({navigation, route}) => {
         console.log('Error  : ', error);
       });
   }, [my_items]);
-
+  const Follow_Seller = useCallback(async () => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'follow/follow_user', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        follow_by_user_ID:route.params.seller_id,
+        user_ID:user_id
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log("here user follow",response)
+        if (response.result.length === 0) {
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -195,10 +222,32 @@ const OtherProfile = ({navigation, route}) => {
             />
           )}
         </View>
-        <View style={{alignItems: 'center', marginTop: hp(5)}}>
-          <Text style={{color: 'white'}}>
+        <View
+          style={{
+            alignItems: 'center',
+            marginTop: hp(5),
+            alignSelf: 'center',
+            width:wp(90),
+            justifyContent:'center'
+          }}>
+          <Text style={{color: 'white',textAlign:'center'}}>
             {username === null ? 'UserName' : username}
           </Text>
+          <TouchableOpacity
+          onPress={()=> Follow_Seller()}
+            style={{
+              borderRadius: wp(3),
+              height: hp(4),
+              width: wp(20),
+              backgroundColor: 'red',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position:'absolute',
+              right:30,
+              top:-12,
+            }}>
+            <Text style={{color: 'white'}}>Follow</Text>
+          </TouchableOpacity>
         </View>
         <View
           style={{

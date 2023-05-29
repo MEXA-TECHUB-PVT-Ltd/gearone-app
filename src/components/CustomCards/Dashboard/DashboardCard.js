@@ -19,10 +19,6 @@ const DashboardCard = props => {
       <View style={styles.card}>
         <View
           style={styles.imageView}>
-          {/* <Image
-            source={{uri:props.image}}
-            style={styles.image}
-            resizeMode="cover"/> */}
         {props.images_array_length === 0 ? (
           <Ionicons name={'image'} color={'red'} size={25} />
         ) : (

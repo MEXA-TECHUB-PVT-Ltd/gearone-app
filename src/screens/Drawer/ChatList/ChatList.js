@@ -8,11 +8,15 @@ import {
   Text
 } from 'react-native';
 
+////////////naviagtion///////////////
+import { useIsFocused } from '@react-navigation/native';
+
 /////////////////firebase all users//////////////
 //import firestore from '@react-native-firebase/firestore';
 
 //////////////////////app components///////////////
 import Header from '../../../components/Header/Header';
+import CustomModal from '../../../components/Modal/CustomModal';
 
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
@@ -37,8 +41,15 @@ import {appImages} from '../../../constant/images';
 import { chatlist_data } from '../../../App_dummy_App/data/Chatlist_data';
 
 const ChatList = ({navigation}) => {
-  ////////////////redux/////////////////
+  //////redux variable//////////
   const dispatch = useDispatch();
+  const join_as_guest=useSelector(state => state.auth.join_as_guest)
+  
+  /////////navigation variable/////////////
+  const isFocused = useIsFocused();
+
+  ///////////////Modal States///////////////
+  const [modalVisible, setModalVisible] = useState(false);
 
 ////////////////loading/////////////
 const [loading, setloading] = useState(true);
@@ -61,9 +72,13 @@ const [loading, setloading] = useState(true);
   const[data,setData]=useState()
 
   useEffect(() => {
+    if (isFocused && join_as_guest) {
+      setModalVisible(true)
+       // You can customize the a message as per your needs
+     }
       //firebase_all_users()
       console.log('User dta here : ', data);
-  }, []);
+  }, [isFocused]);
 
 
   ///////////////////firebase all users///////////////
@@ -150,7 +165,19 @@ const [loading, setloading] = useState(true);
          showsVerticalScrollIndicator={false}
        />
         </View>
-
+        <CustomModal
+        modalVisible={modalVisible}
+        onClose={()=>{setModalVisible(false), navigation.navigate('Home')}}
+        text={'Alert'}
+        btn_text={'Go to Login'}
+        subtext={'Login First To See Content'}
+        type={'single_btn'}
+        guest={'confirmation'}
+        onPress={() => {
+          setModalVisible(false);
+           navigation.navigate('Login');
+        }}
+      />
     </SafeAreaView>
   );
 };

@@ -1,6 +1,9 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Modal, Image} from 'react-native';
 
+/////////////icon//////////////
+import Ionicons from 'react-native-vector-icons/Ionicons'
+
 import styles from './styles';
 import {
   widthPercentageToDP as wp,
@@ -17,13 +20,24 @@ const CustomModal = props => {
       animationType="slide"
       transparent={true}
       visible={props.modalVisible}
-      onRequestClose={props.CloseModal}>
+      onRequestClose={props.onClose}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
+        <TouchableOpacity 
+        onPress={ props.onClose}
+        style={{position:'absolute',right:wp(3),top:hp(1.5)}}>
+          {  props.type === 'single_btn' &&props.guest=== 'confirmation' ? (
+              <Ionicons name={'close'} size={25} color={"white"} />
+            ) :null}
+            </TouchableOpacity>
           <View style={{height: hp(14)}}>
+    
             {props.type === 'confirmation' ? (
               <ExclaimIcon width={wp(20)} height={hp(15)} />
-            ) : (
+            ) : props.type === 'single_btn' &&props.guest=== 'confirmation' ? (
+              <ExclaimIcon width={wp(20)} height={hp(15)} />
+            ) 
+            :(
               <CheckIcon width={wp(30)} height={hp(16)} />
             )}
           </View>

@@ -34,7 +34,14 @@ import Logo from '../../assets/svgs/Logo.svg';
 ///////////country picker//////////
 import {CountryPicker} from 'react-native-country-codes-picker';
 
+////////////redux////////////////
+import {useDispatch, useSelector} from 'react-redux';
+import {setJoin_as_Guest} from '../../redux/AuthSlice';
+
 const Login = ({navigation}) => {
+  //////////////redux variable////////////
+  const dispatch = useDispatch();
+
   ///////////////button states/////////////
   const [loading, setloading] = useState(0);
   const [disable, setdisable] = useState(0);
@@ -119,7 +126,10 @@ const Login = ({navigation}) => {
         </View>
         <TouchableOpacity
           style={{alignItems: 'center'}}
-          onPress={() => navigation.navigate('Drawerroute')}>
+          onPress={() => {
+            dispatch(setJoin_as_Guest(true)),
+              navigation.navigate('Drawerroute');
+          }}>
           <Text style={Authstyles.last_text}>Join as a Guest</Text>
         </TouchableOpacity>
         <View
@@ -152,50 +162,49 @@ const Login = ({navigation}) => {
         {snackbarValue.value}
       </Snackbar>
       {show && (
-  // <View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 10 ,height:hp(20) }}>
-  //        <TouchableOpacity onPress={closePicker}>
-  //         <Text style={{ fontSize: 18, color: 'blue' }}>Close</Text>
-  //       </TouchableOpacity>
-  //         </View> 
-          <CountryPicker
-            show={show}
-            //disableBackdrop={true}
-            onBackdropPress={() => setShow(false)}
-            enableModalAvoiding={true}
-            searchMessage={'Please Choose Your Country Code'}
-            //inputPlaceholder={'Please Choose Your Country Code'}
-            // when picker button press you will get the country object with dial code
-            pickerButtonOnPress={item => {
-              setCountryCode(item.dial_code);
-              setShow(false);
-            }}
-            style={{
-              modal: {
-                height:hp(45),
-                backgroundColor: '#444444',
-              },
-              // Styles for input [TextInput]
-              textInput: {
-                height: hp(6.5),
-                borderRadius: wp(2),
-                color:'black'
-              },
-              // Dial code styles [Text]
-              dialCode: {
-                color: 'black',
-              },
-              // Country name styles [Text]
-              countryName: {
-                color: 'black',
-              },
-              // Styles for search message [Text]
-              searchMessageText: {
-                color: 'black',
-              },
-   
-            }}
-          />
-       )}
+        // <View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 10 ,height:hp(20) }}>
+        //        <TouchableOpacity onPress={closePicker}>
+        //         <Text style={{ fontSize: 18, color: 'blue' }}>Close</Text>
+        //       </TouchableOpacity>
+        //         </View>
+        <CountryPicker
+          show={show}
+          //disableBackdrop={true}
+          onBackdropPress={() => setShow(false)}
+          enableModalAvoiding={true}
+          searchMessage={'Please Choose Your Country Code'}
+          //inputPlaceholder={'Please Choose Your Country Code'}
+          // when picker button press you will get the country object with dial code
+          pickerButtonOnPress={item => {
+            setCountryCode(item.dial_code);
+            setShow(false);
+          }}
+          style={{
+            modal: {
+              height: hp(45),
+              backgroundColor: '#444444',
+            },
+            // Styles for input [TextInput]
+            textInput: {
+              height: hp(6.5),
+              borderRadius: wp(2),
+              color: 'black',
+            },
+            // Dial code styles [Text]
+            dialCode: {
+              color: 'black',
+            },
+            // Country name styles [Text]
+            countryName: {
+              color: 'black',
+            },
+            // Styles for search message [Text]
+            searchMessageText: {
+              color: 'black',
+            },
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };

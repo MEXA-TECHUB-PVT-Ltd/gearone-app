@@ -17,7 +17,6 @@ appImages.ClothIcon,
 
 const AutoImageSlider = (props) => {
 
-  console.log("here data",props.slider_images_array)
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
@@ -102,7 +101,6 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     borderColor:Colors.appgreycolor,
     borderWidth:wp(0.2),
-    backgroundColor:'red'
   },
   image: {
     width: wp(100),
