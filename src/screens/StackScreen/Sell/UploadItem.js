@@ -41,6 +41,9 @@ import UploadIcon from '../../../assets/svgs/upload_icon.svg';
 import {useSelector, useDispatch} from 'react-redux';
 import {setItemDetail} from '../../../redux/ItemSlice';
 
+////////////screen id//////////////
+import ScreensNames from '../../../data/ScreensNames';
+
 const UploadItem = ({navigation}) => {
   ////////////redux////////////
   const dispatch = useDispatch();
@@ -93,7 +96,7 @@ const UploadItem = ({navigation}) => {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({
-              screen_id: '5',
+              screen_id: ScreensNames.Sell_Screen,
             }),
           })
             .then(response => response.json())

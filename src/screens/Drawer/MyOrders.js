@@ -3,7 +3,6 @@ import {SafeAreaView, ScrollView, FlatList} from 'react-native';
 
 ///////////////app components////////////////
 import Header from '../../components/Header/Header';
-import NoDataFound from '../../components/NoDataFound/NoDataFound';
 import SellCard from '../../components/CustomCards/SellCards/SellCards';
 
 /////////////app styles///////////////////
@@ -18,9 +17,37 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import { setItemDetail } from '../../redux/ItemSlice';
 
+////////////screen id////////////
+import ScreensNames from '../../data/ScreensNames';
+
 const MyOrders = ({navigation, route}) => {
   //////redux variable/////////
   const dispatch = useDispatch();
+
+    /////////////Get Screen Logo/////////////
+    const [logo, setLogo] = useState();
+    const GetLogo = useCallback(async () => {
+      var token = await AsyncStorage.getItem('JWT_Token');
+      var headers = {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      };
+      await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+          screen_id: ScreensNames.MyGear_Screen,
+        }),
+      })
+        .then(response => response.json())
+        .then(async response => {
+          setLogo(response.result[0].image);
+        })
+        .catch(error => {
+          console.log('Error  : ', error);
+        });
+    }, [logo]);
 
   /////////////Get Notification/////////////
   const [myOrder_items, setMyOrderItems] = useState('');
@@ -47,6 +74,7 @@ const MyOrders = ({navigation, route}) => {
       
       axios.request(config)
       .then((response) => {
+        console.log("hre data",response.data)
         setMyOrderItems(response.data.result)
       })
       .catch((error) => {
@@ -55,6 +83,7 @@ const MyOrders = ({navigation, route}) => {
   }, [myOrder_items]);
   useEffect(() => {
     Get_MyOrders();
+    GetLogo()
   }, []);
   const renderItem = ({item}) => {
     return (
@@ -68,6 +97,7 @@ const MyOrders = ({navigation, route}) => {
         type={'orders'}
         subtext_Content={item.createdat}
         subtext_Text={'Date: '}
+        images_array_length={0}
         //images_array_length={item.images.length}
         onpress={() => {
           navigation.navigate('MerchandiseDetails', {
@@ -88,6 +118,7 @@ const MyOrders = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_logo={BASE_URL+logo}
         />
         <FlatList
           data={myOrder_items}

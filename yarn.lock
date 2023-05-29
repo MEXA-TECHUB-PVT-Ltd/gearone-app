@@ -6421,6 +6421,11 @@ react-native-modalbox@^2.0.2:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-otp-verify@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-otp-verify/-/react-native-otp-verify-1.1.5.tgz#334e656b7bb8cf45ede4b1176b5efdb264649c9a"
+  integrity sha512-DsZ5RCKcr1E785KR/yfA6Ii+EwuYSSAAaj2/ngoyVZCHV1c+7lJkkNSnyq6qErLvZ/JfCYEXDzADsAFk17yDOA==
+
 react-native-paper@^5.7.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.7.0.tgz#0d726615f03bdd73f0f8d8fb16fe2f34f66d7743"

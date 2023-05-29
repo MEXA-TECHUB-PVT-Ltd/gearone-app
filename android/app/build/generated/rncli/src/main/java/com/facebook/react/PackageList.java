@@ -29,6 +29,8 @@ import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 // react-native-insta-story
 import com.reactlibrary.InstaStoryPackage;
+// react-native-otp-verify
+import com.faizal.OtpVerify.OtpVerifyPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
 // react-native-safe-area-context
@@ -91,6 +93,7 @@ public class PackageList {
       new RNGestureHandlerPackage(),
       new PickerPackage(),
       new InstaStoryPackage(),
+      new OtpVerifyPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),

@@ -1,6 +1,9 @@
 import React, {useState, useEffect, useLayoutEffect, useRef} from 'react';
 import {View, Text, SafeAreaView} from 'react-native';
 
+////////////////app pakages////////////
+import {Snackbar} from 'react-native-paper';
+
 //////////////////firebase////////////////
 import firestore from '@react-native-firebase/firestore';
 
@@ -66,7 +69,10 @@ const Verification = ({navigation, route}) => {
   /////////////previous data state///////////////
   const [predata] = useState(route.params);
 
-  console.log(predata);
+  ///////////////button states/////////////
+  const [visible, setVisible] = useState(false);
+  const [snackbarValue, setsnackbarValue] = useState({value: '', color: ''});
+  const onDismissSnackBar = () => setVisible(false);
 
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
@@ -127,30 +133,25 @@ const Verification = ({navigation, route}) => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
-  const extractOTPFromVerificationId = (verificationId) => {
-    const match = verificationId.match(/\d{6}$/);
-    if (match) {
-      return match[0];
-    }
-    return null;
-  };
+
   async function confirmCode() {
     setCount(count + 1);
     try {
       await confirm.confirm(value);
       SigUpUser()
     } catch (error) {
-      console.log('Invalid code.');
+      console.log('Invalid code.',error);
+      setsnackbarValue('Invalid code, Please Enter Valid one')
     }
-    const credential = auth.PhoneAuthProvider.credential(
-      confirm.verificationId,
-      value,
-    );
-    console.log('code', credential);
-    const user = await auth().signInWithCredential(credential);
-    console.log('user', user);
-    let userData = await auth().currentUser.linkWithCredential(credential);
-    console.log('user userData', userData);
+    // const credential = auth.PhoneAuthProvider.credential(
+    //   confirm.verificationId,
+    //   value,
+    // );
+    // console.log('code', credential);
+    // const user = await auth().signInWithCredential(credential);
+    // console.log('user', user);
+    // let userData = await auth().currentUser.linkWithCredential(credential);
+    // console.log('user userData', userData);
     //SigUpUser()
   }
   //////////////Api Calling////////////////////
@@ -357,16 +358,25 @@ const Verification = ({navigation, route}) => {
       <CustomModal
         modalVisible={modalVisible}
         text={'Success'}
-        btn_text={'Go to Home'}
+        btn_text={'Go to Create Profile'}
         subtext={'Account Verified Successfully'}
         type={'single_btn'}
         onPress={() => {
-          confirmCode();
-          //setModalVisible(false);
-          //  navigation.navigate('CreateProfile');
-          //navigation.navigate('Drawerroute');
+          setModalVisible(false);
+           navigation.navigate('CreateProfile');
         }}
       />
+              <Snackbar
+          duration={400}
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          style={{
+            backgroundColor: snackbarValue.color,
+            marginBottom: hp(20),
+            zIndex: 999,
+          }}>
+          {snackbarValue.value}
+        </Snackbar>
     </SafeAreaView>
   );
 };

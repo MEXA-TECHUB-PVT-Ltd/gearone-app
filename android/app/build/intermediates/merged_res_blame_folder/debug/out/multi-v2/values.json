@@ -370,6 +370,23 @@
                     }
                 },
                 {
+                    "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\15a57b7be4a044055cfebf45f345142e\\transformed\\jetified-play-services-basement-18.2.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "4,7",
+                        "startColumns": "0,0",
+                        "startOffsets": "243,406",
+                        "endColumns": "63,166",
+                        "endOffsets": "306,572"
+                    },
+                    "to": {
+                        "startLines": "845,942",
+                        "startColumns": "4,4",
+                        "startOffsets": "51377,60177",
+                        "endColumns": "67,166",
+                        "endOffsets": "51440,60339"
+                    }
+                },
+                {
                     "source": "E:\\MtechubProjects\\Gear_1\\git project again\\gearone-app-1\\android\\app\\src\\main\\res\\values\\strings.xml",
                     "from": {
                         "startLines": "1",
@@ -492,23 +509,6 @@
                         "startOffsets": "62365",
                         "endColumns": "81",
                         "endOffsets": "62442"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\mtechubuser\\.gradle\\caches\\transforms-3\\b8b032a9f011549aa4242ce10998c5f2\\transformed\\jetified-play-services-basement-18.1.0\\res\\values\\values.xml",
-                    "from": {
-                        "startLines": "4,7",
-                        "startColumns": "0,0",
-                        "startOffsets": "243,406",
-                        "endColumns": "63,166",
-                        "endOffsets": "306,572"
-                    },
-                    "to": {
-                        "startLines": "845,942",
-                        "startColumns": "4,4",
-                        "startOffsets": "51377,60177",
-                        "endColumns": "67,166",
-                        "endOffsets": "51440,60339"
                     }
                 },
                 {

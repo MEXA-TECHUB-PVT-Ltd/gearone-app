@@ -19,7 +19,37 @@ import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+///////////screen id/////////
+import ScreensNames from '../../../data/ScreensNames';
+
 const AllFollowings = ({navigation, route}) => {
+
+     /////////////Get Screen Logo/////////////
+     const [logo, setLogo] = useState([]);
+     const GetLogo = useCallback(async () => {
+       var token = await AsyncStorage.getItem('JWT_Token');
+       var headers = {
+         Authorization: `Bearer ${JSON.parse(token)}`,
+         Accept: 'application/json',
+         'Content-Type': 'application/json',
+       };
+       await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+         method: 'POST',
+         headers: headers,
+         body: JSON.stringify({
+           screen_id: ScreensNames.MyGear_Screen,
+         }),
+       })
+         .then(response => response.json())
+         .then(async response => {
+           console.log('response here in logos : ', response);
+           setLogo(response.result[0].image)
+         })
+         .catch(error => {
+           console.log('Error  : ', error);
+         });
+     }, [logo]);
+
   /////////////Get Notification/////////////
   const [myposts, setMyPosts] = useState('');
 
@@ -42,6 +72,7 @@ const AllFollowings = ({navigation, route}) => {
   };
   useEffect(() => {
     GetAllFollowers();
+    GetLogo()
   }, []);
 
   const renderItem = ({item}) => {
@@ -69,6 +100,7 @@ const AllFollowings = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_icon={BASE_URL+logo}
         />
         <View style={{marginTop:hp(3)}}>
         <FlatList

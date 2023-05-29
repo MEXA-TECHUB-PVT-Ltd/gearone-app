@@ -18,9 +18,37 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {setItemDetail} from '../../redux/ItemSlice';
 
+//////////screen id///////////////
+import ScreensNames from '../../data/ScreensNames';
+
 const DailyDeals = ({navigation, route}) => {
   //////redux variable/////////
   const dispatch = useDispatch();
+
+      /////////////Get Screen Logo/////////////
+      const [logo, setLogo] = useState();
+      const GetLogo = useCallback(async () => {
+        var token = await AsyncStorage.getItem('JWT_Token');
+        var headers = {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        };
+        await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+            screen_id: ScreensNames.MyGear_Screen,
+          }),
+        })
+          .then(response => response.json())
+          .then(async response => {
+            setLogo(response.result[0].image);
+          })
+          .catch(error => {
+            console.log('Error  : ', error);
+          });
+      }, [logo]);
 
   /////////////Get Notification/////////////
   const [daily_deals, setDailyDeals] = useState('');
@@ -54,6 +82,7 @@ const DailyDeals = ({navigation, route}) => {
   }, [daily_deals]);
   useEffect(() => {
     Get_DailyDeals();
+    GetLogo()
   }, []);
   const renderItem = ({item}) => {
     return (
@@ -86,6 +115,7 @@ const DailyDeals = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_logo={BASE_URL+logo}
         />
         <FlatList
           data={daily_deals}

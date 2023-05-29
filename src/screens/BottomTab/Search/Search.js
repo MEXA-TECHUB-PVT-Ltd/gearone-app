@@ -22,32 +22,8 @@ import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Lorem ipsum',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Lorem ipsum',
-  },
-  {
-    id: '58694a0f-3dhjk8a1-471f-bd96-145571e29d72',
-    title: 'Lorem ipsum Lorem ipsum',
-  },
-  {
-    id: 'bd7acbea-c1b781-46c2-aed5-3ad53abb28ba',
-    title: 'Lorem ipsum',
-  },
-  {
-    id: '3ac68afc-c6bjj705-48d3-a47344f8-fbd91aa97f63',
-    title: 'Lorem ipsum',
-  },
-  {
-    id: '58694a0f-3d78ga1-471f-bdhhffh696-145571e29d72',
-    title: 'Lorem ipsum',
-  },
-];
+////////screeen id//////////////
+import ScreensNames from '../../../data/ScreensNames';
 
 const Search = ({navigation}) => {
 
@@ -64,7 +40,7 @@ const Search = ({navigation}) => {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({
-          screen_id: '6',
+          screen_id: ScreensNames.Search_Screen,
         }),
       })
         .then(response => response.json())

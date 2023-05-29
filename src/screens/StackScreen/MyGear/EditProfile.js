@@ -9,25 +9,18 @@ import EditPersonalDetail from '../../../components/EditProfile/EditPersonal';
 import EditSocialLinks from '../../../components/EditProfile/EditLinks';
 import EditImages from '../../../components/EditProfile/EditImages';
 
-////////////////app pakages////////////
-import {Snackbar} from 'react-native-paper';
-
 /////////////app styles///////////////////
 import styles from './styles';
 
-//////////height and width/////////////
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
-
 ////////////////api////////////////
-import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
+
+///////screen id/////////
+import ScreensNames from '../../../data/ScreensNames';
 
 const EditProfile = ({navigation}) => {
   ////////////////redux/////////////////
@@ -35,13 +28,6 @@ const EditProfile = ({navigation}) => {
   const {edit_personal, edit_links, edit_Images} = useSelector(
     state => state.editProfile,
   );
-
-  ///////////////button states/////////////
-  const [loading, setloading] = useState(0);
-  const [disable, setdisable] = useState(0);
-  const [visible, setVisible] = useState(false);
-  const [snackbarValue, setsnackbarValue] = useState({value: '', color: ''});
-  const onDismissSnackBar = () => setVisible(false);
 
    /////////////Get Screen Logo/////////////
    const [logo, setLogo] = useState([]);
@@ -56,7 +42,7 @@ const EditProfile = ({navigation}) => {
        method: 'POST',
        headers: headers,
        body: JSON.stringify({
-         screen_id: '7',
+         screen_id: ScreensNames.MyGear_Screen,
        }),
      })
        .then(response => response.json())
@@ -69,65 +55,8 @@ const EditProfile = ({navigation}) => {
        });
    }, [logo]);
  
-
-  //Api form validation
-  const formValidation = async () => {
-    // input validation
-    if (username == '') {
-      setsnackbarValue({value: 'Please Enter Username', color: 'red'});
-      setVisible('true');
-    } else if (gender.name == '') {
-      setsnackbarValue({value: 'Please Enter Gender', color: 'red'});
-      setVisible('true');
-    } else if (age == '') {
-      setsnackbarValue({value: 'Please Enter Age', color: 'red'});
-      setVisible('true');
-    } else if (experience == '') {
-      setsnackbarValue({
-        value: 'Please Enter Experience',
-        color: 'red',
-      });
-      setVisible('true');
-    } else {
-      setloading(1);
-      setdisable(1);
-      get_image(imagePath);
-    }
-  };
-  //////////////Api Calling////////////////////
-  const CreateProfile = async () => {
-    const user_id = await AsyncStorage.getItem('User_id');
-    const device_id = await AsyncStorage.getItem('Device_id');
-    var token = await AsyncStorage.getItem('JWT_Token');
-    let data = JSON.stringify({
-      barber_id: user_id,
-      user_name: username,
-    });
-
-    let config = {
-      method: 'put',
-      url: BASE_URL + 'Barber/update_profile?current_user_id=' + user_id,
-      headers: {
-        Authorization: `Bearer ${JSON.parse(token)}`,
-        'Content-Type': 'application/json',
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then(response => {
-        setloading(0);
-        setdisable(0);
-        navigation.navigate('ProfileSucess');
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
   useEffect(() => {
     GetLogo()
-    //checkPermission()
   }, []);
   return (
     <SafeAreaView style={styles.container}>
@@ -151,17 +80,6 @@ const EditProfile = ({navigation}) => {
           <EditImages />
         ) : null}
 
-        <Snackbar
-          duration={400}
-          visible={visible}
-          onDismiss={onDismissSnackBar}
-          style={{
-            backgroundColor: snackbarValue.color,
-            marginBottom: hp(20),
-            zIndex: 999,
-          }}>
-          {snackbarValue.value}
-        </Snackbar>
       </ScrollView>
     </SafeAreaView>
   );

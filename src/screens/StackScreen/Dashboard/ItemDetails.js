@@ -43,20 +43,18 @@ import {setItemDetail} from '../../../redux/ItemSlice';
 import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 
+///////////////screen id////////////
+import ScreensNames from '../../../data/ScreensNames';
+
 const ItemDetails = ({navigation, route}) => {
   ////////////redux////////////
   const dispatch = useDispatch();
 
   /////////////reducer value////////////
   const ItemDetail = useSelector(state => state.ItemDetail);
-  console.log('item id here in redux', ItemDetail);
 
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
-
-  ///////////////button states/////////////
-  const [loading, setloading] = useState(0);
-  const [disable, setdisable] = useState(0);
 
   ////////////Listing Checks//////////////
   const [Item_like_user_id, setItem_Like_User_id] = useState('');
@@ -97,12 +95,11 @@ const ItemDetails = ({navigation, route}) => {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({
-          screen_id: '3',
+          screen_id:ScreensNames.Dashboard_Screen,
         }),
       })
         .then(response => response.json())
         .then(async response => {
-          console.log('response here in logos : ', response);
           setDashboardLogo(response.result[0].image)
         })
         .catch(error => {
