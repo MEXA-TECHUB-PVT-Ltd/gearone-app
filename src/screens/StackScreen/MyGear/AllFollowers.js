@@ -19,46 +19,37 @@ import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      username: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_1.png'),
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      username: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_2.png'),
-    },
-    {
-      id: '58694a0f-3dhjk8a1-471f-bd96-145571e29d72',
-      title: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_3.png'),
-    },
-    {
-      id: 'bd7acbea-c1b781-46c2-aed5-3ad53abb28ba',
-      username: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_4.png'),
-    },
-    {
-      id: '3ac68afc-c6bjj705-48d3-a47344f8-fbd91aa97f63',
-      username: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_5.png'),
-    },
-    {
-      id: '58694a0f-3d78ga1-471f-bdhhffh696-145571e29d72',
-      username: 'Item Name',
-      price: '45',
-      image: require('../../../assets/dummyimages/image_6.png'),
-    },
-  ];
+////////////////screen id////////////////
+import ScreensNames from '../../../data/ScreensNames';
 
 const AllFollowers = ({navigation, route}) => {
+
+      /////////////Get Screen Logo/////////////
+      const [logo, setLogo] = useState([]);
+      const GetLogo = useCallback(async () => {
+        var token = await AsyncStorage.getItem('JWT_Token');
+        var headers = {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        };
+        await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+            screen_id: ScreensNames.MyGear_Screen,
+          }),
+        })
+          .then(response => response.json())
+          .then(async response => {
+            console.log('response here in logos : ', response);
+            setLogo(response.result[0].image)
+          })
+          .catch(error => {
+            console.log('Error  : ', error);
+          });
+      }, [logo]);
+
   /////////////Get Notification/////////////
   const [myposts, setMyPosts] = useState('');
 
@@ -81,6 +72,7 @@ const AllFollowers = ({navigation, route}) => {
   };
   useEffect(() => {
     GetAllFollowers();
+    GetLogo()
   }, []);
 
   const renderItem = ({item}) => {
@@ -108,6 +100,7 @@ const AllFollowers = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_icon={BASE_URL+logo}
         />
         <View style={{marginTop:hp(3)}}>
         <FlatList

@@ -34,8 +34,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 ///////////////////icons///////////
 import Icon from 'react-native-vector-icons/Ionicons';
 
-/////////////colors////////////
-import Colors from '../../../utills/Colors';
+////////screen id///////////
+import ScreensNames from '../../../data/ScreensNames';
 
 const MyGear = ({navigation}) => {
   ///////////////Modal States///////////////
@@ -54,12 +54,11 @@ const MyGear = ({navigation}) => {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({
-          screen_id: '7',
+          screen_id: ScreensNames.MyGear_Screen,
         }),
       })
         .then(response => response.json())
         .then(async response => {
-          console.log('response here in logos : ', response);
           setLogo(response.result[0].image)
         })
         .catch(error => {

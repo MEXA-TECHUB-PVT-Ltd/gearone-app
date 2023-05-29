@@ -14,7 +14,6 @@ import {
 } from 'react-native-responsive-screen';
 
 const SellCard = props => {
-  console.log('here image', props.image);
   /////////price formatter
   const formatter = new Intl.NumberFormat('en-US', {
     notation: 'compact',
@@ -22,13 +21,10 @@ const SellCard = props => {
   });
   const formattedLikes = formatter.format(props.price);
 const dateObject = new Date(props.subtext_Content);
-
 const day = String(dateObject.getUTCDate()).padStart(2, "0");
 const month = String(dateObject.getUTCMonth() + 1).padStart(2, "0");
 const year = dateObject.getUTCFullYear();
-
 const formattedDate = day + "/" + month + "/" + year;
-console.log(formattedDate);
   return (
     <TouchableOpacity
       onPress={props.onpress}

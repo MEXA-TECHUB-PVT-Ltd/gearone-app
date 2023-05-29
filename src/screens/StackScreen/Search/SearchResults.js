@@ -17,6 +17,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {setItemDetail} from '../../../redux/ItemSlice';
 
+//////////screeen id//////////////
+import ScreensNames from '../../../data/ScreensNames';
+
 const SearchResults = ({navigation, route}) => {
   ///////////redux variable////////
   const dispatch = useDispatch();
@@ -39,7 +42,7 @@ const SearchResults = ({navigation, route}) => {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({
-          screen_id: '6',
+          screen_id:ScreensNames.Search_Screen,
         }),
       })
         .then(response => response.json())
@@ -69,7 +72,6 @@ const SearchResults = ({navigation, route}) => {
           })
             .then(response => response.json())
             .then(async response => {
-              console.log('here',response)
               setSearchResults(response.items)
             })
             .catch(error => {

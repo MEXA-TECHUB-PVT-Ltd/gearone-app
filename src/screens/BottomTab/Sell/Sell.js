@@ -24,6 +24,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {setItemDetail} from '../../../redux/ItemSlice';
 
+////////////screen id///////////////
+import ScreensNames from '../../../data/ScreensNames';
+
 const Sell = ({navigation}) => {
   //////redux variable//////////
   const dispatch = useDispatch();
@@ -41,7 +44,7 @@ const Sell = ({navigation}) => {
           method: 'POST',
           headers: headers,
           body: JSON.stringify({
-            screen_id: '5',
+            screen_id: ScreensNames.Sell_Screen,
           }),
         })
           .then(response => response.json())

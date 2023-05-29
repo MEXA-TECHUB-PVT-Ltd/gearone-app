@@ -35,6 +35,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 ///////////////////icons///////////
 import Icon from 'react-native-vector-icons/Ionicons';
 
+////////screen id/////////////
+import ScreensNames from '../../../data/ScreensNames';
+
 const OtherProfile = ({navigation, route}) => {
   //camera and imagepicker
   const refRBSheet = useRef();
@@ -52,7 +55,7 @@ const OtherProfile = ({navigation, route}) => {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({
-        screen_id: '3',
+        screen_id: ScreensNames.Dashboard_Screen,
       }),
     })
       .then(response => response.json())
@@ -150,7 +153,7 @@ const OtherProfile = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
-          right_logo={BASE_URL + logo}
+          right_logo={BASE_URL + dashboard_logo}
         />
         <View style={{alignItems: 'center'}}>
           {coverImage === null ? (

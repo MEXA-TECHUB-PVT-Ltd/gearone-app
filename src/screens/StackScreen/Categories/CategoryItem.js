@@ -19,6 +19,9 @@ import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+///////////screen id///////////////
+import ScreensNames from '../../../data/ScreensNames';
+
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -73,7 +76,7 @@ const CategoryItem = ({navigation,route}) => {
        method: 'POST',
        headers: headers,
        body: JSON.stringify({
-         screen_id: '4',
+         screen_id: ScreensNames.Categoriies_Screen,
        }),
      })
        .then(response => response.json())

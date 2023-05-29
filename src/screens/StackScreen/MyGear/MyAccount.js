@@ -25,6 +25,9 @@ import FaceBook from '../../../assets/svgs/facebook.svg';
 import Twitter from '../../../assets/svgs/twitter.svg';
 import Instagram from '../../../assets/svgs/insta.svg';
 
+////////screen id/////////
+import ScreensNames from '../../../data/ScreensNames';
+
 const MyAccount = ({navigation, route}) => {
   /////////////Get Notification/////////////
   const [email, setEmail] = useState('');
@@ -50,12 +53,11 @@ const MyAccount = ({navigation, route}) => {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({
-        screen_id: '7',
+        screen_id: ScreensNames.MyGear_Screen,
       }),
     })
       .then(response => response.json())
       .then(async response => {
-        console.log('response here in logos : ', response);
         setLogo(response.result[0].image)
       })
       .catch(error => {

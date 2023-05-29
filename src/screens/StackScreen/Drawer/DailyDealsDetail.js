@@ -30,8 +30,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 
+/////screen id//////////
+import ScreensNames from '../../../data/ScreensNames';
+
 const DailyDealsDetails = ({navigation, route}) => {
-  console.log('item id here in redux', route.params);
   const [predata] = useState(route.params);
 
   ///////////////Modal States///////////////
@@ -55,6 +57,33 @@ const DailyDealsDetails = ({navigation, route}) => {
     require('../../../assets/dummyimages/image_3.png'),
     require('../../../assets/dummyimages/image_4.png'),
   ];
+
+      /////////////Get Screen Logo/////////////
+      const [logo, setLogo] = useState([]);
+      const GetLogo = useCallback(async () => {
+        var token = await AsyncStorage.getItem('JWT_Token');
+        var headers = {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        };
+        await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+            screen_id: ScreensNames.MyGear_Screen,
+          }),
+        })
+          .then(response => response.json())
+          .then(async response => {
+            console.log('response here in logos : ', response);
+            setLogo(response.result[0].image)
+          })
+          .catch(error => {
+            console.log('Error  : ', error);
+          });
+      }, [logo]);
+
   const Get_DailyDealsDetail = useCallback(async () => {
     var token = await AsyncStorage.getItem('JWT_Token');
     var headers = {
@@ -84,6 +113,7 @@ const DailyDealsDetails = ({navigation, route}) => {
   }, [Item_likes_count]);
   useEffect(() => {
     Get_DailyDealsDetail();
+    GetLogo()
   }, []);
 
   //----------save Item ///////////
@@ -134,6 +164,7 @@ const DailyDealsDetails = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_icon={BASE_URL+logo}
         />
         <AutoImageSlider
           slider_images_array={Item_Images.length === 0 ? images : Item_Images}
