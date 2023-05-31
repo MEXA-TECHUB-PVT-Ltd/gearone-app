@@ -69,35 +69,130 @@ const data = [
   },
 ];
 const Categories = ({navigation}) => {
+  /////////////Get Screen Logo/////////////
+  const [logo, setLogo] = useState([]);
+  const GetLogo = useCallback(async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        screen_id: ScreensNames.Categoriies_Screen,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        setLogo(response.result[0].image);
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [logo]);
 
-        /////////////Get Screen Logo/////////////
-        const [logo, setLogo] = useState([]);
-        const GetLogo = useCallback(async () => {
-          var token = await AsyncStorage.getItem('JWT_Token');
-          var headers = {
-            Authorization: `Bearer ${JSON.parse(token)}`,
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          };
-          await fetch(BASE_URL + 'logos/get_logos_by_screen', {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify({
-              screen_id: ScreensNames.Categoriies_Screen,
-            }),
-          })
-            .then(response => response.json())
-            .then(async response => {
-              setLogo(response.result[0].image)
-            })
-            .catch(error => {
-              console.log('Error  : ', error);
-            });
-        }, [logo]);
+  /////////////Get Categories/////////////
+  const [categories, setCategories] = useState([]);
 
-        useEffect(() => {
-          GetLogo()
-        }, []);
+  const GetCategories = useCallback(async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+
+    let data = '';
+
+    let config = {
+      method: 'Get',
+      url: BASE_URL + 'category/get_all_category',
+      headers: headers,
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        console.log('response here', response.data);
+        if (response.data.status === true) {
+          // setLoading(false);
+          // setCount(1);
+          // var recent_data = response.data.result;
+          // var newArray = recent_data.concat(dashboard_items);
+          setCategories(response.data.result);
+          GetCategories_Ads();
+        } else {
+          <NoDataFound title={'No data here'} />;
+          setLoading(false);
+          setCount(1);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [categories]);
+
+  /////////////Get Categories Ads/////////////
+  const [categories_ads, setCategories_Ads] = useState([]);
+  const GetCategories_Ads = useCallback(async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+
+    let data = JSON.stringify({
+      screen_id: '4',
+      page: '1',
+    });
+
+    let config = {
+      method: 'post',
+      url: BASE_URL + 'ads/get_active_ads_by_screen',
+      headers: headers,
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        console.log('response here', response.data);
+        if (response.data.status === true) {
+          // setLoading(false);
+          // setCount(1);
+          const modifiedData = response.data.result.map((item, index) => {
+              return {...item, type: 'second',image:item.link};
+          });
+          console.log('here modify array', modifiedData);
+          response.data.result.forEach(function (element) {
+            element.Active = "false";
+            type='second'
+          });
+          console.log(modifiedData);
+          var recent_data = modifiedData;
+          var newArray = recent_data.concat(categories);
+          console.log('here array', newArray);
+          setCategories_Ads(newArray);
+        } else {
+          <NoDataFound title={'No data here'} />;
+          setLoading(false);
+          setCount(1);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [categories_ads]);
+
+  useEffect(() => {
+    GetLogo();
+    GetCategories();
+  }, []);
 
   const renderItem = ({item}) => {
     return (
@@ -108,7 +203,8 @@ const Categories = ({navigation}) => {
         price={item.price}
         onpress={() => {
           navigation.navigate('CategoryItem', {
-            listing_id: item.id,categoryname:item.title
+            listing_id: item.id,
+            categoryname: item.title,
           });
         }}
       />
@@ -119,32 +215,31 @@ const Categories = ({navigation}) => {
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
-      <Header
-        title={'Categories'}
-        // left_icon={'chevron-back-sharp'}
-        // left_iconPress={() => {
-        //   navigation.goBack();
-        // }}
-        right_logo={BASE_URL+logo}
-      />
-      <View style={{alignSelf: 'center', marginVertical: hp(2)}}>
-        <Image
-          source={require('../../../assets/dummyimages/banner_1.png')}
-          style={{width: wp(85), height: hp(20)}}
-          resizeMode="contain"
+        <Header
+          title={'Categories'}
+          // left_icon={'chevron-back-sharp'}
+          // left_iconPress={() => {
+          //   navigation.goBack();
+          // }}
+          right_logo={BASE_URL + logo}
         />
-      </View>
+        <View style={{alignSelf: 'center', marginVertical: hp(2)}}>
+          <Image
+            source={require('../../../assets/dummyimages/banner_1.png')}
+            style={{width: wp(85), height: hp(20)}}
+            resizeMode="contain"
+          />
+        </View>
 
-      <View style={{alignSelf: 'center'}}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-          numColumns={2}
-          scrollEnabled={false}
-        />
-      </View>
-
+        <View style={{alignSelf: 'center'}}>
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+            numColumns={2}
+            scrollEnabled={false}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

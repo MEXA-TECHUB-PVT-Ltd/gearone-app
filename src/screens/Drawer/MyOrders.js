@@ -28,7 +28,6 @@ const MyOrders = ({navigation, route}) => {
   //////redux variable//////////
   const dispatch = useDispatch();
   const join_as_guest=useSelector(state => state.auth.join_as_guest)
-  console.log("here user status",join_as_guest)
 
   /////////navigation variable/////////////
   const isFocused = useIsFocused();

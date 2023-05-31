@@ -112,9 +112,13 @@ const Verification = ({navigation, route}) => {
     if (count === 0) {
       setLoading(true);
       signInWithPhoneNumber(predata.country_code + predata.phone_number);
+      console.log(
+        'here function call',
+        predata.country_code + predata.phone_number,
+      );
       return;
     } else {
-      console.log('here no function');
+      console.log('here no function call');
     }
   });
 
@@ -125,7 +129,7 @@ const Verification = ({navigation, route}) => {
   async function signInWithPhoneNumber(phoneNumber) {
     setCount(count + 1);
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    console.log('here data code', confirmation.verificationId);
+    console.log('here data code', confirmation);
     setConfirm(confirmation);
     setLoading(false);
   }
@@ -138,10 +142,10 @@ const Verification = ({navigation, route}) => {
     setCount(count + 1);
     try {
       await confirm.confirm(value);
-      SigUpUser()
+      SigUpUser();
     } catch (error) {
-      console.log('Invalid code.',error);
-      setsnackbarValue('Invalid code, Please Enter Valid one')
+      console.log('Invalid code.', error);
+      setsnackbarValue('Invalid code, Please Enter Valid one');
     }
     // const credential = auth.PhoneAuthProvider.credential(
     //   confirm.verificationId,
@@ -349,8 +353,8 @@ const Verification = ({navigation, route}) => {
           topDistance={35}
           // loading={loading}
           // disabled={disable}
-          onPress={() =>
-            confirmCode()
+          onPress={
+            () => confirmCode()
             //SigUpUser()
           }
         />
@@ -363,20 +367,20 @@ const Verification = ({navigation, route}) => {
         type={'single_btn'}
         onPress={() => {
           setModalVisible(false);
-           navigation.navigate('CreateProfile');
+          navigation.navigate('CreateProfile');
         }}
       />
-              <Snackbar
-          duration={400}
-          visible={visible}
-          onDismiss={onDismissSnackBar}
-          style={{
-            backgroundColor: snackbarValue.color,
-            marginBottom: hp(20),
-            zIndex: 999,
-          }}>
-          {snackbarValue.value}
-        </Snackbar>
+      <Snackbar
+        duration={400}
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        style={{
+          backgroundColor: snackbarValue.color,
+          marginBottom: hp(20),
+          zIndex: 999,
+        }}>
+        {snackbarValue.value}
+      </Snackbar>
     </SafeAreaView>
   );
 };
