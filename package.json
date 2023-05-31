@@ -30,6 +30,7 @@
     "react-native-gesture-handler": "^2.9.0",
     "react-native-gifted-chat": "^2.0.1",
     "react-native-image-crop-picker": "^0.39.0",
+    "react-native-images-collage": "^3.3.5",
     "react-native-insta-story": "^1.1.8",
     "react-native-lightbox-v2": "^0.9.0",
     "react-native-otp-verify": "^1.1.5",

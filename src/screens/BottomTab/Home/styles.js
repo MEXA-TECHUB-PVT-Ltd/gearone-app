@@ -67,6 +67,24 @@ imageroundview:
   margin:wp(1),
   alignItems:'center',
   justifyContent:'center'
-}
+},
+
+
+doubleRow: {
+  flexDirection: 'row',
+},
+doubleRowImage: {
+  flex: 1,
+  aspectRatio: 1,
+},
+singleRow: {
+  flex: 1,
+  flexDirection: 'row',
+},
+singleRowImage: {
+  flex: 1,
+  aspectRatio: 1,
+  marginHorizontal: 4,
+},
 });
 export default styles;

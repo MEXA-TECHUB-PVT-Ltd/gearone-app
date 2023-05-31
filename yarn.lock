@@ -6395,6 +6395,11 @@ react-native-image-crop-picker@^0.39.0:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.39.0.tgz#9cb8e8ffb0e8ab06f7b3227cadf077169e225eba"
   integrity sha512-4aANbQMrmU6zN/4b0rVBA7SbaZ3aa5JESm3Xk751sINybZMt1yz/9h95LkO7U0pbslHDo3ofXjG75PmQRP6a/w==
 
+react-native-images-collage@^3.3.5:
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/react-native-images-collage/-/react-native-images-collage-3.3.5.tgz#e3816c474a9cea5232ab93c6859c09167717d572"
+  integrity sha512-vst0lXBEsYWGDAPV3xALHNSakcerN07QRG6zoOsymqDwe6n81LElxGaSvxD1eUjPPcQaCK5LLOr2wxaR3YVfHw==
+
 react-native-insta-story@^1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/react-native-insta-story/-/react-native-insta-story-1.1.8.tgz#5441a3a9baff3509e048137b47a10b8a0c3ef68d"

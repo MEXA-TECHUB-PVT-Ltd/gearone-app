@@ -5,6 +5,7 @@ import {SafeAreaView, ScrollView, FlatList} from 'react-native';
 import Header from '../../components/Header/Header';
 import NoDataFound from '../../components/NoDataFound/NoDataFound';
 import SellCard from '../../components/CustomCards/SellCards/SellCards';
+import CustomModal from '../../components/Modal/CustomModal';
 
 /////////////app styles///////////////////
 import styles from './styles';
@@ -15,40 +16,39 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /////////////redux/////////
 import {useDispatch} from 'react-redux';
-import { setItemDetail } from '../../redux/ItemSlice';
+import {setItemDetail} from '../../redux/ItemSlice';
 
 //////screen id//////////////
 import ScreensNames from '../../data/ScreensNames';
 
 const Merchandise = ({navigation, route}) => {
-  //////redux variable/////////
+  //////redux variable//////////
   const dispatch = useDispatch();
 
-    /////////////Get Screen Logo/////////////
-    const [logo, setLogo] = useState();
-    const GetLogo = useCallback(async () => {
-      var token = await AsyncStorage.getItem('JWT_Token');
-      var headers = {
-        Authorization: `Bearer ${JSON.parse(token)}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      };
-      await fetch(BASE_URL + 'logos/get_logos_by_screen', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({
-          screen_id: ScreensNames.MyGear_Screen,
-        }),
+  /////////////Get Screen Logo/////////////
+  const [logo, setLogo] = useState();
+  const GetLogo = useCallback(async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        screen_id: ScreensNames.MyGear_Screen,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        setLogo(response.result[0].image);
       })
-        .then(response => response.json())
-        .then(async response => {
-          setLogo(response.result[0].image);
-        })
-        .catch(error => {
-          console.log('Error  : ', error);
-        });
-    }, [logo]);
-  
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [logo]);
 
   /////////////Get Notification/////////////
   const [merchandise_items, setMerchandiseItems] = useState('');
@@ -78,7 +78,7 @@ const Merchandise = ({navigation, route}) => {
   }, [merchandise_items]);
   useEffect(() => {
     GetLiked_Items();
-    GetLogo()
+    GetLogo();
   }, []);
   const renderItem = ({item}) => {
     return (
@@ -108,7 +108,7 @@ const Merchandise = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
-          right_logo={BASE_URL+logo}
+          right_logo={BASE_URL + logo}
         />
         <FlatList
           data={merchandise_items}
