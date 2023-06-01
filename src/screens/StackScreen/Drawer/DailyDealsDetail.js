@@ -1,9 +1,10 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, View, Text} from 'react-native';
+import {SafeAreaView, ScrollView, View, Text,Image} from 'react-native';
 
 ////////////////////app components//////////////
 import CustomModal from '../../../components/Modal/CustomModal';
 import CustomButtonhere from '../../../components/Button/CustomButton';
+import Counter from '../../../components/Counter/Counter';
 
 /////////////////app components/////////
 import Header from '../../../components/Header/Header';
@@ -31,6 +32,11 @@ import ScreensNames from '../../../data/ScreensNames';
 /////////////redux/////////
 import {useDispatch, useSelector} from 'react-redux';
 
+import CountDown from 'react-native-countdown-component';
+import moment from 'moment';
+import Colors from '../../../utills/Colors';
+
+
 const DailyDealsDetails = ({navigation, route}) => {
   const [predata] = useState(route.params);
 
@@ -47,12 +53,13 @@ const DailyDealsDetails = ({navigation, route}) => {
   const [disable, setdisable] = useState(0);
 
   /////////////Item Detail states/////////////
-  const [Item_Images, setItem_Images] = useState('');
+  const [Item_Image, setItem_Image] = useState('');
   const [Item_item_title, setItem_Item_Title] = useState('');
   const [Item_item_price, setItem_Item_Price] = useState('');
   const [Item_likes_count, setItem_Likes_count] = useState('');
   const [Item_description, setItem_Description] = useState('');
   const [Item_location, setItem_Location] = useState('');
+  const [Item_endDeal, setItem_EndDeal] = useState('');
 
   const images = [
     require('../../../assets/dummyimages/image_1.png'),
@@ -104,19 +111,36 @@ const DailyDealsDetails = ({navigation, route}) => {
       .then(response => response.json())
       .then(async response => {
         console.log('here response data', response);
-        setItem_Images(response?.result[0].images);
+        setItem_Image(response?.result[0].image);
         setItem_Item_Title(response?.result[0].name);
         setItem_Item_Price(response?.result[0].price);
         setItem_Description(response?.result[0].description);
         setItem_Location(response?.result[0].location);
+        setItem_EndDeal(response?.result[0].ends_at);
+
+        const dateString = moment(response?.result[0].ends_at).toDate();
+        console.log("hree dateString",dateString)
+        const timestamp = new Date(response?.result[0].ends_at).getTime()
+        console.log("hree timestamp",timestamp)
+        const currentTime = moment();
+        const remainingTime = moment(timestamp).diff(currentTime);
+        console.log("hree remainingTime",remainingTime)
+        // Handle negative remaining time
+  const formattedRemainingTime = remainingTime >= 0 ? remainingTime : 0;
+  console.log("hree formattedRemainingTime",formattedRemainingTime)
+        //setItem_EndDeal(formattedRemainingTime);
       })
       .catch(error => {
         console.log('Error  : ', error);
       });
   }, [Item_likes_count]);
+
+  const [remaining_time,setRemainingTime]=useState()
   useEffect(() => {
+
     Get_DailyDealsDetail();
     GetLogo();
+
   }, []);
 
   //----------save Item ///////////
@@ -167,9 +191,15 @@ const DailyDealsDetails = ({navigation, route}) => {
           }}
           right_icon={BASE_URL + logo}
         />
-        <AutoImageSlider
-          slider_images_array={Item_Images.length === 0 ? images : Item_Images}
-        />
+    <Image
+    source={{uri:BASE_URL+Item_Image}}
+    style={{height:hp(30),width:wp(98),marginBottom:hp(4)}}
+    resizeMode='cover'
+    />
+<View style={{backgroundColor:'#444444',height:hp(5),width:wp(30),alignSelf:'center'}}>
+<Counter endTime={Item_endDeal} />
+</View>
+
         <View>
           <View
             style={{

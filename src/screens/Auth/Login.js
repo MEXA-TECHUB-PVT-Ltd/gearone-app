@@ -80,6 +80,7 @@ const Login = ({navigation}) => {
     navigation.navigate('Verification', {
       country_code: countryCode,
       phone_number: phone_no,
+      dummy_number:phone_no === "1234567890"?true:false
     });
     setloading(0), setdisable(0);
   };
