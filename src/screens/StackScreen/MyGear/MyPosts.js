@@ -1,9 +1,10 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, FlatList} from 'react-native';
+import {SafeAreaView, ScrollView, FlatList,View} from 'react-native';
 
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
 import DashboardCard from '../../../components/CustomCards/Dashboard/DashboardCard';
+import CustomButtonhere from '../../../components/Button/CustomButton';
 
 /////////////app styles///////////////////
 import styles from './styles';
@@ -19,6 +20,9 @@ import {setItemDetail} from '../../../redux/ItemSlice';
 
 /////////////screen id///////////
 import ScreensNames from '../../../data/ScreensNames';
+
+/////////height and width/////////
+import { heightPercentageToDP as hp,widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const MyPosts = ({navigation, route}) => {
   /////redux variable///////////
@@ -129,6 +133,16 @@ const MyPosts = ({navigation, route}) => {
           scrollEnabled={false}
         />
       </ScrollView>
+      <View style={{marginBottom: hp(8),position:'absolute',bottom:0,left:wp(10)}}>
+          <CustomButtonhere
+            title={'Add Item'}
+            widthset={80}
+            topDistance={5}
+            // loading={loading}
+            // disabled={disable}
+            onPress={() => navigation.navigate('UploadItem')}
+          />
+        </View>
     </SafeAreaView>
   );
 };

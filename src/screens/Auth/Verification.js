@@ -109,13 +109,9 @@ const Verification = ({navigation, route}) => {
   }
   const [count, setCount] = useState(0);
   useLayoutEffect(() => {
-    if (count === 0) {
+    if (count === 0 && predata.dummy_number === false) {
       setLoading(true);
       signInWithPhoneNumber(predata.country_code + predata.phone_number);
-      console.log(
-        'here function call',
-        predata.country_code + predata.phone_number,
-      );
       return;
     } else {
       console.log('here no function call');
@@ -127,11 +123,14 @@ const Verification = ({navigation, route}) => {
 
   // Handle the button press
   async function signInWithPhoneNumber(phoneNumber) {
+    setloading(true)
+    setdisable(true)
     setCount(count + 1);
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    console.log('here data code', confirmation);
     setConfirm(confirmation);
     setLoading(false);
+    setloading(false)
+    setdisable(false)
   }
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -147,16 +146,6 @@ const Verification = ({navigation, route}) => {
       console.log('Invalid code.', error);
       setsnackbarValue('Invalid code, Please Enter Valid one');
     }
-    // const credential = auth.PhoneAuthProvider.credential(
-    //   confirm.verificationId,
-    //   value,
-    // );
-    // console.log('code', credential);
-    // const user = await auth().signInWithCredential(credential);
-    // console.log('user', user);
-    // let userData = await auth().currentUser.linkWithCredential(credential);
-    // console.log('user userData', userData);
-    //SigUpUser()
   }
   //////////////Api Calling////////////////////
   const SigUpUser = async () => {
@@ -262,17 +251,28 @@ const Verification = ({navigation, route}) => {
       phoneNo: predata.phone_number,
       country_code: predata.country_code,
     });
-    // .then(() => {
-    //   setEmail('');
-    //   setPassword('');
-    //   navigation.navigate('Login');
-    // });
   };
   useEffect(() => {
     checkPermission();
     setLoading(false);
   }, []);
-
+  const dummy_phonenuber = () => {
+    setloading(true)
+    setdisable(true)
+    if (predata.phone_number === '1234567890') {
+      if (value === '000000') {
+        SigUpUser();
+        setloading(false)
+        setdisable(false)
+      } else {
+        
+        setsnackbarValue('Please Enter Valid one');
+        setloading(false)
+        setdisable(false)
+        console.log('hree issue in code');
+      }
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <Loader isLoading={isLoading} />
@@ -351,11 +351,11 @@ const Verification = ({navigation, route}) => {
           title={'Submit'}
           widthset={80}
           topDistance={35}
-          // loading={loading}
-          // disabled={disable}
+          loading={loading}
+          disabled={disable}
           onPress={
-            () => confirmCode()
-            //SigUpUser()
+            () =>
+              predata.dummy_number === true ? dummy_phonenuber() : confirmCode()
           }
         />
       </View>

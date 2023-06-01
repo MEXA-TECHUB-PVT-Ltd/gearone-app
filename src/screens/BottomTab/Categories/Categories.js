@@ -6,6 +6,7 @@ import {
   Text,
   FlatList,
   Image,
+  RefreshControl
 } from 'react-native';
 
 ///////////////app components////////////////
@@ -29,6 +30,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /////////screen id/////////////
 import ScreensNames from '../../../data/ScreensNames';
+
+import BrickList from 'react-native-masonry-brick-list';
 
 const data = [
   {
@@ -68,7 +71,16 @@ const data = [
     image: require('../../../assets/dummyimages/image_6.png'),
   },
 ];
+
 const Categories = ({navigation}) => {
+
+    ///////////data states/////////
+    const [refresh, setRefresh] = useState(false);
+    const [page, setPage] = useState(1);
+    const [ads, setAds] = useState(0);
+  
+    const [refreshing, setRefreshing] = React.useState(false);
+
   /////////////Get Screen Logo/////////////
   const [logo, setLogo] = useState([]);
   const GetLogo = useCallback(async () => {
@@ -95,17 +107,23 @@ const Categories = ({navigation}) => {
   }, [logo]);
 
   /////////////Get Categories/////////////
-  const [categories, setCategories] = useState([]);
+
+  const [span_array, setSpanArray] = useState([]);
+  const[count,setCount]=useState(0)
 
   const GetCategories = useCallback(async () => {
+    setCount(count+1)
+    console.log("in page ads",ads,page)
     var token = await AsyncStorage.getItem('JWT_Token');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
       Accept: 'application/json',
       'Content-Type': 'application/json',
     };
-
-    let data = '';
+    let data = JSON.stringify({
+      page: page,
+      AdsOffset: ads,
+    });
 
     let config = {
       method: 'Get',
@@ -117,14 +135,30 @@ const Categories = ({navigation}) => {
     axios
       .request(config)
       .then(response => {
-        console.log('response here', response.data);
+        console.log('response here in maintttt', response.data.result);
         if (response.data.status === true) {
+          setAds(response.data.InpageAds)
           // setLoading(false);
           // setCount(1);
           // var recent_data = response.data.result;
           // var newArray = recent_data.concat(dashboard_items);
-          setCategories(response.data.result);
-          GetCategories_Ads();
+var idhere=0
+          // Create a new array by mapping over the original data and adding the 'span' attribute
+          const updatedData = response.data.result.map(item => ({
+            ...item,
+            id:idhere+1,
+            span: item.type === 'ad' ? 3 : 3/2,
+            color: item.type === 'ad' ? 'red' : 'yellow',
+          }));
+          setSpanArray(page === 1 ? updatedData : [span_array,...updatedData ]);
+          //setSpanArray(updatedData);
+         // console.log('here data in update one', updatedData);
+          //setCategories(response.data.result);
+
+          // const adItems = data.filter((item) => item.type === 'ad');
+          // setCategories_Ad(adItems);
+          // const otherItems = data.filter((item) => item.type !== 'ad');
+          // setCategories(otherItems);
         } else {
           <NoDataFound title={'No data here'} />;
           setLoading(false);
@@ -134,87 +168,91 @@ const Categories = ({navigation}) => {
       .catch(error => {
         console.log(error);
       });
-  }, [categories]);
-
-  /////////////Get Categories Ads/////////////
-  const [categories_ads, setCategories_Ads] = useState([]);
-  const GetCategories_Ads = useCallback(async () => {
-    var token = await AsyncStorage.getItem('JWT_Token');
-    var headers = {
-      Authorization: `Bearer ${JSON.parse(token)}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    };
-
-    let data = JSON.stringify({
-      screen_id: '4',
-      page: '1',
-    });
-
-    let config = {
-      method: 'post',
-      url: BASE_URL + 'ads/get_active_ads_by_screen',
-      headers: headers,
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then(response => {
-        console.log('response here', response.data);
-        if (response.data.status === true) {
-          // setLoading(false);
-          // setCount(1);
-          const modifiedData = response.data.result.map((item, index) => {
-              return {...item, type: 'second',image:item.link};
-          });
-          console.log('here modify array', modifiedData);
-          response.data.result.forEach(function (element) {
-            element.Active = "false";
-            type='second'
-          });
-          console.log(modifiedData);
-          var recent_data = modifiedData;
-          var newArray = recent_data.concat(categories);
-          console.log('here array', newArray);
-          setCategories_Ads(newArray);
-        } else {
-          <NoDataFound title={'No data here'} />;
-          setLoading(false);
-          setCount(1);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, [categories_ads]);
+  }, [span_array]);
 
   useEffect(() => {
     GetLogo();
-    GetCategories();
+    if(count ===0)
+    {
+      GetCategories();
+    }
+
   }, []);
 
-  const renderItem = ({item}) => {
-    return (
-      <CategoryCard
-        image={item.image}
-        maintext={item.title}
-        subtext={item.location}
-        price={item.price}
-        onpress={() => {
-          navigation.navigate('CategoryItem', {
-            listing_id: item.id,
-            categoryname: item.title,
-          });
-        }}
-      />
-    );
+  const renderView = prop => {
+    if (prop.type === 'ad') {
+      return (
+        <View
+          style={{alignSelf: 'center', marginVertical: hp(2)}}
+          key={prop.index}>
+          <Image
+            source={{uri: BASE_URL + prop.image}}
+            style={{width: wp(85), height: hp(20)}}
+            resizeMode="contain"
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View style={{alignSelf:'center'}}>
+        <CategoryCard
+          image={{uri: BASE_URL+prop.image}}
+          maintext={prop.name}
+          subtext={prop.location}
+          price={prop.price}
+          onpress={() => {
+            navigation.navigate('CategoryItem', {
+              listing_id: prop.id,
+              categoryname: prop.name,
+            });
+          }}
+        />
+        </View>
+
+      );
+    }
+  };
+
+
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
+  const Refresh = () => {
+    setPage(page + 1);
+    // clearproductlist(page);
+    setRefresh(true);
+    GetCategories();
+    setRefresh(false);
+  };
+  useEffect(() => {
+    if (refreshing && refreshing) {
+      Refresh();
+      console.log('i run');
+    }
+  }, [refreshing]);
+
+  const handleLoadMore = () => {
+    setRefreshing(false)
+    setPage(page+1);
+    GetCategories();
   };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={refreshing}
+        //     onRefresh={() => handleLoadMore()}
+        //   />
+        // }
+        >
         <Header
           title={'Categories'}
           // left_icon={'chevron-back-sharp'}
@@ -223,23 +261,13 @@ const Categories = ({navigation}) => {
           // }}
           right_logo={BASE_URL + logo}
         />
-        <View style={{alignSelf: 'center', marginVertical: hp(2)}}>
-          <Image
-            source={require('../../../assets/dummyimages/banner_1.png')}
-            style={{width: wp(85), height: hp(20)}}
-            resizeMode="contain"
-          />
-        </View>
-
-        <View style={{alignSelf: 'center'}}>
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
-            numColumns={2}
-            scrollEnabled={false}
-          />
-        </View>
+        <BrickList
+          data={span_array}
+          renderItem={prop => renderView(prop)}
+          columns={3}
+          rowHeight={185}
+          onEndReached={handleLoadMore}
+        />
       </ScrollView>
     </SafeAreaView>
   );

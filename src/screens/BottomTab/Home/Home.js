@@ -34,6 +34,7 @@ import Lightbox from 'react-native-lightbox-v2';
 
 /////////////screen id////////////
 import ScreensNames from '../../../data/ScreensNames';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 const Home = ({navigation}) => {
   ///////redux states/////////
@@ -114,7 +115,6 @@ const Home = ({navigation}) => {
   const [dashboard_items, setDashboardItems] = useState([]);
 
   const GetDashboardItems = useCallback(async () => {
-    console.log('here page', page);
     var token = await AsyncStorage.getItem('JWT_Token');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
@@ -136,17 +136,20 @@ const Home = ({navigation}) => {
     axios
       .request(config)
       .then(response => {
+        //console.log('here data of items', response.data);
         if (response.data.status === true) {
           setLoading(false);
           setCount(1);
-          var recent_data = response.data.result;
-          var newArray = recent_data.concat(dashboard_items);
-          setDashboardItems(newArray);
 
-          if (response.data.result[0].promoted ===true )
-          {
-            const images=images[0]
-          }
+          // var recent_data = response.data.result;
+          // var filteredDashboardItems = dashboard_items.filter((item) => {
+          //   // Filter out items that already exist in recent_data
+          //   return recent_data.some((recentItem) => recentItem.id === item.id);
+          // });
+          // var newArray = recent_data.concat(filteredDashboardItems);
+          // var arary_length1 = newArray.length;
+        //  /console.log(' newArray array length', newArray,page);
+          setDashboardItems(page === 1 ? response.data.result : [...dashboard_items,...response.data.result ]);
         } else {
           <NoDataFound title={'No data here'} />;
           setLoading(false);
@@ -184,23 +187,6 @@ const Home = ({navigation}) => {
       console.log('i run');
     }
   }, [refreshing]);
-  const renderItem = ({item}) => {
-    return (
-      <DashboardCard
-        image={BASE_URL + item.images[0]}
-        maintext={item.name}
-        subtext={item.location}
-        price={item.price}
-        images_array_length={item.images.length}
-        onpress={() => {
-          dispatch(setItemDetail({id: item.id, navplace: 'Home'}));
-          navigation.navigate('ItemDetails', {
-            Item_id: item.id,
-          });
-        }}
-      />
-    );
-  };
   const [isLarge, setIsLarge] = useState(false);
   const storyrenderItem = ({item}) => {
     return (
@@ -242,192 +228,128 @@ const Home = ({navigation}) => {
         </Lightbox>
       </View>
     );
-  }
-  
-  const data = [
-    {
-      id: 'header',
-      number:1,
-      column1: 'Header 1',
-      column2: 'Header 2',
-      image: require('../../../App_dummy_App/dummy_images/hairstyle_1.png'),
-    },
-    {
-      id: 1,
-      number:2,
-      column1: 'Row 1 - Column 1',
-      column2: 'Row 1 - Column 2',
-      type: true,
-      image: require('../../../App_dummy_App/dummy_images/myprofile_user.png'),
-      image1: require('../../../App_dummy_App/dummy_images/hairstyle_2.png'),
-      image2: require('../../../App_dummy_App/dummy_images/user_1.png'),
-    },
-    {
-      id: 'header',
-      number:3,
-      column1: 'Header 1',
-      column2: 'Header 2',
-      image: require('../../../App_dummy_App/dummy_images/hairstyle_2.png'),
-    },
-
-    //   { id: 2, column1: 'Row 2 - Column 1', column2: 'Row 2 - Column 2'  ,
-    //   type:true,
-    //  // image:require('../../../App_dummy_App/dummy_images/hairstyle_4.png')
-    //  },
-    {
-      id: 'header',
-      number:4,
-      column1: 'Header 1',
-      column2: 'Header 2',
-      image: require('../../../App_dummy_App/dummy_images/user_1.png'),
-    },
-    {
-      id: 'header',
-      number:5,
-      column1: 'Header 1',
-      column2: 'Header 2',
-      image: require('../../../App_dummy_App/dummy_images/user_1.png'),
-    },
-  ];
-
-  // Merge the two rows with two columns
-  const mergedRow = {
-    id: 'merged',
-    column1: `${data[1].image} ${data[2].image}`,
-    column2: data[1].image + data[2].image,
   };
-  data.push(mergedRow);
 
-    // Modify the data to include the next index item as the first item
-    const modifiedData = data.map((item, index) => {
-      const nextIndex = (index + 1) % data.length;
-      return {
-        id: item.id,
-        title: `${item.title} (Next: ${data[nextIndex].title})`,
-      };
-    });
-    
-  // Render function for each item in the list
-  const merge_renderItem = ({item,index}) => {
-    if (item.id ==='header') {
-      return (
-        <View style={{flexDirection: 'row', backgroundColor: 'green'}}>
-          <Text
+  const renderItem_two = ({item, index}) => {
+    return (
+      <View>
+        {item[0]?.promoted === 'true' ||
+        item[1]?.promoted === 'true' ||
+        item[2]?.promoted === 'true' ? (
+          <View
             style={{
-              flex: 1,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              backgroundColor: 'red',
-              margin: 2,
+              flexDirection: 'row',
+              marginBottom: heightPercentageToDP(0.5),
             }}>
-            {item.number+index+1}
-          </Text>
-          <Text
-            style={{
-              flex: 1,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              margin: 1,
-              backgroundColor: 'purple',
-            }}>
-            {item.number+index}
-          </Text>
-          <Text
-            style={{
-              flex: 1,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              margin: 1,
-              backgroundColor: 'orange',
-            }}>
-            {item.number+index}
-          </Text>
-        </View>
-      );
-    } else if (item.type === true) {
-      return (
-        <View style={{flexDirection: 'row', backgroundColor: 'red'}}>
-       
-          {/* <Text style={{ flex: 0.7, textAlign: 'center',backgroundColor:'red',width:'80%',marginRight:2 }}>{item.column1}</Text> */}
-          <Image
-            source=  {item.image}
-            style={{height: 170, width: 274}}
-            resizeMode="cover"
+            {item[0]?.promoted === 'true' ? (
+              <>
+                <Image
+                  source={{uri: BASE_URL + item[0]?.images[0]}}
+                  style={{height: 170, width: 280}}
+                  resizeMode="cover"
+                />
+                <View>
+                  <Image
+                    source={{uri: BASE_URL + item[1]?.images[0]}}
+                    style={{height: 82, width: 134, margin: 1}}
+                    resizeMode="cover"
+                  />
+                  <View>
+                    <Image
+                      source={{uri: BASE_URL + item[2]?.images[0]}}
+                      style={{height: 82, width: 134, margin: 1}}
+                      resizeMode="cover"
+                    />
+                  </View>
+                </View>
+              </>
+            ) : item[1]?.promoted === 'true' ? (
+              <>
+                <View>
+                  <Image
+                    source={{uri: BASE_URL + item[2]?.images[0]}}
+                    style={{height: 82, width: 134, margin: 1}}
+                    resizeMode="cover"
+                  />
+                  <View>
+                    <Image
+                      source={{uri: BASE_URL + item[0]?.images[0]}}
+                      style={{height: 82, width: 134, margin: 1}}
+                      resizeMode="cover"
+                    />
+                  </View>
+                </View>
+                <Image
+                  source={{uri: BASE_URL + item[1]?.images[0]}}
+                  style={{height: 170, width: 274}}
+                  resizeMode="cover"
+                />
+              </>
+            ) : item[2]?.promoted === 'true' ? (
+              <>
+                <View>
+                  <Image
+                    source={{uri: BASE_URL + item[1]?.images[0]}}
+                    style={{height: 82, width: 134, margin: 1}}
+                    resizeMode="cover"
+                  />
+                  <View>
+                    <Image
+                      source={{uri: BASE_URL + item[0]?.images[0]}}
+                      style={{height: 82, width: 134, margin: 1}}
+                      resizeMode="cover"
+                    />
+                  </View>
+                </View>
+                <Image
+                  source={{uri: BASE_URL + item[2]?.images[0]}}
+                  style={{height: 170, width: 274}}
+                  resizeMode="cover"
+                />
+              </>
+            ) : (
+              <>
+                {/* <View>
+                  <Image
+                    source={{uri: BASE_URL + item[2]?.images[0]}}
+                    style={{height: 82, width: 134, margin: 1}}
+                    resizeMode="cover"
+                  />
+                  <View>
+                    <Image
+                      source={{uri: BASE_URL + item[0]?.images[0]}}
+                      style={{height: 82, width: 134, margin: 1}}
+                      resizeMode="cover"
+                    />
+                  </View>
+                </View>
+                <Image
+                  source={{uri: BASE_URL + item[1]?.images[0]}}
+                  style={{height: 170, width: 274}}
+                  resizeMode="cover"
+                /> */}
+              </>
+            )}
+          </View>
+        ) : (
+          <FlatList
+            data={item}
+            horizontal={true}
+            scrollEnabled={false}
+            keyExtractor={(item, index) => index}
+            renderItem={({item}) => (
+              <View>
+                <Image
+                  source={{uri: BASE_URL + item?.images[0]}}
+                  style={{height: 150, width: 140}}
+                  resizeMode="cover"
+                />
+              </View>
+            )}
           />
-                       <Text
-            style={{
-              flex: 1,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              backgroundColor: 'red',
-              margin: 2,
-              position:'absolute',
-              top:50,
-              left:50
-            }}>
-            {item.number}
-          </Text>
-          <View>
-            <Image
-              source=  {item.image}
-              style={{height: 80, width: 134, margin: 2}}
-              resizeMode="cover"
-            />
-                               <Text
-            style={{
-              flex: 1,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              backgroundColor: 'red',
-              margin: 2,
-              position:'absolute',
-              top:50,
-              left:50
-            }}>
-            {item.number}
-          </Text>
-          <View>
-          <Image
-              source=  {item.image}
-              style={{height: 80, width: 134, margin: 2}}
-              resizeMode="cover"
-            />
-                               <Text
-            style={{
-              flex: 1,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              backgroundColor: 'red',
-              margin: 2,
-              position:'absolute',
-              top:50,
-              left:50
-            }}>
-            {item.number}
-          </Text>
-          </View>
-    
-            {/* <Text style={{ flex: 0.5, textAlign: 'center',margin:2,backgroundColor:'yellow',color:'black',width:'119%'  }}>{item.image}</Text> */}
-            {/* <Text style={{ flex: 0.5, textAlign: 'center',margin:2,backgroundColor:'yellow',color:'black',width:'119%'   }}>{item.column2}</Text> */}
-          </View>
-        </View>
-      );
-    } else {
-      <View style={{flexDirection: 'row'}}>
-        {/* <Text style={{ flex: 1, textAlign: 'center',backgroundColor:'red' }}>{item.column1}</Text> */}
-
-        <Text
-          style={{
-            flex: 1,
-            textAlign: 'center',
-            margin: 1,
-            backgroundColor: 'yellow',
-            color: 'black',
-          }}>
-          {item.column2}
-        </Text>
-      </View>;
-    }
+        )}
+      </View>
+    );
   };
 
   return (
@@ -461,21 +383,22 @@ const Home = ({navigation}) => {
           windowSize={7} // Reduce the window size
           onEndReachedThreshold={0.7}
           estimatedItemSize={50}
-          onEndReached={() => GetDashboardItems()}
-          refreshing={refresh}
-          onRefresh={() => Refresh()}
+          // onEndReached={() => GetDashboardItems()}
+          // refreshing={refresh}
+          // onRefresh={() => Refresh()}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
         />
-
         <View style={styles.bottomlineview}></View>
-
         <FlatList
-          data={modifiedData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={merge_renderItem}
+          data={dashboard_items}
+          scrollEnabled={false}
+          keyExtractor={(item, index) => index}
+          renderItem={renderItem_two}
+          onEndReached={() => GetDashboardItems()}
+          refreshing={refresh}
+          onRefresh={() => Refresh()}
         />
-        
       </ScrollView>
     </SafeAreaView>
   );

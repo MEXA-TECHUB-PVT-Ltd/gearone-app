@@ -133,7 +133,9 @@ const Sell = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        style={styles.container}
+        >
         <Header
           title={'Sell'}
           left_icon={'chevron-back-sharp'}
@@ -149,7 +151,8 @@ const Sell = ({navigation}) => {
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
         />
-        <View style={{marginBottom: hp(8)}}>
+              </ScrollView>
+        <View style={{marginBottom: hp(8),position:'absolute',bottom:0,left:wp(10)}}>
           <CustomButtonhere
             title={'Add Item'}
             widthset={80}
@@ -159,7 +162,7 @@ const Sell = ({navigation}) => {
             onPress={() => navigation.navigate('UploadItem')}
           />
         </View>
-      </ScrollView>
+
       <CustomModal
         modalVisible={modalVisible}
         onClose={()=>{setModalVisible(false), navigation.navigate('Home')}}

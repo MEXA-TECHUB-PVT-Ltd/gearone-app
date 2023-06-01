@@ -97,7 +97,7 @@ const DailyDeals = ({navigation, route}) => {
         description={item.description}
         images_array_length={item.image === null?0:1}
         onpress={() => {
-          navigation.navigate('MerchandiseDetails', {
+          navigation.navigate('DailyDealsDetails', {
             merchandise_id: item.id,
           });
         }}
