@@ -123,14 +123,14 @@ const Verification = ({navigation, route}) => {
 
   // Handle the button press
   async function signInWithPhoneNumber(phoneNumber) {
-    setloading(true)
-    setdisable(true)
+    // setloading(true)
+    // setdisable(true)
     setCount(count + 1);
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
     setLoading(false);
-    setloading(false)
-    setdisable(false)
+    // setloading(false)
+    // setdisable(false)
   }
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);

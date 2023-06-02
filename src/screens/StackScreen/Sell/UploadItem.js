@@ -159,37 +159,7 @@ const UploadItem = ({navigation}) => {
       Authorization: `Bearer ${JSON.parse(token)}`,
       'Content-Type': 'application/json',
     };
-    // var raw = JSON.stringify({
-    //   user_ID: user_id,
-    //   name: Item_name,
-    //   price: Item_price,
-    //   category_id: gender.value,
-    //   description: Item_description,
-    //   location: Item_location,
-    //   promoted: 'false',
-    //   start_date: currentDate,
-    //   end_date: currentDate,
-    //   added_by: 'user',
-    // });
-
-    // var requestOptions = {
-    //   method: 'POST',
-    //   headers: headers,
-    //   body: raw,
-    //   redirect: 'follow',
-    // };
-
-    // fetch(
-    //   BASE_URL+'items/add_items',
-    //   requestOptions,
-    // )
-    //   .then(response => response.text())
-    //   .then(response => {
-    //     console.log('here item data', response.result);
-    //     dispatch(setItemDetail({id:response.result[0].id, navplace: 'login_user_items'}));
-    //     post_Item_Images(response.result[0].id);
-    //   })
-    //   .catch(error => console.log('error', error));
+   
     let data = JSON.stringify({
       user_ID: user_id,
       name: Item_name,

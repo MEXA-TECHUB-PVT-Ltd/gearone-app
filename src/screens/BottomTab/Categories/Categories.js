@@ -6,7 +6,8 @@ import {
   Text,
   FlatList,
   Image,
-  RefreshControl
+  RefreshControl,
+  TouchableOpacity
 } from 'react-native';
 
 ///////////////app components////////////////
@@ -182,6 +183,9 @@ var idhere=0
   const renderView = prop => {
     if (prop.type === 'ad') {
       return (
+        // <TouchableOpacity onPress={()=>{}
+        
+        // }>
         <View
           style={{alignSelf: 'center', marginVertical: hp(2)}}
           key={prop.index}>
@@ -191,10 +195,18 @@ var idhere=0
             resizeMode="contain"
           />
         </View>
+        // </TouchableOpacity>
+
       );
     } else {
       return (
-        <View style={{alignSelf:'center'}}>
+        <TouchableOpacity onPress={()=>{ 
+                   navigation.navigate('CategoryItem', {
+          category_id: prop.id,
+          category_name:prop.name
+        }) }}
+        style={{alignSelf:'center'}}
+      >
         <CategoryCard
           image={{uri: BASE_URL+prop.image}}
           maintext={prop.name}
@@ -202,12 +214,11 @@ var idhere=0
           price={prop.price}
           onpress={() => {
             navigation.navigate('CategoryItem', {
-              listing_id: prop.id,
-              categoryname: prop.name,
+              category_id: prop.id,
+              category_name:prop.name
             });
           }}
-        />
-        </View>
+        /></TouchableOpacity>
 
       );
     }

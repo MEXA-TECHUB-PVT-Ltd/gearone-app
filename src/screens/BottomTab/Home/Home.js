@@ -56,6 +56,7 @@ const Home = ({navigation}) => {
       headers: headers,
       body: JSON.stringify({
         screen_id: ScreensNames.Dashboard_Screen,
+        page:"1"
       }),
     })
       .then(response => response.json())
@@ -115,6 +116,7 @@ const Home = ({navigation}) => {
   const [dashboard_items, setDashboardItems] = useState([]);
 
   const GetDashboardItems = useCallback(async () => {
+    console.log(page)
     var token = await AsyncStorage.getItem('JWT_Token');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
@@ -136,7 +138,7 @@ const Home = ({navigation}) => {
     axios
       .request(config)
       .then(response => {
-        //console.log('here data of items', response.data);
+        console.log('here data of items', response.data);
         if (response.data.status === true) {
           setLoading(false);
           setCount(1);
@@ -148,8 +150,12 @@ const Home = ({navigation}) => {
           // });
           // var newArray = recent_data.concat(filteredDashboardItems);
           // var arary_length1 = newArray.length;
-        //  /console.log(' newArray array length', newArray,page);
-          setDashboardItems(page === 1 ? response.data.result : [...dashboard_items,...response.data.result ]);
+          //  /console.log(' newArray array length', newArray,page);
+          setDashboardItems(
+            page === 1
+              ? response.data.result
+              : [...dashboard_items, ...response.data.result],
+          );
         } else {
           <NoDataFound title={'No data here'} />;
           setLoading(false);
@@ -160,20 +166,19 @@ const Home = ({navigation}) => {
         console.log(error);
       });
   }, [dashboard_items]);
-  useEffect(() => {
-    GetDashboardItems();
-  }, [page]);
+  // useEffect(() => {
+  //   GetDashboardItems();
+  // }, [page]);
 
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (count === 0) {
       setLoading(true);
+      GetDashboardItems();
     }
-
-    GetDashboardItems();
     GetDashboardStories();
     GetDashboardLogo();
-  }, []);
+  }, [page]);
   const Refresh = () => {
     setPage(page + 1);
     // clearproductlist(page);
@@ -230,7 +235,18 @@ const Home = ({navigation}) => {
     );
   };
 
+  const on_nav = prop => {
+    dispatch(
+      setItemDetail({
+        id: prop,
+        navplace: 'dashboard_items',
+      }),
+    ),
+      navigation.navigate('ItemDetails');
+  };
+
   const renderItem_two = ({item, index}) => {
+    console.log(item)
     return (
       <View>
         {item[0]?.promoted === 'true' ||
@@ -243,93 +259,208 @@ const Home = ({navigation}) => {
             }}>
             {item[0]?.promoted === 'true' ? (
               <>
-                <Image
-                  source={{uri: BASE_URL + item[0]?.images[0]}}
-                  style={{height: 170, width: 280}}
-                  resizeMode="cover"
-                />
-                <View>
+                <TouchableOpacity onPress={() => on_nav(item[0].id)}>
                   <Image
-                    source={{uri: BASE_URL + item[1]?.images[0]}}
-                    style={{height: 82, width: 134, margin: 1}}
+                    source={{uri: BASE_URL + item[0]?.images[0]}}
+                    style={{height: 170, width: 280}}
                     resizeMode="cover"
                   />
-                  <View>
+                </TouchableOpacity>
+
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>  on_nav(item[1].id)}>
                     <Image
-                      source={{uri: BASE_URL + item[2]?.images[0]}}
+                      source={{uri: BASE_URL + item[1]?.images[0]}}
                       style={{height: 82, width: 134, margin: 1}}
                       resizeMode="cover"
                     />
+                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        dispatch(
+                          setItemDetail({
+                            id: item[2].id,
+                            navplace: 'dashboard_Items',
+                          }),
+                        ),
+                          navigation.navigate('ItemDetails');
+                      }}>
+                      <Image
+                        source={{uri: BASE_URL + item[2]?.images[0]}}
+                        style={{height: 82, width: 134, margin: 1}}
+                        resizeMode="cover"
+                      />
+                    </TouchableOpacity>
                   </View>
                 </View>
               </>
             ) : item[1]?.promoted === 'true' ? (
               <>
                 <View>
-                  <Image
-                    source={{uri: BASE_URL + item[2]?.images[0]}}
-                    style={{height: 82, width: 134, margin: 1}}
-                    resizeMode="cover"
-                  />
-                  <View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      dispatch(
+                        setItemDetail({
+                          id: item[2].id,
+                          navplace: 'dashboard_Items',
+                        }),
+                      ),
+                        navigation.navigate('ItemDetails');
+                    }}>
                     <Image
-                      source={{uri: BASE_URL + item[0]?.images[0]}}
+                      source={{uri: BASE_URL + item[2]?.images[0]}}
                       style={{height: 82, width: 134, margin: 1}}
                       resizeMode="cover"
                     />
+                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        dispatch(
+                          setItemDetail({
+                            id: item[0].id,
+                            navplace: 'dashboard_Items',
+                          }),
+                        ),
+                          navigation.navigate('ItemDetails');
+                      }}>
+                      <Image
+                        source={{uri: BASE_URL + item[0]?.images[0]}}
+                        style={{height: 82, width: 134, margin: 1}}
+                        resizeMode="cover"
+                      />
+                    </TouchableOpacity>
                   </View>
                 </View>
-                <Image
-                  source={{uri: BASE_URL + item[1]?.images[0]}}
-                  style={{height: 170, width: 274}}
-                  resizeMode="cover"
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(
+                      setItemDetail({
+                        id: item[1].id,
+                        navplace: 'dashboard_Items',
+                      }),
+                    ),
+                      navigation.navigate('ItemDetails');
+                  }}>
+                  <Image
+                    source={{uri: BASE_URL + item[1]?.images[0]}}
+                    style={{height: 170, width: 274}}
+                    resizeMode="cover"
+                  />
+                </TouchableOpacity>
               </>
             ) : item[2]?.promoted === 'true' ? (
               <>
                 <View>
-                  <Image
-                    source={{uri: BASE_URL + item[1]?.images[0]}}
-                    style={{height: 82, width: 134, margin: 1}}
-                    resizeMode="cover"
-                  />
-                  <View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      dispatch(
+                        setItemDetail({
+                          id: item[1].id,
+                          navplace: 'dashboard_Items',
+                        }),
+                      ),
+                        navigation.navigate('ItemDetails');
+                    }}>
                     <Image
-                      source={{uri: BASE_URL + item[0]?.images[0]}}
+                      source={{uri: BASE_URL + item[1]?.images[0]}}
                       style={{height: 82, width: 134, margin: 1}}
                       resizeMode="cover"
                     />
+                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        dispatch(
+                          setItemDetail({
+                            id: item[0].id,
+                            navplace: 'dashboard_Items',
+                          }),
+                        ),
+                          navigation.navigate('ItemDetails');
+                      }}>
+                      <Image
+                        source={{uri: BASE_URL + item[0]?.images[0]}}
+                        style={{height: 82, width: 134, margin: 1}}
+                        resizeMode="cover"
+                      />
+                    </TouchableOpacity>
                   </View>
                 </View>
-                <Image
-                  source={{uri: BASE_URL + item[2]?.images[0]}}
-                  style={{height: 170, width: 274}}
-                  resizeMode="cover"
-                />
-              </>
-            ) : (
-              <>
-                {/* <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(
+                      setItemDetail({
+                        id: item[2].id,
+                        navplace: 'dashboard_Items',
+                      }),
+                    ),
+                      navigation.navigate('ItemDetails');
+                  }}>
                   <Image
                     source={{uri: BASE_URL + item[2]?.images[0]}}
-                    style={{height: 82, width: 134, margin: 1}}
+                    style={{height: 170, width: 274}}
                     resizeMode="cover"
                   />
-                  <View>
+                </TouchableOpacity>
+              </>
+            ) : 
+            <>
+                <View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      dispatch(
+                        setItemDetail({
+                          id: item[1].id,
+                          navplace: 'dashboard_Items',
+                        }),
+                      ),
+                        navigation.navigate('ItemDetails');
+                    }}>
                     <Image
-                      source={{uri: BASE_URL + item[0]?.images[0]}}
+                      source={{uri: BASE_URL + item[1]?.images[0]}}
                       style={{height: 82, width: 134, margin: 1}}
                       resizeMode="cover"
                     />
+                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        dispatch(
+                          setItemDetail({
+                            id: item[0].id,
+                            navplace: 'dashboard_Items',
+                          }),
+                        ),
+                          navigation.navigate('ItemDetails');
+                      }}>
+                      <Image
+                        source={{uri: BASE_URL + item[0]?.images[0]}}
+                        style={{height: 82, width: 134, margin: 1}}
+                        resizeMode="cover"
+                      />
+                    </TouchableOpacity>
                   </View>
                 </View>
-                <Image
-                  source={{uri: BASE_URL + item[1]?.images[0]}}
-                  style={{height: 170, width: 274}}
-                  resizeMode="cover"
-                /> */}
-              </>
-            )}
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(
+                      setItemDetail({
+                        id: item[2].id,
+                        navplace: 'dashboard_Items',
+                      }),
+                    ),
+                      navigation.navigate('ItemDetails');
+                  }}>
+                  <Image
+                    source={{uri: BASE_URL + item[2]?.images[0]}}
+                    style={{height: 170, width: 274}}
+                    resizeMode="cover"
+                  />
+                </TouchableOpacity>
+              </>}
           </View>
         ) : (
           <FlatList
@@ -339,11 +470,14 @@ const Home = ({navigation}) => {
             keyExtractor={(item, index) => index}
             renderItem={({item}) => (
               <View>
-                <Image
-                  source={{uri: BASE_URL + item?.images[0]}}
-                  style={{height: 150, width: 140}}
-                  resizeMode="cover"
-                />
+                <TouchableOpacity
+                  onPress={() => on_nav(item.id)}>
+                  <Image
+                    source={{uri: BASE_URL + item?.images[0]}}
+                    style={{height: 150, width: 140}}
+                    resizeMode="cover"
+                  />
+                </TouchableOpacity>
               </View>
             )}
           />
@@ -351,7 +485,11 @@ const Home = ({navigation}) => {
       </View>
     );
   };
-
+  const handleLoadMore = () => {
+    setRefreshing(false)
+    setPage(page+1);
+    GetDashboardItems();
+  };
   return (
     <SafeAreaView style={styles.container}>
       <Loader isLoading={isLoading} />
@@ -395,7 +533,7 @@ const Home = ({navigation}) => {
           scrollEnabled={false}
           keyExtractor={(item, index) => index}
           renderItem={renderItem_two}
-          onEndReached={() => GetDashboardItems()}
+          onEndReached={handleLoadMore}
           refreshing={refresh}
           onRefresh={() => Refresh()}
         />

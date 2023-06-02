@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, FlatList,View} from 'react-native';
+import {SafeAreaView, ScrollView, FlatList,View,RefreshControl} from 'react-native';
 
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
@@ -57,6 +57,8 @@ const MyPosts = ({navigation, route}) => {
 
   /////////////Get Notification/////////////
   const [myposts, setMyPosts] = useState('');
+  const [page, setPage] = useState(1);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   useEffect(() => {
     GetMyPosts();
@@ -74,6 +76,7 @@ const MyPosts = ({navigation, route}) => {
     };
     let data = JSON.stringify({
       user_ID: user_id,
+      page:page
     });
 
     let config = {
@@ -87,7 +90,12 @@ const MyPosts = ({navigation, route}) => {
       .request(config)
       .then(response => {
         console.log(JSON.stringify(response.data.result));
-        setMyPosts(response.data.result);
+        setMyPosts(
+          page === 1
+            ? response.data.result
+            : [...myposts, ...response.data.result],
+        );
+        //setMyPosts(response.data.result);
       })
       .catch(error => {
         console.log(error);
@@ -98,10 +106,10 @@ const MyPosts = ({navigation, route}) => {
     return (
       <DashboardCard
         image={BASE_URL+ item.images[0]}
+        images_array_length={item.images.length}
         maintext={item.name}
         subtext={item.location}
         price={item.price}
-        images_array_length={item.images.length}
         onpress={() => {
           dispatch(setItemDetail({id: item.id, navplace: 'login_user_items'}));
           navigation.navigate('ItemDetails', {
@@ -111,11 +119,25 @@ const MyPosts = ({navigation, route}) => {
       />
     );
   };
+
+  const handleLoadMore = () => {
+    setPage(page+1);
+    setRefreshing(true)
+    GetMyPosts();
+    setRefreshing(false)
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => handleLoadMore()}
+          />
+        }
+        >
         <Header
           title={'My Posts'}
           left_icon={'chevron-back-sharp'}
@@ -131,6 +153,9 @@ const MyPosts = ({navigation, route}) => {
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
+          onEndReached={handleLoadMore}
+          //refreshing={refresh}
+          // onRefresh={() => Refresh()}
         />
       </ScrollView>
       <View style={{marginBottom: hp(8),position:'absolute',bottom:0,left:wp(10)}}>
