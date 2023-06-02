@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
+import {SafeAreaView, ScrollView, View, Text, FlatList,RefreshControl} from 'react-native';
 
 ////////////naviagtion///////////////
 import { useIsFocused } from '@react-navigation/native';
@@ -70,6 +70,8 @@ const Sell = ({navigation}) => {
 
   /////////////Get Notification/////////////
   const [my_items, setMyItems] = useState();
+  const [page, setPage] = useState(1);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const GetMyItems =useCallback( async () => {
     var token = await AsyncStorage.getItem('JWT_Token');
@@ -81,6 +83,7 @@ const Sell = ({navigation}) => {
     };
     let data = JSON.stringify({
       user_ID:user_id,
+      page:page
     });
 
     let config = {
@@ -94,7 +97,12 @@ const Sell = ({navigation}) => {
       .request(config)
       .then(response => {
         console.log(JSON.stringify(response.data.result));
-        setMyItems(response.data.result);
+        setMyItems(
+          page === 1
+            ? response.data.result
+            : [...my_items, ...response.data.result],
+        );
+        //setMyItems(response.data.result);
       })
       .catch(error => {
         console.log(error);
@@ -128,6 +136,10 @@ const Sell = ({navigation}) => {
       />
     );
   };
+  const handleLoadMore = () => {
+    setPage(page+1);
+    GetMyItems();
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -135,6 +147,12 @@ const Sell = ({navigation}) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => handleLoadMore()}
+          />
+        }
         >
         <Header
           title={'Sell'}
@@ -150,6 +168,9 @@ const Sell = ({navigation}) => {
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
+          onEndReached={handleLoadMore}
+          // refreshing={refresh}
+          // onRefresh={() => Refresh()}
         />
               </ScrollView>
         <View style={{marginBottom: hp(8),position:'absolute',bottom:0,left:wp(10)}}>

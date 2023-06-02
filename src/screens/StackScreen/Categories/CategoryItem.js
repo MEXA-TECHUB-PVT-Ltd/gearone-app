@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
+import {SafeAreaView, ScrollView, View, Text, FlatList,RefreshControl} from 'react-native';
 
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
@@ -8,19 +8,18 @@ import DashboardCard from '../../../components/CustomCards/Dashboard/DashboardCa
 /////////////app styles///////////////////
 import styles from './styles';
 
-//////////height and width/////////////
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
-
 ////////////////api////////////////
 import axios from 'axios';
 import {BASE_URL} from '../../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 ///////////screen id///////////////
-import ScreensNames from '../../../data/ScreensNames';
+import ScreensNames from '../../../data/ScreensNames'
+
+/////////////////redux///////////
+import {useDispatch, useSelector} from 'react-redux';
+import {setItemDetail} from '../../../redux/ItemSlice';
+
 
 const DATA = [
   {
@@ -63,6 +62,12 @@ const DATA = [
 
 const CategoryItem = ({navigation,route}) => {
 
+  /////redux//////////////
+  const dispatch=useDispatch()
+
+  ////////previous data////////
+  const[predata]=useState(route.params)
+
    /////////////Get Screen Logo/////////////
    const [logo, setLogo] = useState([]);
    const GetLogo = useCallback(async () => {
@@ -87,21 +92,74 @@ const CategoryItem = ({navigation,route}) => {
          console.log('Error  : ', error);
        });
    }, [logo]);
+  /////////////Get Notification/////////////
+  const [category_items, setCategoryItems] = useState();
+  const [page, setPage] = useState(1);
+  const [refreshing, setRefreshing] = React.useState(false);
 
+  const GetCategoryItems =useCallback( async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    let data = JSON.stringify({
+      category_ID:predata.category_id,
+      page:page
+    });
+
+    let config = {
+      method: 'post',
+      headers: headers,
+      url: BASE_URL + 'items/get_items_by_category',
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        console.log(JSON.stringify(response.data.result));
+        setCategoryItems(
+          page === 1
+            ? response.data.result
+            : [...category_items, ...response.data.result],
+        );
+        //setMyItems(response.data.result);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [category_items]);
    useEffect(() => {
      GetLogo()
+     GetCategoryItems()
    }, []);
+
+   const handleLoadMore = () => {
+    setPage(page+1);
+    setRefreshing(true)
+    GetMyItems();
+    setRefreshing(false)
+  };
+
   const renderItem = ({item}) => {
     return (
       <DashboardCard
-        image={item.image}
+      image={BASE_URL+ item.images[0]}
+      images_array_length={item.images.length}
         maintext={item.title}
         subtext={item.location}
         price={item.price}
         onpress={() => {
-          navigation.navigate('MainListingsDetails', {
-            listing_id: item.id,
-          });
+          dispatch(
+            setItemDetail({
+              id: item[2].id,
+              navplace: 'dashboard_Items',
+            }),
+          ),
+            navigation.navigate('ItemDetails');
+        
         }}
       />
     );
@@ -110,9 +168,16 @@ const CategoryItem = ({navigation,route}) => {
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => handleLoadMore()}
+          />
+        }
+        >
         <Header
-          title={'Category Name'}
+          title={predata.category_name}
           left_icon={'chevron-back-sharp'}
           left_iconPress={() => {
             navigation.goBack();
@@ -121,11 +186,12 @@ const CategoryItem = ({navigation,route}) => {
         />
 
         <FlatList
-          data={DATA}
+          data={category_items}
           numColumns={3}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
+          onEndReached={handleLoadMore}
         />
       </ScrollView>
     </SafeAreaView>
