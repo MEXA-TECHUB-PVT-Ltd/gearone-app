@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useLayoutEffect, useRef} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView,Alert,TouchableOpacity} from 'react-native';
 
 ////////////////app pakages////////////
 import {Snackbar} from 'react-native-paper';
@@ -112,6 +112,7 @@ const Verification = ({navigation, route}) => {
     if (count === 0 && predata.dummy_number === false) {
       setLoading(true);
       signInWithPhoneNumber(predata.country_code + predata.phone_number);
+      console.log(predata.country_code + predata.phone_number)
       return;
     } else {
       console.log('here no function call');
@@ -123,12 +124,25 @@ const Verification = ({navigation, route}) => {
 
   // Handle the button press
   async function signInWithPhoneNumber(phoneNumber) {
+    try {
+      setCount(count + 1);
+      const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+      setConfirm(confirmation);
+      setLoading(false);
+    } catch (error) {
+      console.log('Invalid code.', error);
+      Alert.alert(
+        'Error',
+        `Please `+ error,
+        [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ],
+        { cancelable: false }
+      )
+    }
     // setloading(true)
     // setdisable(true)
-    setCount(count + 1);
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    setConfirm(confirmation);
-    setLoading(false);
+
     // setloading(false)
     // setdisable(false)
   }
@@ -144,6 +158,14 @@ const Verification = ({navigation, route}) => {
       SigUpUser();
     } catch (error) {
       console.log('Invalid code.', error);
+      Alert.alert(
+        'Error',
+        `Please `+ error,
+        [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ],
+        { cancelable: false }
+      );
       setsnackbarValue('Invalid code, Please Enter Valid one');
     }
   }
@@ -332,19 +354,19 @@ const Verification = ({navigation, route}) => {
                 //return { shouldRepeat: true, delay: 1.5 } // repeat animation in 1.5 seconds
               }}>
               {({remainingTime}) => (
-                <Text style={{color: 'black', fontSize: hp(2)}}>
+                <Text style={{color: 'white', fontSize: hp(2)}}>
                   {remainingTime}(s)
                 </Text>
               )}
             </CountdownCircleTimer>
           ) : null}
         </View>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           disabled={disabletimer}
-          onPress={() => setdisableTimer(true)}
+          onPress={() => {      signInWithPhoneNumber(predata.country_code + predata.phone_number), setdisableTimer(true)}}
           style={{marginLeft: wp(8)}}>
           <Text style={styles.Cellmaintext}>Resend Code</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
       <View style={styles.buttonview}>
         <CustomButtonhere

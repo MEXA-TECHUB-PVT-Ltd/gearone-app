@@ -35,6 +35,7 @@ import { BASE_URL } from '../../utills/ApiRootUrl';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RattingBottomSheet = props => {
+  console.log("params.......... seller id",props.seller_id);
   //////////naviagtion variable////////////
   const navigation = useNavigation();
 
@@ -57,31 +58,57 @@ const RattingBottomSheet = props => {
   };
 
   //-----------seller ratting///////////
-  const seller_Ratting = async props => {
+  const seller_Ratting = async() => {
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
-    console.log('params',user_id, token);
-    axios({
-      method: 'POST',
-      url: BASE_URL + 'rate_user/rate_user',
-      headers: {
-        Authorization: `Bearer ${JSON.parse(token)}`,
-        'Content-Type': 'multipart/form-data',
-      },
-      body: {
-        rate_by_user_ID: user_id,
-        user_ID: props.seller_id,
-        rating: total_ratting,
-      },
+    console.log('params',user_id, token,".......... seller id",props.seller_id);
+
+    var headers={
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      'Content-Type': "application/json",
+    }
+    let data = JSON.stringify({
+      rate_by_user_ID:user_id,
+      user_ID:props.seller_id,
+      rating: total_ratting,
+    });
+    
+    let config = {
+      method: 'post',
+      url: BASE_URL+'rate_user/rate_user',
+      headers:headers,
+      data : data
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      props.getData()
     })
-      .then(async function (response) {
-        console.log('list data here in like api', response.data);
-        //setItem_Like_User_id(response.data.id);
-        //navigation.navigate("Drawerroute");
-      })
-      .catch(function (error) {
-        console.log('error', error);
-      });
+    .catch((error) => {
+      console.log(error);
+    });
+ 
+    //   method: 'POST',
+    //   url: BASE_URL + 'rate_user/rate_user',
+    //   headers: {
+    //     Authorization: `Bearer ${JSON.parse(token)}`,
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    //   body: {
+    //     rate_by_user_ID: user_id,
+    //     user_ID: props.seller_id,
+    //     rating: total_ratting,
+    //   },
+    // })
+    //   .then(async function (response) {
+    //     console.log('list data here in like api', response.data);
+    //     //setItem_Like_User_id(response.data.id);
+    //     //navigation.navigate("Drawerroute");
+    //   })
+    //   .catch(function (error) {
+    //     console.log('error', error);
+    //   });
   };
   return (
     <RBSheet

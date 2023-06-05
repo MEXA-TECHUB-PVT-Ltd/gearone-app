@@ -32,11 +32,14 @@ import {
 import Logo from '../../assets/svgs/Logo.svg';
 
 ///////////country picker//////////
-import {CountryPicker} from 'react-native-country-codes-picker';
+// import {CountryPicker} from 'react-native-country-codes-picker';
 
 ////////////redux////////////////
 import {useDispatch, useSelector} from 'react-redux';
 import {setJoin_as_Guest} from '../../redux/AuthSlice';
+
+/////////////////country picker/////////////
+import CountryPicker from 'react-native-country-picker-modal';
 
 const Login = ({navigation}) => {
   //////////////redux variable////////////
@@ -58,7 +61,9 @@ const Login = ({navigation}) => {
     setShow(false);
   };
   const [show, setShow] = useState(false);
-  const [countryCode, setCountryCode] = useState('+92');
+  ///////////////country picker states//////////////////////
+  const [CountryPickerView, setCountryPickerView] = useState(false);
+  const [countryCode, setCountryCode] = useState('92');
 
   ///////////////data states////////////////////
   const [phone_no, setPhoneNo] = React.useState('');
@@ -78,9 +83,9 @@ const Login = ({navigation}) => {
   };
   const final = () => {
     navigation.navigate('Verification', {
-      country_code: countryCode,
+      country_code: '+' +countryCode,
       phone_number: phone_no,
-      dummy_number:phone_no === "1234567890"?true:false
+      dummy_number: phone_no === '1234567890' ? true : false,
     });
     setloading(0), setdisable(0);
   };
@@ -89,6 +94,28 @@ const Login = ({navigation}) => {
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
+        {CountryPickerView == true ? (
+          <CountryPicker
+            withFilter={true}
+            withCallingCode={true}
+            withModal={true}
+            withFlag={true}
+            withFlagButton={true}
+            onSelect={e => {
+              setCountryPickerView(false);
+              //setCountryFlag(JSON.parse(e.flag))
+              e.name === 'Antarctica'
+                ? setCountryCode('672')
+                : setCountryCode(e.callingCode[0]);
+            }}
+            onClose={e => {
+              setCountryPickerView(false);
+            }}
+            visible={CountryPickerView}
+          />
+        ) : (
+          <View></View>
+        )}
         <View style={Logostyles.Logoview}>
           <Logo width={wp(45)} height={hp(11)} />
         </View>
@@ -104,10 +131,12 @@ const Login = ({navigation}) => {
           </View>
 
           <View style={styles.TextFieldView}>
-            <TouchableOpacity onPress={() => openPicker()} style={{}}>
+            <TouchableOpacity
+              onPress={() => setCountryPickerView(true)}
+              style={{}}>
               <TextInput
                 style={[styles.TextField, {width: wp(15)}]}
-                value={countryCode}
+                value={ '+' +countryCode}
                 editable={false}
                 disabled={false}></TextInput>
             </TouchableOpacity>
@@ -162,12 +191,7 @@ const Login = ({navigation}) => {
         }}>
         {snackbarValue.value}
       </Snackbar>
-      {show && (
-        // <View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 10 ,height:hp(20) }}>
-        //        <TouchableOpacity onPress={closePicker}>
-        //         <Text style={{ fontSize: 18, color: 'blue' }}>Close</Text>
-        //       </TouchableOpacity>
-        //         </View>
+      {/* {show && (
         <CountryPicker
           show={show}
           //disableBackdrop={true}
@@ -205,7 +229,7 @@ const Login = ({navigation}) => {
             },
           }}
         />
-      )}
+      )} */}
     </SafeAreaView>
   );
 };

@@ -59,7 +59,7 @@ const CamerBottomSheet = props => {
                 path: '',
                 Coverpath: image.path,
               }),
-            )
+            ):props.type==="Chat_image"?props.onClose()
           : dispatch(
               updateImagePath({
                 path: image.path,
@@ -187,7 +187,8 @@ const CamerBottomSheet = props => {
           }}></View>
         <TouchableOpacity
           onPress={() => {
-            choosePhotoFromLibrary(), props.refRBSheet.current.close();
+            choosePhotoFromLibrary(),
+            props.type==="Chat_image"?props.onClose(): props.refRBSheet.current.close();
           }}
           style={styles.modaltextview}>
           <Ionicons name="image" size={25} color={'white'} />

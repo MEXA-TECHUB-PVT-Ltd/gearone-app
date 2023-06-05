@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, View, Text, FlatList,Image} from 'react-native';
+import {SafeAreaView, ScrollView, View, Text, FlatList,Image,TouchableOpacity} from 'react-native';
 
 //////////////paper//////////////////
 import { Chip } from 'react-native-paper';
@@ -62,7 +62,7 @@ useEffect(() => {
   {
     getDataArray();
   }
-
+  getDataArray();
 }, []);
 
 const getDataArray = async () => {
@@ -128,6 +128,23 @@ const removeItem = (index) => {
     addDataToArray()
 navigation.navigate('SearchResults',{search_data:search})
   }
+
+  const deleteArrayDataFromAsyncStorage = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      console.log(keys,'All array data');
+      const arrayDataKeys = keys.filter((key) => key.startsWith('dataArray'));
+      console.log('All array data',arrayDataKeys);
+      await AsyncStorage.multiRemove(arrayDataKeys);
+      setDataArray([]);
+  
+      console.log('All array data successfully deleted from async storage.');
+    } catch (error) {
+      console.log('Error deleting array data from async storage:', error);
+    }
+  };
+  
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -136,7 +153,7 @@ navigation.navigate('SearchResults',{search_data:search})
         <Header
           title={'Search'}
           headertype={'header_without_text'}
-          right_logo={BASE_URL+logo}
+          right_logo={logo}
         />
               <View style={{alignSelf: 'center', marginBottom: hp(2)}}>
         <Image
@@ -155,8 +172,14 @@ navigation.navigate('SearchResults',{search_data:search})
           />
 <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:wp(5),marginTop:hp(3)}}>
   <Text style={styles.horizontal_lefttext}>Recent</Text>
+  <TouchableOpacity onPress={()=>deleteArrayDataFromAsyncStorage()}>
   <Text style={styles.horizontal_righttext}>Clear All</Text>
+  </TouchableOpacity>
+
 </View>
+{dataArray.length === 0 ? (
+    <Text style={[styles.horizontal_righttext,{left:wp(5)}]}>No Recent data available</Text>
+      ) : (
 <FlatList
           data={dataArray}
           numColumns={2}
@@ -164,7 +187,7 @@ navigation.navigate('SearchResults',{search_data:search})
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
         />
-
+      )}
         
       </ScrollView>
     </SafeAreaView>
