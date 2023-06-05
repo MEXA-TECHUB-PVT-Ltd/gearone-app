@@ -17,17 +17,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignContent: 'center',
-    backgroundColor:Colors.AppBckGround_color
+    backgroundColor: Colors.AppBckGround_color,
   },
-  horizontal_lefttext:{
-    fontFamily:fontFamily.Poppins_Regular,
-    color:'white',
-    fontSize:hp(2)
-      },
-      horizontal_righttext:{
-        fontFamily:fontFamily.Poppins_Regular,
-        color:'#B1B1B1',
-        fontSize:hp(1.8)
-          },
+  horizontal_lefttext: {
+    fontFamily: fontFamily.Poppins_Regular,
+    color: 'white',
+    fontSize: hp(2),
+  },
+  horizontal_righttext: {
+    fontFamily: fontFamily.Poppins_Regular,
+    color: '#B1B1B1',
+    fontSize: hp(1.8),
+  },
+  map_container: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal:wp(2),
+    paddingTop:hp(2)
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  text: {
+    marginHorizontal: 5,
+  },
 });
 export default styles;

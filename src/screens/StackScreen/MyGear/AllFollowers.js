@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef,useCallback} from 'react';
 import {SafeAreaView, ScrollView, View, Text, FlatList} from 'react-native';
 
 ///////////////app components////////////////
@@ -100,7 +100,7 @@ const AllFollowers = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
-          right_icon={BASE_URL+logo}
+          right_logo={logo}
         />
         <View style={{marginTop:hp(3)}}>
         <FlatList

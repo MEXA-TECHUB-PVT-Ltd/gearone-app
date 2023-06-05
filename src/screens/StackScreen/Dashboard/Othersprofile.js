@@ -117,6 +117,7 @@ const OtherProfile = ({navigation, route}) => {
     GetSellerProfileData();
     GetMyItems();
     GetDashboardLogo();
+    Follow_Seller_Status()
   }, []);
 
   /////////////Get Notification///////////
@@ -162,16 +163,53 @@ const OtherProfile = ({navigation, route}) => {
       .then(response => response.json())
       .then(async response => {
         console.log("here user follow",response)
-        if (response.result.length === 0) {
-          setLoading(false);
-        } else {
-          setLoading(false);
-        }
+        Follow_Seller_Status()
+        GetSellerProfileData()
+
       })
       .catch(error => {
         console.log('Error  : ', error);
       });
   }, []);
+
+  ////////status state////////////
+  const[status,setStatus]=useState(false)
+  const Follow_Seller_Status = useCallback(async () => {
+   
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
+    console.log("here data ids",route.params.seller_id,user_id)
+    var headers = { 
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'follow/check_follow_status', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        viewed_user_ID:route.params.seller_id,
+        user_ID:user_id
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        console.log("here user follow",response,',,,,,,,,,,,,,,,,,,,', route.params.seller_id )
+        //setStatus(response.Followed)
+        response.Followed === "true"?
+        setStatus(true)
+        :setStatus(false)
+        // if (response.status=== true) {
+        //   route.params.seller_id === response.follow_by_user_id?
+        //   setStatus(true):setStatus(false)
+        // } else {
+        // }
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -249,7 +287,7 @@ const OtherProfile = ({navigation, route}) => {
               right:30,
               top:-12,
             }}>
-            <Text style={{color: 'white'}}>Follow</Text>
+            <Text style={{color: 'white'}}>{status === true?"UnFollow":"Follow"}</Text>
           </TouchableOpacity>
         </View>
         <View
