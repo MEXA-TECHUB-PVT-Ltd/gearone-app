@@ -137,6 +137,7 @@ const Sell = ({navigation}) => {
     );
   };
   const handleLoadMore = () => {
+    console.log('at end of fltlist',page)
     setPage(page+1);
     GetMyItems();
   };
@@ -146,13 +147,14 @@ const Sell = ({navigation}) => {
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
+        scrollEnabled={false}
         style={styles.container}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={() => handleLoadMore()}
-          />
-        }
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={refreshing}
+        //     onRefresh={() => handleLoadMore()}
+        //   />
+        // }
         >
         <Header
           title={'Sell'}
@@ -161,17 +163,20 @@ const Sell = ({navigation}) => {
             navigation.goBack();
           }}
           headertype={'header_without_text'}
-          right_logo={BASE_URL+logo}
+          right_logo={logo}
         />
+        <View style={{height:hp(69)}}>
         <FlatList
           data={my_items}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
-          scrollEnabled={false}
+          //scrollEnabled={false}
           onEndReached={handleLoadMore}
-          // refreshing={refresh}
-          // onRefresh={() => Refresh()}
+          onEndReachedThreshold={0.7}
+          showsVerticalScrollIndicator={false}
         />
+        </View>
+  
               </ScrollView>
         <View style={{marginBottom: hp(8),position:'absolute',bottom:0,left:wp(10)}}>
           <CustomButtonhere

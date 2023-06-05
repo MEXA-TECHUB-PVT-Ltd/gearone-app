@@ -130,7 +130,7 @@ const SocialLinks = ({navigation}) => {
       </View>
       <View style={{height: hp(20), marginTop: hp(0), marginBottom: hp(20)}}>
         <CustomButtonhere
-          title={'Countinue'}
+          title={'Continue'}
           widthset={80}
           topDistance={23}
           loading={loading}

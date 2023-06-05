@@ -20,7 +20,6 @@ const NoDataFound = props => {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: hp(20),
-        backgroundColor:'red'
       }}>
       <MaterialCommunityIcons
         name={props.icon}

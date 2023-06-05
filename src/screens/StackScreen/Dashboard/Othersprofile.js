@@ -104,7 +104,10 @@ const OtherProfile = ({navigation, route}) => {
         setUsername(response.data.result[0].username);
         setFollowig(response.data.followings);
         setFollowers(response.data.followers);
-        setRattings(response.data.Total_Ratings);
+        var ratting=response.data.avgRatings
+        var subratting=ratting.substring(0,1)
+        setRattings(subratting) ;
+       
       })
       .catch(function (error) {
         console.log('error', error);
@@ -328,7 +331,7 @@ const OtherProfile = ({navigation, route}) => {
         title={'Rate Profile'}
         subtitle={'Enter Description'}
         getData={() => GetSellerProfileData()}
-        seller_id={id}
+        seller_id={route.params.seller_id}
       />
     </SafeAreaView>
   );

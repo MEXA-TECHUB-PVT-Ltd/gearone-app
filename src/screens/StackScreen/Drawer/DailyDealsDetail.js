@@ -1,14 +1,12 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, View, Text,Image} from 'react-native';
+import {SafeAreaView, ScrollView, View, Text, Image} from 'react-native';
 
 ////////////////////app components//////////////
 import CustomModal from '../../../components/Modal/CustomModal';
-import CustomButtonhere from '../../../components/Button/CustomButton';
 import Counter from '../../../components/Counter/Counter';
 
 /////////////////app components/////////
 import Header from '../../../components/Header/Header';
-import AutoImageSlider from '../../../components/ImageSlider/AutoImageSlider';
 
 ////////////////App Heigth Width////////////////
 import {
@@ -29,28 +27,15 @@ import {BASE_URL} from '../../../utills/ApiRootUrl';
 /////screen id//////////
 import ScreensNames from '../../../data/ScreensNames';
 
-/////////////redux/////////
-import {useDispatch, useSelector} from 'react-redux';
-
-import CountDown from 'react-native-countdown-component';
+/////moment library///////////////
 import moment from 'moment';
-import Colors from '../../../utills/Colors';
-
 
 const DailyDealsDetails = ({navigation, route}) => {
   const [predata] = useState(route.params);
 
-  //////redux variable//////////
-  const dispatch = useDispatch();
-  const join_as_guest = useSelector(state => state.auth.join_as_guest);
-
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
   const [guest_modalVisible, setGuestModalVisible] = useState(false);
-
-  ///////////////button states/////////////
-  const [loading, setloading] = useState(0);
-  const [disable, setdisable] = useState(0);
 
   /////////////Item Detail states/////////////
   const [Item_Image, setItem_Image] = useState('');
@@ -60,13 +45,6 @@ const DailyDealsDetails = ({navigation, route}) => {
   const [Item_description, setItem_Description] = useState('');
   const [Item_location, setItem_Location] = useState('');
   const [Item_endDeal, setItem_EndDeal] = useState('');
-
-  const images = [
-    require('../../../assets/dummyimages/image_1.png'),
-    require('../../../assets/dummyimages/image_2.png'),
-    require('../../../assets/dummyimages/image_3.png'),
-    require('../../../assets/dummyimages/image_4.png'),
-  ];
 
   /////////////Get Screen Logo/////////////
   const [logo, setLogo] = useState([]);
@@ -86,7 +64,6 @@ const DailyDealsDetails = ({navigation, route}) => {
     })
       .then(response => response.json())
       .then(async response => {
-        console.log('response here in logos : ', response);
         setLogo(response.result[0].image);
       })
       .catch(error => {
@@ -119,15 +96,13 @@ const DailyDealsDetails = ({navigation, route}) => {
         setItem_EndDeal(response?.result[0].ends_at);
 
         const dateString = moment(response?.result[0].ends_at).toDate();
-        console.log("hree dateString",dateString)
-        const timestamp = new Date(response?.result[0].ends_at).getTime()
-        console.log("hree timestamp",timestamp)
+        const timestamp = new Date(response?.result[0].ends_at).getTime();
         const currentTime = moment();
         const remainingTime = moment(timestamp).diff(currentTime);
-        console.log("hree remainingTime",remainingTime)
+        console.log('hree remainingTime', remainingTime);
         // Handle negative remaining time
-  const formattedRemainingTime = remainingTime >= 0 ? remainingTime : 0;
-  console.log("hree formattedRemainingTime",formattedRemainingTime)
+        const formattedRemainingTime = remainingTime >= 0 ? remainingTime : 0;
+        console.log('hree formattedRemainingTime', formattedRemainingTime);
         //setItem_EndDeal(formattedRemainingTime);
       })
       .catch(error => {
@@ -135,12 +110,10 @@ const DailyDealsDetails = ({navigation, route}) => {
       });
   }, [Item_likes_count]);
 
-  const [remaining_time,setRemainingTime]=useState()
+  const [remaining_time, setRemainingTime] = useState();
   useEffect(() => {
-
     Get_DailyDealsDetail();
     GetLogo();
-
   }, []);
 
   //----------save Item ///////////
@@ -189,16 +162,22 @@ const DailyDealsDetails = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
-          right_icon={BASE_URL + logo}
+          right_logo={logo}
         />
-    <Image
-    source={{uri:BASE_URL+Item_Image}}
-    style={{height:hp(30),width:wp(98),marginBottom:hp(4)}}
-    resizeMode='cover'
-    />
-<View style={{backgroundColor:'#444444',height:hp(5),width:wp(30),alignSelf:'center'}}>
-<Counter endTime={Item_endDeal} />
-</View>
+        <Image
+          source={{uri: BASE_URL + Item_Image}}
+          style={{height: hp(30), width: wp(98), marginBottom: hp(4)}}
+          resizeMode="cover"
+        />
+        <View
+          style={{
+            backgroundColor: '#444444',
+            height: hp(5),
+            width: wp(30),
+            alignSelf: 'center',
+          }}>
+          <Counter endTime={Item_endDeal} />
+        </View>
 
         <View>
           <View
@@ -228,25 +207,6 @@ const DailyDealsDetails = ({navigation, route}) => {
           </View>
           <View style={{paddingHorizontal: wp(5)}}>
             <Text style={styles.detail_text}>{Item_description}</Text>
-          </View>
-          <View
-            style={{
-              height: hp(20),
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <CustomButtonhere
-              title={'Create Order'}
-              widthset={80}
-              topDistance={0}
-              loading={loading}
-              disabled={disable}
-              onPress={() => {
-                join_as_guest === true
-                  ? setGuestModalVisible(true)
-                  : Merchnadise_Order();
-              }}
-            />
           </View>
         </View>
       </ScrollView>

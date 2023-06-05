@@ -57,7 +57,7 @@ import {useSelector} from 'react-redux';
 
 const ChatScreen = ({route, navigation}) => {
   ////////////////redux/////////////////
-  const {path} = useSelector(state => state.image);
+  const imagePath = useSelector(state => state.image.path);
 
   //////////navigation//////////
   const isFocused = useIsFocused();
@@ -76,11 +76,6 @@ const ChatScreen = ({route, navigation}) => {
 
   //////////////chat states/////////////
   const [messages, setMessages] = useState([]);
-  const [imageData, setImageData] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
-
-  /////////////login user//////////
-  const [login_user, setLoginUser] = useState('');
 
   /////////////Get Notification/////////////
   const [profileImage, setProfileImage] = useState('');
@@ -103,13 +98,10 @@ const ChatScreen = ({route, navigation}) => {
   };
   useEffect(() => {
     GetProfileData();
+    AllMessages()
   }, []);
 
-  /////////get login user//////////
-  const getUserMessages = async () => {
-    var user = await AsyncStorage.getItem('Userid');
-    setLoginUser(user);
-  };
+
   const requestCameraPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -132,15 +124,15 @@ const ChatScreen = ({route, navigation}) => {
     }
   };
   const AllMessages = async () => {
-    var user = '1';
-    const doc_id =
-      route.params.userid > '1'
-        ? '1' + '-' + route.params.userid
-        : route.params.userid + '-' + user;
+    var user_id = await AsyncStorage.getItem('User_id');
+    const docid =
+    predata.userid > user_id
+        ?user_id + '-' + predata.userid
+        : predata.userid + '-' + user_id;
 
     const messageRef = firestore()
       .collection('chats')
-      .doc(doc_id)
+      .doc(docid)
       .collection('messages')
       .orderBy('createdAt', 'desc');
 
@@ -172,27 +164,36 @@ const ChatScreen = ({route, navigation}) => {
   }, []);
   const handleSend = async messageArray => {
     console.log('here chat message value array', messageArray);
-    var user = await AsyncStorage.getItem('Userid');
+    var user_id = await AsyncStorage.getItem('User_id');
     const docid =
-      route.params.userid > user
-        ? '1' + '-' + route.params.userid
-        : route.params.userid + '-' + '1';
+    predata.userid > user_id
+        ?user_id + '-' + predata.userid
+        : predata.userid + '-' + user_id;
 
     let myMsg = null;
     const msg = messageArray[0];
     console.log('here chat message value', msg);
     myMsg = {
       ...msg,
-      text:emoji_name,
+      //text:emoji_name,
       //type: "image_text",
-      //image: path,
-      senderId: '2',
-      receiverId: '1',
+      //image: imagePath,
+      senderId:predata.userid,
+      receiverId: user_id,
       user: {
-        _id: user,
+        _id: predata.userid,
         name: 'ali',
       },
+      
     };
+    if (messageArray.text) {
+      msg.text = messageArray.text;
+    } else if (messageArray.image) {
+      msg.image = messageArray.image;
+    } else if (messageArray.emoji) {
+      msg.text = messageArray.emoji;
+    }
+    //messagesRef.push().set(messageArray);
     setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
     firestore()
       .collection('chats')
@@ -202,38 +203,22 @@ const ChatScreen = ({route, navigation}) => {
         ...myMsg,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
+
     messages.forEach(message => {});
     AllMessages();
   };
+  const handleSendImage = (image) => {
+    const imageMessage = {
+      _id: Math.round(Math.random() * 1000000),
+      image,
+      createdAt: new Date(),
+      user: {
+        _id: predata.userid, // Provide a unique user ID
+      },
+    };
 
-  const handleImageUpload = useCallback(async (fileName, filePath) => {
-    try {
-      if (!fileName) return;
-      // let fileName = file?.path?.split('/').pop();
-
-      const uploadTask = storage().ref().child(fileName).putFile(filePath);
-      uploadTask.on(
-        'state_changed',
-        snapshot => {
-          // const progress = Math.round(
-          //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-          // );
-        },
-        error => {
-          // alert(error);
-        },
-        async () => {
-          const url = await storage().ref(fileName).getDownloadURL();
-
-          setImageUrl(url);
-          //onSend(message)
-          //handleSend(message, url, );
-        },
-      );
-    } catch (error) {
-      setLoading(false);
-    }
-  }, []);
+    handleSend([imageMessage]);
+  };
 
   const CustomInputToolbar = props => {
     return (
@@ -271,7 +256,7 @@ const ChatScreen = ({route, navigation}) => {
             name={'camera'}
             size={22}
             color={'#444444'}
-            onPress={() => refRBSheet.current.open()}
+           onPress={() => refRBSheet.current.open()}
             //onPress={() => handleImageUpload()}
           />
         </View>
@@ -305,7 +290,10 @@ const ChatScreen = ({route, navigation}) => {
     return (
       <View>
         {props.currentMessage.image ? (
-          <Image source={{uri: props.currentMessage.image}} />
+          <Image source={{uri: props.currentMessage.image}} 
+          style={{height:120,width:100}}
+          resizeMode="contain"
+          />
         ) : (
         <Text
           style={{
@@ -362,6 +350,7 @@ const ChatScreen = ({route, navigation}) => {
            // bottom: 0,
           },
         }}
+        renderEmoji={(props) => <Emoji {...props} />}
         renderInputToolbar={props => {
           return <CustomInputToolbar {...props} />;
         }}
@@ -387,7 +376,7 @@ const ChatScreen = ({route, navigation}) => {
                     props.currentMessage.text != ''
                       ? Colors.Appthemecolor
                       : 'orange',
-                  width: props.currentMessage.text != '' ? wp(80) : wp(70),
+                 // width: props.currentMessage.text != '' ? wp(80) : wp(70),
                   marginBottom: hp(1.5),
                   paddingTop: hp(2),
                   paddingHorizontal: wp(3),
@@ -415,7 +404,7 @@ const ChatScreen = ({route, navigation}) => {
 
       <CamerBottomSheet
         refRBSheet={refRBSheet}
-        onClose={() => refRBSheet.current.close()}
+        onClose={() =>{ refRBSheet.current.close(),handleSendImage(imagePath)}}
         title={'From Gallery'}
         type={'Chat_image'}
       />

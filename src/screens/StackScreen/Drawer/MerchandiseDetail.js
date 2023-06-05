@@ -169,7 +169,7 @@ const MerchandiseDetails = ({navigation, route}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
-          right_icon={BASE_URL + logo}
+          right_logo={logo}
         />
         <AutoImageSlider
           slider_images_array={Item_Images.length === 0 ? images : Item_Images}

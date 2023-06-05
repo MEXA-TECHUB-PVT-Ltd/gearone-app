@@ -46,6 +46,9 @@ import {BASE_URL} from '../../../utills/ApiRootUrl';
 ///////////////screen id////////////
 import ScreensNames from '../../../data/ScreensNames';
 
+//////////////////firebase////////////////
+import firestore from '@react-native-firebase/firestore';
+
 const ItemDetails = ({navigation, route}) => {
   //////redux variable//////////
   const dispatch = useDispatch();
@@ -294,6 +297,48 @@ const ItemDetails = ({navigation, route}) => {
       });
   };
 
+  /////////////Get Notification/////////////
+  const [profileImage, setProfileImage] = useState('');
+  const [username, setUsername] = useState('');
+  const [country_code, setCountryCode] = useState('');
+  const [phone_number, setPhoneNumber] = useState('');
+  const [user_id, setUser_id] = useState('');
+
+  const GetProfileData = async () => {
+    console.log('list data here Item_userid ', Item_userid);
+    axios({
+      method: 'GET',
+      url: BASE_URL + 'auth/specific_user/' + Item_userid,
+    })
+      .then(async function (response) {
+        console.log('list data here ', response.data.result);
+        setProfileImage(response.data.result[0].image);
+        setUsername(response.data.result[0].username);
+        setCountryCode(response.data.result[0].country_code);
+        setPhoneNumber(response.data.result[0].phone);
+        setUser_id(response.data.result[0].id);
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+  };
+
+  ////////////firebase store function/////////////////
+  const firebase_store_user = props => {
+    GetProfileData()
+    firestore().collection('Users').add({
+      id: user_id,
+      phoneNo: phone_number,
+      country_code: country_code,
+      username:username,
+      user_image:profileImage
+    });
+    navigation.navigate('ChatScreen', {
+      navtype: 'chatlist',
+      userid: Item_userid,
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -443,10 +488,7 @@ const ItemDetails = ({navigation, route}) => {
                   onPress={() => {
                     join_as_guest === true
                       ? setGuestModalVisible(true)
-                      : navigation.navigate('ChatScreen', {
-                          navtype: 'chatlist',
-                          userid: Item_userid,
-                        });
+                      :firebase_store_user()
                   }}>
                   <MaterialIcons name={'chat'} size={20} color={'white'} />
                   <Text style={styles.verticletext}>Messages</Text>

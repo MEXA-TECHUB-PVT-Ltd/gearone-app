@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef,useCallback} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -40,6 +40,8 @@ import UploadIcon from '../../../assets/svgs/upload_icon.svg';
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
 import {setItemDetail} from '../../../redux/ItemSlice';
+import {updateGender} from '../../../redux/GenderSlice';
+import {updateImagesArrayPath} from '../../../redux/ImagesArray';
 
 ////////////screen id//////////////
 import ScreensNames from '../../../data/ScreensNames';
@@ -83,40 +85,39 @@ const UploadItem = ({navigation}) => {
   const [Item_location, setItemLocation] = useState('');
   const [Item_description, setItemDescription] = useState('');
 
-        /////////////Get Screen Logo/////////////
-        const [logo, setLogo] = useState([]);
-        const GetLogo = useCallback(async () => {
-          var token = await AsyncStorage.getItem('JWT_Token');
-          var headers = {
-            Authorization: `Bearer ${JSON.parse(token)}`,
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          };
-          await fetch(BASE_URL + 'logos/get_logos_by_screen', {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify({
-              screen_id: ScreensNames.Sell_Screen,
-            }),
-          })
-            .then(response => response.json())
-            .then(async response => {
-              setLogo(response.result[0].image)
-            })
-            .catch(error => {
-              console.log('Error  : ', error);
-            });
-        }, [logo]);
+  /////////////Get Screen Logo/////////////
+  const [logo, setLogo] = useState([]);
+  const GetLogo = useCallback(async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    await fetch(BASE_URL + 'logos/get_logos_by_screen', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        screen_id: ScreensNames.Sell_Screen,
+      }),
+    })
+      .then(response => response.json())
+      .then(async response => {
+        setLogo(response.result[0].image);
+      })
+      .catch(error => {
+        console.log('Error  : ', error);
+      });
+  }, [logo]);
 
-        useEffect(() => {
-          GetLogo()
-        }, []);
+  useEffect(() => {
+    GetLogo();
+  }, []);
 
   /////////////image array/////////
   const post_Item_Images = async props => {
     const formData = new FormData();
     formData.append('id', props);
-    //formData.append("images",item_images_array);
     if (item_images_array?.length > 0) {
       for (let i = 0; i < item_images_array?.length; i++) {
         let url = item_images_array[i];
@@ -140,9 +141,8 @@ const UploadItem = ({navigation}) => {
     })
       .then(response => response.text())
       .then(
-        resulthere => console.log('image data', resulthere),
-
-        // dispatch(setItemDetail(result.result[0].id, result.result[0].name)),
+        resulthere => 
+        //console.log('image data', resulthere),
         setloading(0),
         setdisable(0),
         setModalVisible(true),
@@ -152,14 +152,13 @@ const UploadItem = ({navigation}) => {
   //////////////Api Calling////////////////////
   const CreateItem = async () => {
     const user_id = await AsyncStorage.getItem('User_id');
-    console.log('here user id', user_id);
     var token = await AsyncStorage.getItem('JWT_Token');
     const currentDate = new Date();
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
       'Content-Type': 'application/json',
     };
-   
+
     let data = JSON.stringify({
       user_ID: user_id,
       name: Item_name,
@@ -171,7 +170,7 @@ const UploadItem = ({navigation}) => {
       start_date: currentDate,
       end_date: currentDate,
       added_by: 'user',
-     });
+    });
 
     let config = {
       method: 'POST',
@@ -185,9 +184,19 @@ const UploadItem = ({navigation}) => {
     axios
       .request(config)
       .then(response => {
-        console.log('here item data', response.data);
-        dispatch(setItemDetail({id:response.data.result[0].id, navplace: 'login_user_items'}));
+        dispatch(
+          setItemDetail({
+            id: response.data.result[0].id,
+            navplace: 'login_user_items',
+          }),
+        );
         post_Item_Images(response.data.result[0].id);
+        setItemName('');
+        setItemDescription('');
+        setItemLocation('');
+        setItemPrice('');
+        dispatch(updateGender({name: '', value: ''}));
+        dispatch(updateImagesArrayPath([]));
       })
       .catch(error => {
         console.log(error);
@@ -248,7 +257,7 @@ const UploadItem = ({navigation}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
-          right_logo={BASE_URL+logo}
+          right_logo={logo}
         />
         <FlatList
           data={item_images_array.slice(0, maxIndex)}

@@ -23,6 +23,9 @@ import {fontFamily} from '../../constant/fonts';
 import Logo from '../../assets/svgs/Logo.svg';
 import YourLogo from '../../assets/svgs/yourlogo.svg';
 
+////////////////baseurl//////////////
+import { BASE_URL } from '../../utills/ApiRootUrl';
+
 const Header = ({
   title,
   left_icon,
@@ -35,6 +38,7 @@ const Header = ({
   type,
   right_logo
 }) => {
+  //console.log("here logo",right_logo)
   return (
     <View
       style={[
@@ -66,10 +70,11 @@ const Header = ({
             justifyContent: 'center',
           }}>
             {
-              right_logo===null?
-                    <Logo width={wp(30)} height={hp(7)} />:
+              type==="withoutlogo" ?null:
+              right_logo.length===0?
+                    <YourLogo width={wp(30)} height={hp(7)} />:
                     <Image
-                    source={{uri:right_logo}}
+                    source={{uri:BASE_URL+right_logo}}
                     style={{height:hp(15),width:wp(15)}}
                     resizeMode='contain'
                     />

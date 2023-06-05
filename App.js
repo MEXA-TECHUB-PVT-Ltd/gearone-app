@@ -135,6 +135,7 @@ function App() {
               headerShown: false,
             }}
           />
+              
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

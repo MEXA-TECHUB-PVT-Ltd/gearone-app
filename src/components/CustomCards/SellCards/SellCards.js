@@ -46,14 +46,15 @@ const formattedDate = day + "/" + month + "/" + year;
            </View>
       :
       null}
- 
-      <View style={styles.imageView}>
-        {props.images_array_length === 0 ? (
-          <Ionicons name={'image'} color={'grey'} size={25} />
+     {props.images_array_length === 0 ? (
+          <Ionicons name={'image'} color={'grey'} size={hp(10)} />
         ) : (
+      <View style={styles.imageView}>
+    
           <Image source={{uri:props.image}} style={styles.image} resizeMode="cover" />
-        )}
+   
       </View>
+           )}
       <View style={styles.textView}>
         <Text style={styles.maintext}>{props.maintext}</Text>
         <Text style={styles.pricetext}>

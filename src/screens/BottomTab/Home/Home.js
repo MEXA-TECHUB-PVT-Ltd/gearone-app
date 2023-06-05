@@ -11,6 +11,9 @@ import {
   RefreshControl,
 } from 'react-native';
 
+////////////icon///////////
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
 import DashboardCard from '../../../components/CustomCards/Dashboard/DashboardCard';
@@ -34,7 +37,10 @@ import Lightbox from 'react-native-lightbox-v2';
 
 /////////////screen id////////////
 import ScreensNames from '../../../data/ScreensNames';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 const Home = ({navigation}) => {
   ///////redux states/////////
@@ -56,7 +62,6 @@ const Home = ({navigation}) => {
       headers: headers,
       body: JSON.stringify({
         screen_id: ScreensNames.Dashboard_Screen,
-        page:"1"
       }),
     })
       .then(response => response.json())
@@ -70,8 +75,8 @@ const Home = ({navigation}) => {
 
   /////////////Get Stories/////////////
   const [dashboard_stories, setDashboardStories] = useState([]);
+  const [dashboard_stories_error_status, setDashboardStoriesErrorStatus] = useState(false);
   const GetDashboardStories = useCallback(async () => {
-    var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
@@ -83,11 +88,25 @@ const Home = ({navigation}) => {
       headers: headers,
       body: JSON.stringify({
         screen_id: '3',
+        page:'1'
       }),
     })
       .then(response => response.json())
       .then(async response => {
-        setDashboardStories(response.result);
+        if (response.status === true) {
+          setLoading(false);
+          setCount(1);
+          setDashboardStories(
+            page === 1
+              ? response.result
+              : [...dashboard_stories, ...response.result],
+          );
+        } else {
+          setDashboardStoriesErrorStatus(true)
+          setLoading(false);
+          setCount(1);
+        }
+        //setDashboardStories(response.result);
       })
       .catch(error => {
         console.log('Error  : ', error);
@@ -100,23 +119,12 @@ const Home = ({navigation}) => {
 
   const [refreshing, setRefreshing] = React.useState(false);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-  const handleRefresh = () => {
-    setRefreshing(true);
-    setPage(1); // Reset page to 1 when refreshing
-    fetchData().then(() => setRefreshing(false));
-  };
-
   /////////////Get Items/////////////
   const [dashboard_items, setDashboardItems] = useState([]);
+  const [dashboard_error_status, setDashboardErrorStatus] = useState(false);
 
   const GetDashboardItems = useCallback(async () => {
-    console.log(page)
+    console.log(page);
     var token = await AsyncStorage.getItem('JWT_Token');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
@@ -138,26 +146,16 @@ const Home = ({navigation}) => {
     axios
       .request(config)
       .then(response => {
-        console.log('here data of items', response.data);
         if (response.data.status === true) {
           setLoading(false);
           setCount(1);
-
-          // var recent_data = response.data.result;
-          // var filteredDashboardItems = dashboard_items.filter((item) => {
-          //   // Filter out items that already exist in recent_data
-          //   return recent_data.some((recentItem) => recentItem.id === item.id);
-          // });
-          // var newArray = recent_data.concat(filteredDashboardItems);
-          // var arary_length1 = newArray.length;
-          //  /console.log(' newArray array length', newArray,page);
           setDashboardItems(
             page === 1
               ? response.data.result
               : [...dashboard_items, ...response.data.result],
           );
         } else {
-          <NoDataFound title={'No data here'} />;
+          setDashboardErrorStatus(true)
           setLoading(false);
           setCount(1);
         }
@@ -166,9 +164,6 @@ const Home = ({navigation}) => {
         console.log(error);
       });
   }, [dashboard_items]);
-  // useEffect(() => {
-  //   GetDashboardItems();
-  // }, [page]);
 
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -179,28 +174,20 @@ const Home = ({navigation}) => {
     GetDashboardStories();
     GetDashboardLogo();
   }, [page]);
-  const Refresh = () => {
-    setPage(page + 1);
-    // clearproductlist(page);
-    setRefresh(true);
-    GetDashboardItems();
-    setRefresh(false);
+  const [visitedItemIndex, setVisitedItemIndex] = useState(null);
+
+  const handleVisit = (index, link) => {
+   console.log("is pressed")
+    setVisitedItemIndex(index);
+    Linking.openURL(link);
   };
-  useEffect(() => {
-    if (refreshing && refreshing) {
-      Refresh();
-      console.log('i run');
-    }
-  }, [refreshing]);
   const [isLarge, setIsLarge] = useState(false);
-  const storyrenderItem = ({item}) => {
+  const storyrenderItem = ({item,index}) => {
     return (
       <View style={{}}>
         <Lightbox
           activeProps={{resizeMode: 'contain'}}
           onLongPress={() => setIsLarge(true)}
-          //longPressGapTimer={500}
-          //onClose={()=>setIsLarge(false)}
           onOpen={() => setIsLarge(true)}
           willClose={() => setIsLarge(false)}>
           {isLarge === true ? (
@@ -212,7 +199,7 @@ const Home = ({navigation}) => {
                 style={styles.imageLarge}
                 resizeMode="cover"
               />
-              <TouchableOpacity onPress={() => Linking.openURL(item.link)}>
+              <TouchableOpacity onPress={() =>  handleVisit(index, item.link)}>
                 <Text style={styles.Visit_btn}>Visit</Text>
               </TouchableOpacity>
             </View>
@@ -227,7 +214,7 @@ const Home = ({navigation}) => {
                   resizeMode="cover"
                 />
               </View>
-              <Text style={styles.stories_user}>Username</Text>
+              {/* <Text style={styles.stories_user}>Username</Text> */}
             </>
           )}
         </Lightbox>
@@ -246,7 +233,6 @@ const Home = ({navigation}) => {
   };
 
   const renderItem_two = ({item, index}) => {
-    console.log(item)
     return (
       <View>
         {item[0]?.promoted === 'true' ||
@@ -255,43 +241,60 @@ const Home = ({navigation}) => {
           <View
             style={{
               flexDirection: 'row',
-              marginBottom: heightPercentageToDP(0.5),
+              marginBottom: hp(0.5),
             }}>
             {item[0]?.promoted === 'true' ? (
               <>
                 <TouchableOpacity onPress={() => on_nav(item[0].id)}>
-                  <Image
-                    source={{uri: BASE_URL + item[0]?.images[0]}}
-                    style={{height: 170, width: 280}}
-                    resizeMode="cover"
-                  />
+                  {item[0]?.images.length === 0 ? (
+                    <Ionicons
+                      name={'image'}
+                      color={'grey'}
+                      size={hp(15)}
+                      style={{alignSelf: 'center'}}
+                    />
+                  ) : (
+                    <Image
+                      source={{uri: BASE_URL + item[0]?.images[0]}}
+                      style={{height: 170, width: 280}}
+                      resizeMode="cover"
+                    />
+                  )}
                 </TouchableOpacity>
 
                 <View>
-                  <TouchableOpacity
-                    onPress={() =>  on_nav(item[1].id)}>
-                    <Image
-                      source={{uri: BASE_URL + item[1]?.images[0]}}
-                      style={{height: 82, width: 134, margin: 1}}
-                      resizeMode="cover"
-                    />
-                  </TouchableOpacity>
-                  <View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        dispatch(
-                          setItemDetail({
-                            id: item[2].id,
-                            navplace: 'dashboard_Items',
-                          }),
-                        ),
-                          navigation.navigate('ItemDetails');
-                      }}>
+                  <TouchableOpacity onPress={() => on_nav(item[1].id)}>
+                    {item[1]?.images.length === 0 ? (
+                      <Ionicons
+                        name={'image'}
+                        color={'grey'}
+                        size={hp(15)}
+                        style={{alignSelf: 'center'}}
+                      />
+                    ) : (
                       <Image
-                        source={{uri: BASE_URL + item[2]?.images[0]}}
+                        source={{uri: BASE_URL + item[1]?.images[0]}}
                         style={{height: 82, width: 134, margin: 1}}
                         resizeMode="cover"
                       />
+                    )}
+                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity onPress={() => on_nav(item[2].id)}>
+                      {item[2]?.images.length === 0 ? (
+                        <Ionicons
+                          name={'image'}
+                          color={'grey'}
+                          size={hp(15)}
+                          style={{alignSelf: 'center'}}
+                        />
+                      ) : (
+                        <Image
+                          source={{uri: BASE_URL + item[2]?.images[0]}}
+                          style={{height: 82, width: 134, margin: 1}}
+                          resizeMode="cover"
+                        />
+                      )}
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -299,168 +302,181 @@ const Home = ({navigation}) => {
             ) : item[1]?.promoted === 'true' ? (
               <>
                 <View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      dispatch(
-                        setItemDetail({
-                          id: item[2].id,
-                          navplace: 'dashboard_Items',
-                        }),
-                      ),
-                        navigation.navigate('ItemDetails');
-                    }}>
-                    <Image
-                      source={{uri: BASE_URL + item[2]?.images[0]}}
-                      style={{height: 82, width: 134, margin: 1}}
-                      resizeMode="cover"
-                    />
-                  </TouchableOpacity>
-                  <View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        dispatch(
-                          setItemDetail({
-                            id: item[0].id,
-                            navplace: 'dashboard_Items',
-                          }),
-                        ),
-                          navigation.navigate('ItemDetails');
-                      }}>
+                  <TouchableOpacity onPress={() => on_nav(item[2].id)}>
+                    {item[2]?.images.length === 0 ? (
+                      <Ionicons
+                        name={'image'}
+                        color={'grey'}
+                        size={hp(15)}
+                        style={{alignSelf: 'center'}}
+                      />
+                    ) : (
                       <Image
-                        source={{uri: BASE_URL + item[0]?.images[0]}}
+                        source={{uri: BASE_URL + item[2]?.images[0]}}
                         style={{height: 82, width: 134, margin: 1}}
                         resizeMode="cover"
                       />
+                    )}
+                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity onPress={() => on_nav(item[0].id)}>
+                      {item[0]?.images.length === 0 ? (
+                        <Ionicons
+                          name={'image'}
+                          color={'grey'}
+                          size={hp(15)}
+                          style={{alignSelf: 'center'}}
+                        />
+                      ) : (
+                        <Image
+                          source={{uri: BASE_URL + item[0]?.images[0]}}
+                          style={{height: 82, width: 134, margin: 1}}
+                          resizeMode="cover"
+                        />
+                      )}
                     </TouchableOpacity>
                   </View>
                 </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    dispatch(
-                      setItemDetail({
-                        id: item[1].id,
-                        navplace: 'dashboard_Items',
-                      }),
-                    ),
-                      navigation.navigate('ItemDetails');
-                  }}>
-                  <Image
-                    source={{uri: BASE_URL + item[1]?.images[0]}}
-                    style={{height: 170, width: 274}}
-                    resizeMode="cover"
-                  />
+                <TouchableOpacity onPress={() => on_nav(item[1].id)}>
+                  {item[1]?.images.length === 0 ? (
+                    <Ionicons
+                      name={'image'}
+                      color={'grey'}
+                      size={hp(15)}
+                      style={{alignSelf: 'center'}}
+                    />
+                  ) : (
+                    <Image
+                      source={{uri: BASE_URL + item[1]?.images[0]}}
+                      style={{height: 170, width: 274}}
+                      resizeMode="cover"
+                    />
+                  )}
                 </TouchableOpacity>
               </>
             ) : item[2]?.promoted === 'true' ? (
               <>
                 <View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      dispatch(
-                        setItemDetail({
-                          id: item[1].id,
-                          navplace: 'dashboard_Items',
-                        }),
-                      ),
-                        navigation.navigate('ItemDetails');
-                    }}>
-                    <Image
-                      source={{uri: BASE_URL + item[1]?.images[0]}}
-                      style={{height: 82, width: 134, margin: 1}}
-                      resizeMode="cover"
-                    />
-                  </TouchableOpacity>
-                  <View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        dispatch(
-                          setItemDetail({
-                            id: item[0].id,
-                            navplace: 'dashboard_Items',
-                          }),
-                        ),
-                          navigation.navigate('ItemDetails');
-                      }}>
+                  <TouchableOpacity onPress={() => on_nav(item[1].id)}>
+                    {item[1]?.images.length === 0 ? (
+                      <Ionicons
+                        name={'image'}
+                        color={'grey'}
+                        size={hp(15)}
+                        style={{alignSelf: 'center'}}
+                      />
+                    ) : (
                       <Image
-                        source={{uri: BASE_URL + item[0]?.images[0]}}
+                        source={{uri: BASE_URL + item[1]?.images[0]}}
                         style={{height: 82, width: 134, margin: 1}}
                         resizeMode="cover"
                       />
+                    )}
+                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity onPress={() => on_nav(item[0].id)}>
+                      {item[0]?.images.length === 0 ? (
+                        <Ionicons
+                          name={'image'}
+                          color={'grey'}
+                          size={hp(10)}
+                          style={{alignSelf: 'center'}}
+                        />
+                      ) : (
+                        <Image
+                          source={{uri: BASE_URL + item[0]?.images[0]}}
+                          style={{height: 82, width: 134, margin: 1}}
+                          resizeMode="cover"
+                        />
+                      )}
                     </TouchableOpacity>
                   </View>
                 </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    dispatch(
-                      setItemDetail({
-                        id: item[2].id,
-                        navplace: 'dashboard_Items',
-                      }),
-                    ),
-                      navigation.navigate('ItemDetails');
-                  }}>
-                  <Image
-                    source={{uri: BASE_URL + item[2]?.images[0]}}
-                    style={{height: 170, width: 274}}
-                    resizeMode="cover"
-                  />
+                <TouchableOpacity onPress={() => on_nav(item[2].id)}>
+                  {item[2]?.images.length === 0 ? (
+                    <Ionicons
+                      name={'image'}
+                      color={'grey'}
+                      size={hp(15)}
+                      style={{alignSelf: 'center'}}
+                    />
+                  ) : (
+                    <Image
+                      source={{uri: BASE_URL + item[2]?.images[0]}}
+                      style={{height: 170, width: 274}}
+                      resizeMode="cover"
+                    />
+                  )}
                 </TouchableOpacity>
               </>
-            ) : 
-            <>
-                <View>
-                  <TouchableOpacity
-                    onPress={() => {
-                      dispatch(
-                        setItemDetail({
-                          id: item[1].id,
-                          navplace: 'dashboard_Items',
-                        }),
-                      ),
-                        navigation.navigate('ItemDetails');
-                    }}>
-                    <Image
-                      source={{uri: BASE_URL + item[1]?.images[0]}}
-                      style={{height: 82, width: 134, margin: 1}}
-                      resizeMode="cover"
-                    />
-                  </TouchableOpacity>
-                  <View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        dispatch(
-                          setItemDetail({
-                            id: item[0].id,
-                            navplace: 'dashboard_Items',
-                          }),
-                        ),
-                          navigation.navigate('ItemDetails');
-                      }}>
-                      <Image
-                        source={{uri: BASE_URL + item[0]?.images[0]}}
-                        style={{height: 82, width: 134, margin: 1}}
-                        resizeMode="cover"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    dispatch(
-                      setItemDetail({
-                        id: item[2].id,
-                        navplace: 'dashboard_Items',
-                      }),
-                    ),
-                      navigation.navigate('ItemDetails');
-                  }}>
-                  <Image
-                    source={{uri: BASE_URL + item[2]?.images[0]}}
-                    style={{height: 170, width: 274}}
-                    resizeMode="cover"
-                  />
-                </TouchableOpacity>
-              </>}
+            ) : null
+            // <>
+            //   <View>
+            //     <TouchableOpacity
+            //       onPress={() => {
+            //         dispatch(
+            //           setItemDetail({
+            //             id: item[1].id,
+            //             navplace: 'dashboard_Items',
+            //           }),
+            //         ),
+            //           navigation.navigate('ItemDetails');
+            //       }}>
+            //            {item[1]?.images.length === 0?
+            //      <Ionicons name={'image'} color={'grey'} size={hp(10)} style={{alignSelf:'center'}}/>
+            //      :
+            //       <Image
+            //         source={{uri: BASE_URL + item[1]?.images[0]}}
+            //         style={{height: 82, width: 134, margin: 1}}
+            //         resizeMode="cover"
+            //       />
+            //            }
+            //     </TouchableOpacity>
+            //     <View>
+            //       <TouchableOpacity
+            //         onPress={() => {
+            //           dispatch(
+            //             setItemDetail({
+            //               id: item[0].id,
+            //               navplace: 'dashboard_Items',
+            //             }),
+            //           ),
+            //             navigation.navigate('ItemDetails');
+            //         }}>
+            //              {item[0]?.images.length === 0?
+            //      <Ionicons name={'image'} color={'grey'} size={hp(10)} style={{alignSelf:'center'}}/>
+            //      :
+            //         <Image
+            //           source={{uri: BASE_URL + item[0]?.images[0]}}
+            //           style={{height: 82, width: 134, margin: 1}}
+            //           resizeMode="cover"
+            //         />
+            //              }
+            //       </TouchableOpacity>
+            //     </View>
+            //   </View>
+            //   <TouchableOpacity
+            //     onPress={() => {
+            //       dispatch(
+            //         setItemDetail({
+            //           id: item[2].id,
+            //           navplace: 'dashboard_Items',
+            //         }),
+            //       ),
+            //         navigation.navigate('ItemDetails');
+            //     }}>
+            //          {item[2]?.images.length === 0?
+            //      <Ionicons name={'image'} color={'grey'} size={hp(18)} style={{alignSelf:'center'}}/>
+            //      :
+            //     <Image
+            //       source={{uri: BASE_URL + item[2]?.images[0]}}
+            //       style={{height: 170, width: 274}}
+            //       resizeMode="cover"
+            //     />
+            //          }
+            //   </TouchableOpacity>
+            // </>
+            }
           </View>
         ) : (
           <FlatList
@@ -469,14 +485,28 @@ const Home = ({navigation}) => {
             scrollEnabled={false}
             keyExtractor={(item, index) => index}
             renderItem={({item}) => (
-              <View>
-                <TouchableOpacity
-                  onPress={() => on_nav(item.id)}>
-                  <Image
-                    source={{uri: BASE_URL + item?.images[0]}}
-                    style={{height: 150, width: 140}}
-                    resizeMode="cover"
-                  />
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                  width: wp(34),
+                }}>
+                <TouchableOpacity onPress={() => on_nav(item.id)}>
+                  {item.images.length === 0 ? (
+                    <Ionicons
+                      name={'image'}
+                      color={'grey'}
+                      size={hp(15)}
+                      style={{alignSelf: 'center'}}
+                    />
+                  ) : (
+                    <Image
+                      source={{uri: BASE_URL + item?.images[0]}}
+                      style={{height: 150, width: 140}}
+                      resizeMode="cover"
+                    />
+                  )}
                 </TouchableOpacity>
               </View>
             )}
@@ -486,9 +516,11 @@ const Home = ({navigation}) => {
     );
   };
   const handleLoadMore = () => {
-    setRefreshing(false)
-    setPage(page+1);
+    setRefreshing(false);
+    setPage(page + 1);
+    setRefresh(true);
     GetDashboardItems();
+    setRefresh(false);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -499,7 +531,7 @@ const Home = ({navigation}) => {
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
-            onRefresh={() => onRefresh()}
+            onRefresh={() => handleLoadMore()}
           />
         }>
         <Header
@@ -508,8 +540,13 @@ const Home = ({navigation}) => {
           left_iconPress={() => {
             navigation.toggleDrawer();
           }}
-          right_logo={BASE_URL + dashboard_logo}
+          right_logo={dashboard_logo}
         />
+         {dashboard_stories_error_status ===true?
+            <NoDataFound
+            icon={'exclamation-thick'}
+            text={'No Data Found'}
+            />:
         <FlatList
           data={dashboard_stories}
           horizontal={true}
@@ -527,16 +564,23 @@ const Home = ({navigation}) => {
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
         />
+         }
         <View style={styles.bottomlineview}></View>
+        {dashboard_error_status ===true?
+            <NoDataFound
+            icon={'exclamation-thick'}
+            text={'No Data Found'}
+            />:
         <FlatList
-          data={dashboard_items}
-          scrollEnabled={false}
-          keyExtractor={(item, index) => index}
-          renderItem={renderItem_two}
-          onEndReached={handleLoadMore}
-          refreshing={refresh}
-          onRefresh={() => Refresh()}
-        />
+        data={dashboard_items}
+        scrollEnabled={false}
+        keyExtractor={(item, index) => index}
+        renderItem={renderItem_two}
+        onEndReached={handleLoadMore}
+        refreshing={refresh}
+      />
+        }
+
       </ScrollView>
     </SafeAreaView>
   );
