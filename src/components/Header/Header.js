@@ -75,7 +75,7 @@ const Header = ({
                     <YourLogo width={wp(30)} height={hp(7)} />:
                     <Image
                     source={{uri:BASE_URL+right_logo}}
-                    style={{height:hp(15),width:wp(15)}}
+                    style={{height:hp(7),width:wp(18),borderRadius:hp(0.5)}}
                     resizeMode='contain'
                     />
             }
@@ -96,7 +96,7 @@ const Header = ({
           <View style={styles.iconContainer}>
             <Icon
               name={left_icon}
-              size={20}
+              size={23}
               color="white"
               onPress={left_iconPress}
             />

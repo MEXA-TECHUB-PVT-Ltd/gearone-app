@@ -148,13 +148,13 @@ const CategoryItem = ({navigation,route}) => {
       <DashboardCard
       image={BASE_URL+ item.images[0]}
       images_array_length={item.images.length}
-        maintext={item.title}
+        maintext={item.name}
         subtext={item.location}
         price={item.price}
         onpress={() => {
           dispatch(
             setItemDetail({
-              id: item[2].id,
+              id: item.id,
               navplace: 'dashboard_Items',
             }),
           ),

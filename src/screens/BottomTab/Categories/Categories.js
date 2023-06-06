@@ -191,8 +191,8 @@ var idhere=0
           key={prop.index}>
           <Image
             source={{uri: BASE_URL + prop.image}}
-            style={{width: wp(85), height: hp(20)}}
-            resizeMode="contain"
+            style={{width: wp(85), height: hp(20),borderRadius:hp(1.5)}}
+            resizeMode="cover"
           />
         </View>
         // </TouchableOpacity>
@@ -205,10 +205,11 @@ var idhere=0
           category_id: prop.id,
           category_name:prop.name
         }) }}
-        style={{alignSelf:'center'}}
+        style={{alignSelf:'center',paddingHorizontal:wp(5)}}
       >
         <CategoryCard
-          image={{uri: BASE_URL+prop.image}}
+          image={prop.image}
+          //images_array_length={item.images.length}
           maintext={prop.name}
           subtext={prop.location}
           price={prop.price}
@@ -272,13 +273,16 @@ var idhere=0
           // }}
           right_logo={BASE_URL + logo}
         />
+        <View style={{paddingHorizontal:wp(5)}}>
         <BrickList
           data={span_array}
           renderItem={prop => renderView(prop)}
           columns={3}
-          rowHeight={185}
+          rowHeight={hp(22)}
           onEndReached={handleLoadMore}
         />
+        </View>
+   
       </ScrollView>
     </SafeAreaView>
   );

@@ -6,20 +6,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 /////////////styles///////////////
 import styles from './styles';
+import { BASE_URL } from '../../../utills/ApiRootUrl';
 
-/////////////colors////////////
-import Colors from '../../../utills/Colors';
+////////////height and width///////////
+import { heightPercentageToDP as hp,widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-///////////////height and width/////////
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-
-/////////app imagaes////////
-import {appImages} from '../../../constant/images';
 
 const CategoryCard = props => {
+  console.log("hree image",props.image)
   /////////price formatter
   const formatter = new Intl.NumberFormat('en-US', {
     notation: 'compact',
@@ -33,9 +27,9 @@ const CategoryCard = props => {
       style={styles.card}>
       <View style={styles.imageView}>
         {props.image === null ? (
-          <Ionicons name={'image'} color={'red'} size={25} />
+          <Ionicons name={'image'} color={'red'} size={hp(10)} />
         ) : (
-          <Image source={props.image} style={styles.image} resizeMode="cover" />
+          <Image source={{uri:BASE_URL+ props.image}} style={styles.image} resizeMode="cover" />
         )}
       </View>
       <View style={styles.textView}>
