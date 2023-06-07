@@ -108,9 +108,21 @@ const MyAccount = ({navigation, route}) => {
       .then(response => response.json())
       .then(async response => {
         console.log('response hgeree are  : ', response.result);
+        response.result===[]?
+        setFaceBook("")
+        :
         setFaceBook(response.result[0].facebook)
+        response.result===[]?
+        setLinkedIn("")
+        :
         setLinkedIn(response.result[0].linkedin)
+        response.result===[]?
+        setTwitter("")
+        :
         setTwitter(response.result[0].twitter)
+        response.result===[]?
+        setInstagram("")
+        :
         setInstagram(response.result[0].insta)
       })
       .catch(error => {
@@ -118,13 +130,18 @@ const MyAccount = ({navigation, route}) => {
       });
   }, []);
  
+  const onnav=()=>{
+console.log("heree")
+navigation.navigate('EditLinks')
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <Header
-          title={'My Accouns'}
+          title={'My Account'}
           left_icon={'chevron-back-sharp'}
           left_iconPress={() => {
             navigation.goBack();
@@ -133,7 +150,7 @@ const MyAccount = ({navigation, route}) => {
         />
         <View
           style={{marginTop: hp(3), marginLeft: wp(5), marginBottom: hp(4)}}>
-          <Text style={styles.account_text}>Linked Account:{twitter}{linkedIn}</Text>
+          <Text style={styles.account_text}>Linked Account:</Text>
         </View>
         <View
           style={{
@@ -141,16 +158,16 @@ const MyAccount = ({navigation, route}) => {
             justifyContent: 'space-between',
             paddingHorizontal: wp(12),
           }}>
-            <TouchableOpacity onPress={()=>Linking.openURL(twitter)}>
+            <TouchableOpacity onPress={()=> twitter ===""?onnav():Linking.openURL(twitter)}>
             <Twitter width={wp(10)} height={hp(6)} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(linkedIn)}>
+            <TouchableOpacity onPress={()=>linkedIn ===""?onnav():Linking.openURL(linkedIn)}>
             <LinkedIn width={wp(15)} height={hp(6)} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(insta)}>
+            <TouchableOpacity onPress={()=>insta ===""?onnav():Linking.openURL(insta)}>
             <Instagram width={wp(15)} height={hp(6)} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>Linking.openURL(faceBook)}>
+            <TouchableOpacity onPress={()=>faceBook ===""?onnav():Linking.openURL(faceBook)}>
             <FaceBook width={wp(8)} height={hp(6)} />
             </TouchableOpacity>
 

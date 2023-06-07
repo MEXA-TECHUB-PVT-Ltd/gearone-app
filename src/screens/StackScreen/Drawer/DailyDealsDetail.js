@@ -45,6 +45,7 @@ const DailyDealsDetails = ({navigation, route}) => {
   const [Item_description, setItem_Description] = useState('');
   const [Item_location, setItem_Location] = useState('');
   const [Item_endDeal, setItem_EndDeal] = useState('');
+  const [Item_expiryDate, setItem_ExpiryDate] = useState('');
 
   /////////////Get Screen Logo/////////////
   const [logo, setLogo] = useState([]);
@@ -89,12 +90,17 @@ const DailyDealsDetails = ({navigation, route}) => {
       .then(async response => {
         console.log('here response data', response);
         setItem_Image(response?.result[0].image);
-        setItem_Item_Title(response?.result[0].name);
+        setItem_Item_Title(response?.result[0].title);
         setItem_Item_Price(response?.result[0].price);
         setItem_Description(response?.result[0].description);
         setItem_Location(response?.result[0].location);
         setItem_EndDeal(response?.result[0].ends_at);
-
+        const dateObject = new Date(response?.result[0].ends_at);
+        const day = String(dateObject.getUTCDate()).padStart(2, '0');
+        const month = String(dateObject.getUTCMonth() + 1).padStart(2, '0');
+        const year = dateObject.getUTCFullYear();
+        const formattedDate = day + '/' + month + '/' + year;
+        setItem_ExpiryDate(formattedDate);
         const dateString = moment(response?.result[0].ends_at).toDate();
         const timestamp = new Date(response?.result[0].ends_at).getTime();
         const currentTime = moment();
@@ -171,7 +177,7 @@ const DailyDealsDetails = ({navigation, route}) => {
         />
         <View
           style={{
-            backgroundColor: '#444444',
+            // /backgroundColor: '#444444',
             height: hp(5),
             width: wp(30),
             alignSelf: 'center',
@@ -189,7 +195,6 @@ const DailyDealsDetails = ({navigation, route}) => {
               marginHorizontal: wp(5),
             }}>
             <Text style={styles.ItemName_text}>{Item_item_title}</Text>
-            <Text style={styles.ItemPrice_text}>{Item_item_price} $</Text>
           </View>
           <View
             style={{
@@ -197,8 +202,8 @@ const DailyDealsDetails = ({navigation, route}) => {
               marginTop: hp(0),
               marginHorizontal: wp(5),
             }}>
-            <Text style={styles.ItemName_text}>
-              Category: {Item_item_title}
+            <Text style={{color:'white',fontSize:hp(1.5)}}>
+              Expiry Date: {Item_expiryDate}
             </Text>
           </View>
 

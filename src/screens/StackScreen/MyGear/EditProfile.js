@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
+import { editLinksMenu,editPersonalMenu,editImagesMenu } from '../../../redux/EditprofileSlice';
 
 ///////screen id/////////
 import ScreensNames from '../../../data/ScreensNames';
@@ -57,6 +58,9 @@ const EditProfile = ({navigation}) => {
  
   useEffect(() => {
     GetLogo()
+    dispatch(editPersonalMenu(true));
+    dispatch(editLinksMenu(false));
+    dispatch(editImagesMenu(false));
   }, []);
   return (
     <SafeAreaView style={styles.container}>

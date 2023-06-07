@@ -1,6 +1,9 @@
 import React, {useState, useRef} from 'react';
 import {View, Text} from 'react-native';
 
+////////////////app pakages////////////
+import {Snackbar} from 'react-native-paper';
+
 ///////////////app components////////////////
 import CustomTextInput from '../../components/TextInput/CustomTextInput';
 import CustomButtonhere from '../Button/CustomButton';
@@ -34,15 +37,25 @@ const SocialLinks = ({navigation}) => {
   const ref_input3 = useRef();
   const ref_input4 = useRef();
 
-  ///////////////button states/////////////
-  const [loading, setloading] = useState(0);
-  const [disable, setdisable] = useState(0);
+ ///////////////button states/////////////
+ const [loading, setloading] = useState(0);
+ const [disable, setdisable] = useState(0);
+ const [visible, setVisible] = useState(false);
+ const [snackbarValue, setsnackbarValue] = useState({value: '', color: ''});
+ const onDismissSnackBar = () => setVisible(false);
 
   ///////////////data states////////////////////
   const [facebook, setfacebook] = useState('');
   const [insta, setInsta] = useState('');
   const [twitter, setTwitter] = useState('');
   const [linkedIn, setLinkedIn] = useState('');
+
+    // Regular expressions to validate links
+    const instagramRegex = /^(https?:\/\/)?(www\.)?instagram\.com\//;
+    const facebookRegex = /^(https?:\/\/)?(www\.)?facebook\.com\//;
+    const twitterRegex = /^(https?:\/\/)?(www\.)?twitter\.com\//;
+    const linkedInRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\//;
+  
 
   //////////////Api Calling////////////////////
   const CreateSocialLinks = async () => {
@@ -78,6 +91,28 @@ const SocialLinks = ({navigation}) => {
         console.log(error);
       });
   };
+
+    //Api form validation
+    const formValidation = async () => {
+      // input validation
+      if (facebook && !facebookRegex.test(facebook)){
+        setsnackbarValue({value: 'Invalid Facebook link', color: 'red'});
+        setVisible('true');
+      } else if (insta && !instagramRegex.test(insta)) {
+        setsnackbarValue({value: 'Invalid Instagram link', color: 'red'});
+        setVisible('true');
+      } else if (twitter && !twitterRegex.test(twitter)) {
+        setsnackbarValue({value: 'Invalid Twitter link', color: 'red'});
+        setVisible('true');
+      } else if (linkedIn && !linkedInRegex.test(linkedIn))  {
+        setsnackbarValue({value: 'Invalid LinkedIn link', color: 'red'});
+        setVisible('true');
+      } else {
+        setloading(1);
+        setdisable(1);
+        CreateSocialLinks();
+      }
+    };
   return (
     <View>
       <View style={{marginTop: hp(6)}}>
@@ -136,10 +171,21 @@ const SocialLinks = ({navigation}) => {
           loading={loading}
           disabled={disable}
           onPress={() => {
-            CreateSocialLinks();
+            formValidation();
           }}
         />
       </View>
+      <Snackbar
+          duration={400}
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          style={{
+            backgroundColor: snackbarValue.color,
+            marginBottom: hp(20),
+            zIndex: 999,
+          }}>
+          {snackbarValue.value}
+        </Snackbar>
     </View>
   );
 };

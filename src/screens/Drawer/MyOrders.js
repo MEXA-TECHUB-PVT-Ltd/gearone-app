@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {SafeAreaView, ScrollView, FlatList} from 'react-native';
+import {SafeAreaView, ScrollView, FlatList,View} from 'react-native';
 
 ////////////naviagtion///////////////
 import { useIsFocused } from '@react-navigation/native';
@@ -60,6 +60,12 @@ const MyOrders = ({navigation, route}) => {
         });
     }, [logo]);
 
+      ///////////data states/////////
+  const [refresh, setRefresh] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
   /////////////Get Notification/////////////
   const [myOrder_items, setMyOrderItems] = useState('');
 
@@ -72,7 +78,8 @@ const MyOrders = ({navigation, route}) => {
       'Content-Type': 'application/json',
     };
     let data = JSON.stringify({
-        user_id: user_id
+        user_id: user_id,
+        page:page
       });
       
       let config = {
@@ -107,7 +114,7 @@ const MyOrders = ({navigation, route}) => {
         maintext={item.merchandise_name}
         subtext={item.location}
         price={item.price}
-        description={item.merchandise_description}
+       // description={item.merchandise_description}
         status={item.status}
         type={'orders'}
         subtext_Content={item.createdat}
@@ -117,10 +124,19 @@ const MyOrders = ({navigation, route}) => {
         onpress={() => {
           navigation.navigate('MerchandiseDetails', {
             merchandise_id: item.id,
+            navpalce:'orders'
           });
         }}
       />
     );
+  };
+
+  const handleLoadMore = () => {
+    setRefreshing(false);
+    setPage(page + 1);
+    setRefresh(true);
+    Get_MyOrders();
+    setRefresh(false);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -135,13 +151,16 @@ const MyOrders = ({navigation, route}) => {
           }}
           right_logo={BASE_URL+logo}
         />
+        <View style={{alignSelf:'center',alignItems:'center'}}>
         <FlatList
           data={myOrder_items}
-          numColumns={3}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
+          onEndReached={handleLoadMore}
         />
+        </View>
+
       </ScrollView>
       <CustomModal
         modalVisible={modalVisible}

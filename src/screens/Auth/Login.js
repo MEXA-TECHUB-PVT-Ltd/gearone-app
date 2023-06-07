@@ -82,6 +82,7 @@ const Login = ({navigation}) => {
     }
   };
   const final = () => {
+    dispatch(setJoin_as_Guest(false))
     navigation.navigate('Verification', {
       country_code: '+' +countryCode,
       phone_number: phone_no,

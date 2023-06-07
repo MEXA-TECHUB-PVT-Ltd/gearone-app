@@ -24,6 +24,10 @@
         "source": "com.mtechubgearone.app-main-39:/mipmap-mdpi/ic_launcher.png"
     },
     {
+        "merged": "com.mtechubgearone.app-merged_res-38:/drawable-mdpi_node_modules_reactnativecountrypickermodal_lib_assets_images_closeios.png.flat",
+        "source": "com.mtechubgearone.app-react-33:/drawable-mdpi/node_modules_reactnativecountrypickermodal_lib_assets_images_closeios.png"
+    },
+    {
         "merged": "com.mtechubgearone.app-merged_res-38:/drawable-mdpi_src_assets_dummyimages_image_5.png.flat",
         "source": "com.mtechubgearone.app-react-33:/drawable-mdpi/src_assets_dummyimages_image_5.png"
     },
@@ -102,6 +106,10 @@
     {
         "merged": "com.mtechubgearone.app-merged_res-38:/drawable-mdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
         "source": "com.mtechubgearone.app-react-33:/drawable-mdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+    },
+    {
+        "merged": "com.mtechubgearone.app-merged_res-38:/drawable-mdpi_node_modules_reactnativecountrypickermodal_lib_assets_images_close.png.flat",
+        "source": "com.mtechubgearone.app-react-33:/drawable-mdpi/node_modules_reactnativecountrypickermodal_lib_assets_images_close.png"
     },
     {
         "merged": "com.mtechubgearone.app-merged_res-38:/drawable_rn_edit_text_material.xml.flat",

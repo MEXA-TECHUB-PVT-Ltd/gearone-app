@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(3),
     backgroundColor: "#444444",
     width: wp(90),
-    height: hp(15),
+    height: hp(13),
     borderRadius: wp(2),
     flexDirection:'row',
     paddingHorizontal:wp(5),
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
       elevation: 5,
   },
   image: {
-    height: hp(12),
+    height: hp(10.5),
     width: wp(22),
     borderRadius:wp(2),
   },

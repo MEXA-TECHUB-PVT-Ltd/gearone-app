@@ -52,6 +52,9 @@ const AllFollowings = ({navigation, route}) => {
 
   /////////////Get Notification/////////////
   const [myposts, setMyPosts] = useState('');
+  const [myposts_error, setMyPostsError] = useState("");
+  const [page, setPage] = useState(1);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const GetAllFollowers = async () => {
     var user_id = await AsyncStorage.getItem('User_id');

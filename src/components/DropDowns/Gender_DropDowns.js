@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 
 ///////////////////app pakages///////////////
@@ -13,7 +13,7 @@ import {
 } from 'react-native-responsive-screen';
 
 ////////////////////redux////////////
-import { useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {updateGender} from '../../redux/GenderSlice';
 import Colors from '../../utills/Colors';
 
@@ -35,25 +35,43 @@ const Gender_DropDowns = props => {
   const handleUpdateGender = (name, value) => {
     dispatch(updateGender({name, value}));
   };
-     /////////////Get Notification/////////////
-     const [categories, setCategories] = useState('');
+  ///////////data states/////////
+  const [refresh, setRefresh] = useState(false);
+  const [page, setPage] = useState(1);
+  /////////////Get Notification/////////////
+  const [categories, setCategories] = useState('');
 
-     const GetCategories= async () => {
-       axios({
-         method: 'GET',
-         url: BASE_URL + 'category/get_all_category',
-       })
-         .then(async function (response) {
-           setCategories(response.data.result);
-         })
-         .catch(function (error) {
-           console.log('error', error);
-         });
-     };
-       useEffect(() => {
-        GetCategories()
-        handleUpdateGender('Select Category','1');
-       }, []);
+  const GetCategories = async () => {
+    axios({
+      method: 'GET',
+      url: BASE_URL + 'category/get_all_category',
+      data: {
+        page: Ppage,
+        AdsOffset: '0',
+      },
+    })
+      .then(async function (response) {
+        const filteredData = response.data.filter(
+          category => category.type === 'category',
+        );
+        setCategories(filteredData);
+        //setCategories(response.data.result);
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+  };
+  useEffect(() => {
+    GetCategories();
+    handleUpdateGender('Select Category', '1');
+  }, []);
+
+  const handleLoadMore = () => {
+    setPage(page + 1);
+    setRefresh(true);
+    GetCategories();
+    setRefresh(false);
+  };
   return (
     <RBSheet
       ref={props.refRBSheet}
@@ -73,7 +91,7 @@ const Gender_DropDowns = props => {
           borderTopLeftRadius: wp(10),
           borderTopRightRadius: wp(10),
           height: hp(35),
-          backgroundColor:Colors.AppBckGround_color
+          backgroundColor: Colors.AppBckGround_color,
         },
       }}>
       <View
@@ -99,6 +117,7 @@ const Gender_DropDowns = props => {
           </TouchableOpacity>
         )}
         keyExtractor={item => item.id}
+        onEndReached={handleLoadMore}
       />
     </RBSheet>
   );

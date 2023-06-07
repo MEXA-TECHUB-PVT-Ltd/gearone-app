@@ -4,6 +4,9 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 ///////navigation variable///////////
 import {useNavigation} from '@react-navigation/native';
 
+///////////react native paper///////////
+import {Avatar} from 'react-native-paper';
+
 ///////////componetes///////////
 import CustomButtonhere from '../Button/CustomButton';
 import CustomModal from '../Modal/CustomModal';
@@ -21,10 +24,15 @@ import {fontFamily} from '../../constant/fonts';
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
 import {
-  setCoverImageMenu,
-  setProfileImageMenu,
-} from '../../redux/CreateProfileSlice';
+  editLinksMenu,
+  editImagesMenu,
+  editPersonalMenu,
+} from '../../redux/EditprofileSlice';
+
+
 import {updateImagePath} from '../../redux/ImagePathSlice';
+import {updateCoverImagePath} from '../../redux/CoverImage';
+import {updateProfileImagePath} from '../../redux/ProfileImage';
 
 /////app colors////////////
 import Colors from '../../utills/Colors';
@@ -37,13 +45,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const EditImages = ({}) => {
   /////////////reducer value////////////
   const dispatch = useDispatch();
-  const imagePath = useSelector(state => state.image);
+  const Profilepath = useSelector(state => state.profileimage.Profilepath);
+  const Coverpath = useSelector(state => state.coverimage.Coverpath);
+  console.log('here', Profilepath);
 
   ///////navigation//////
   const navigation = useNavigation();
 
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
+
+  /////////////Get Notification/////////////
+  const [coverImage, setCoverImage] = useState('');
+  const [profileImage, setProfileImage] = useState('');
 
   ///////////get images//////////
   const GetProfileData = async () => {
@@ -54,21 +68,26 @@ const EditImages = ({}) => {
     })
       .then(async function (response) {
         console.log('list data here ', response.data);
-        
+        setCount(1)
+        setCoverImage(response.data.result[0].cover_image);
+        setProfileImage(response.data.result[0].image);
         dispatch(
-          updateImagePath({
-            path: '',
-            Profilepath: BASE_URL + response.data.result[0].image,
-            Coverpath: BASE_URL + response.data.result[0].cover_image,
-          }),
+          updateProfileImagePath(BASE_URL + response.data.result[0].image),
+        );
+        dispatch(
+          updateCoverImagePath(BASE_URL + response.data.result[0].cover_image),
         );
       })
       .catch(function (error) {
         console.log('error', error);
       });
   };
+  const[count,setCount]=useState(0)
   useEffect(() => {
-    GetProfileData();
+    if(count === 0)
+    {
+      GetProfileData();
+    }
   }, []);
   //camera and imagepicker
   const refRBSheet_Profile = useRef();
@@ -99,14 +118,14 @@ const EditImages = ({}) => {
         result => {
           console.log('here coveer image upload', result), GetProfileData();
         },
-        dispatch(updateImagePath('')),
-        dispatch(setCoverImageMenu(false)),
-        dispatch(setProfileImageMenu(true)),
+        // dispatch(updateImagePath('')),
+        // dispatch(setCoverImageMenu(false)),
+        // dispatch(setProfileImageMenu(true)),
       );
   };
   /////////////////image api calling///////////////
   const Edit_ProfileImage = async props => {
-    console.log('here image of profile', props);
+    console.log('here image of profile in url ', props);
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
     const formData = new FormData();
@@ -129,12 +148,16 @@ const EditImages = ({}) => {
         result => {
           console.log('here profile image upload', result), GetProfileData();
         },
-        // dispatch(updateImagePath('')),
-        // dispatch(setProfileImageMenu(false)),
+        dispatch(updateImagePath('')),
         // navigation.navigate('Drawerroute'),
       );
   };
-
+  const continue_btn = () => {
+    Edit_ProfileImage(Profilepath);
+    Edit_CoverImage(Coverpath);
+    setModalVisible(true);
+  };
+  
   return (
     <View style={{marginTop: hp(2)}}>
       <View style={{marginLeft: wp(3), marginTop: hp(3)}}>
@@ -144,7 +167,7 @@ const EditImages = ({}) => {
             fontFamily: fontFamily.Poppins_Light,
             fontSize: hp(1.8),
           }}>
-          Profile Image
+          {'Profile Image' }
         </Text>
       </View>
       <View
@@ -156,11 +179,23 @@ const EditImages = ({}) => {
           justifyContent: 'center',
           alignSelf: 'center',
         }}>
-        <Image
-          source={{uri: imagePath.Profilepath}}
-          style={{width: wp(30), height: hp(15), borderRadius: wp(15)}}
-          resizeMode={'contain'}
-        />
+        {profileImage === null  &&  Profilepath===""?(
+          <Avatar.Text
+            style={{
+              position: 'absolute',
+              backgroundColor:'#444444'
+            }}
+            size={hp(12)}
+            color={'white'}
+            label={'PImage'.substring(0, 2) }
+          />
+        ) : (
+          <Image
+            source={{uri: Profilepath}}
+            style={{width: wp(30), height: hp(15), borderRadius: wp(15)}}
+            resizeMode={'contain'}
+          />
+        )}
       </View>
       <TouchableOpacity
         onPress={() => {
@@ -206,15 +241,36 @@ const EditImages = ({}) => {
           alignSelf: 'center',
           marginTop: hp(2),
         }}>
-        <Image
-          source={{uri: imagePath.Coverpath}}
-          style={{width: wp(85), height: hp(25), borderRadius: wp(1)}}
-          resizeMode={'cover'}
-        />
+        {coverImage === null  &&  Coverpath==="" ? (
+          <View
+            style={{
+              width: wp(95),
+              backgroundColor: '#444444',
+              height: hp(25),
+              alignItems: 'center',
+              alignSelf: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: hp(1.8),
+                fontFamily: fontFamily.Poppins_Bold,
+              }}>
+              Cover Image
+            </Text>
+          </View>
+        ) : (
+          <Image
+            source={{uri: Coverpath}}
+            style={{width: wp(85), height: hp(25), borderRadius: wp(1)}}
+            resizeMode={'cover'}
+          />
+        )}
       </View>
       <TouchableOpacity
         onPress={() => {
-           refRBSheet_Cover.current.open();
+          refRBSheet_Cover.current.open();
         }}
         style={{
           height: hp(5),
@@ -243,7 +299,8 @@ const EditImages = ({}) => {
           // loading={loading}
           // disabled={disable}
           onPress={() => {
-            setModalVisible(true);
+            continue_btn()
+            //setModalVisible(true);
           }}
         />
       </View>
@@ -255,9 +312,8 @@ const EditImages = ({}) => {
         type={'single_btn'}
         onPress={() => {
           setModalVisible(false);
-          dispatch(setCoverImageMenu(false)),
-            dispatch(setProfileImageMenu(true)),
-            navigation.navigate('BottomTab');
+          dispatch(editImagesMenu(false));
+          navigation.navigate('BottomTab');
         }}
       />
       <CamerBottomSheet
@@ -267,7 +323,6 @@ const EditImages = ({}) => {
         type={'onepic'}
         from={'profile'}
         onpress={() => {
-          Edit_ProfileImage(imagePath.Profilepath),
           refRBSheet_Profile.current.close();
         }}
       />
@@ -278,8 +333,7 @@ const EditImages = ({}) => {
         type={'onepic'}
         from={'cover'}
         onpress={() => {
-          Edit_CoverImage(imagePath.Coverpath),
-            refRBSheet_Cover.current.close();
+          refRBSheet_Cover.current.close();
         }}
       />
     </View>

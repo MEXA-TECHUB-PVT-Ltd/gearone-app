@@ -18,6 +18,8 @@ import {
 ////////////////////redux////////////
 import {useSelector, useDispatch} from 'react-redux';
 import {updateImagePath} from '../../redux/ImagePathSlice';
+import { updateCoverImagePath } from '../../redux/CoverImage';
+import { updateProfileImagePath } from '../../redux/ProfileImage';
 import {updateImagesArrayPath} from '../../redux/ImagesArray';
 
 //////////////app pakages//////////////////
@@ -48,24 +50,14 @@ const CamerBottomSheet = props => {
           ? dispatch(updateImagesArrayPath([...imagearray, image.path]))
           : props.type === 'onepic' && props.from === 'profile'
           ? dispatch(
-              updateImagePath({
-                path: '',
-                Profilepath: image.path,
-              }),
+            updateProfileImagePath( image.path),
             )
           : props.type === 'onepic' && props.from === 'cover'
           ? dispatch(
-              updateImagePath({
-                path: '',
-                Coverpath: image.path,
-              }),
+            updateCoverImagePath( image.path),
             ):props.type==="Chat_image"?props.onClose()
           : dispatch(
-              updateImagePath({
-                path: image.path,
-                Profilepath: image.path,
-                Coverpath: image.path,
-              }),
+              updateImagePath(image.path),
             );
       }
 

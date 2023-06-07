@@ -209,18 +209,21 @@ const MerchandiseDetails = ({navigation, route}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <CustomButtonhere
-              title={'Create Order'}
-              widthset={80}
-              topDistance={0}
-              loading={loading}
-              disabled={disable}
-              onPress={() => {
-                join_as_guest === true
-                  ? setGuestModalVisible(true)
-                  : Merchnadise_Order();
-              }}
-            />
+              {predata.navpalce ==="orders"?null:
+                     <CustomButtonhere
+                     title={'Create Order'}
+                     widthset={80}
+                     topDistance={0}
+                     loading={loading}
+                     disabled={disable}
+                     onPress={() => {
+                       join_as_guest === true
+                         ? setGuestModalVisible(true)
+                         : Merchnadise_Order();
+                     }}
+                   />
+            }
+     
           </View>
         </View>
       </ScrollView>
