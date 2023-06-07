@@ -42,7 +42,6 @@ const AllFollowers = ({navigation, route}) => {
         })
           .then(response => response.json())
           .then(async response => {
-            console.log('response here in logos : ', response);
             setLogo(response.result[0].image)
           })
           .catch(error => {
@@ -60,18 +59,24 @@ const AllFollowers = ({navigation, route}) => {
       url: BASE_URL + 'follow/get_followers',
       body: {
         user_ID: user_id,
+        "page":"1"
       },
     })
       .then(async function (response) {
         console.log('list data here ', response.data.result);
+        setCount(1)
         setMyPosts(response.data.result);
       })
       .catch(function (error) {
         console.log('error', error);
       });
   };
+  const[count,setCount]=useState(0)
   useEffect(() => {
-    GetAllFollowers();
+    if(count === 0)
+    {
+      GetAllFollowers();
+    }
     GetLogo()
   }, []);
 

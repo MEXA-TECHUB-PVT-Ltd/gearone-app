@@ -112,10 +112,8 @@ const Verification = ({navigation, route}) => {
     if (count === 0 && predata.dummy_number === false) {
       setLoading(true);
       signInWithPhoneNumber(predata.country_code + predata.phone_number);
-      console.log(predata.country_code + predata.phone_number)
       return;
     } else {
-      console.log('here no function call');
     }
   });
 
@@ -130,7 +128,6 @@ const Verification = ({navigation, route}) => {
       setConfirm(confirmation);
       setLoading(false);
     } catch (error) {
-      console.log('Invalid code.', error);
       Alert.alert(
         'Error',
         `Please `+ error,

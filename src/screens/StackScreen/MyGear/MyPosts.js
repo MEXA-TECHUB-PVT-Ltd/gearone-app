@@ -5,6 +5,7 @@ import {SafeAreaView, ScrollView, FlatList,View,RefreshControl} from 'react-nati
 import Header from '../../../components/Header/Header';
 import DashboardCard from '../../../components/CustomCards/Dashboard/DashboardCard';
 import CustomButtonhere from '../../../components/Button/CustomButton';
+import NoDataFound from '../../../components/NoDataFound/NoDataFound';
 
 /////////////app styles///////////////////
 import styles from './styles';
@@ -57,11 +58,16 @@ const MyPosts = ({navigation, route}) => {
 
   /////////////Get Notification/////////////
   const [myposts, setMyPosts] = useState('');
+  const [myposts_error, setMyPostsError] = useState("");
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = React.useState(false);
 
+  const[count,setCount]=useState(0)
   useEffect(() => {
-    GetMyPosts();
+    if(count ===0){
+      GetMyPosts();
+    }
+
     GetLogo()
   }, []);
 
@@ -89,13 +95,14 @@ const MyPosts = ({navigation, route}) => {
     axios
       .request(config)
       .then(response => {
-        console.log(JSON.stringify(response.data.result));
-        setMyPosts(
-          page === 1
-            ? response.data.result
-            : [...myposts, ...response.data.result],
-        );
-        //setMyPosts(response.data.result);
+        setCount(1)
+        setMyPostsError(JSON.stringify(response.data.status) )
+          setMyPosts(
+            page === 1
+              ? response.data.result
+              : [...myposts, ...response.data.result])
+         
+
       })
       .catch(error => {
         console.log(error);
@@ -146,10 +153,13 @@ const MyPosts = ({navigation, route}) => {
           }}
           right_logo={BASE_URL+logo}
         />
-
+        {myposts_error === "false" ? (
+          <NoDataFound icon={'exclamation-thick'} text={'No Data Found'} />
+        ) : (
         <FlatList
           data={myposts}
           numColumns={3}
+          inverted
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
@@ -157,6 +167,7 @@ const MyPosts = ({navigation, route}) => {
           //refreshing={refresh}
           // onRefresh={() => Refresh()}
         />
+        )}
       </ScrollView>
       <View style={{marginBottom: hp(8),position:'absolute',bottom:0,left:wp(10)}}>
           <CustomButtonhere

@@ -7,6 +7,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 /////////////styles///////////////
 import styles from './styles';
 
+///////////height and width//////
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 const DashboardCard = props => {
   /////////price formatter
   const formatter = new Intl.NumberFormat('en-US', {
@@ -16,11 +19,11 @@ const DashboardCard = props => {
   const formattedLikes = formatter.format(props.price);
   return (
     <TouchableOpacity onPress={props.onpress} activeOpacity={0.9}>
-      <View style={styles.card}>
+      <View style={[styles.card,{marginVertical:props.type === "dashboard_card"?hp(0):hp(2)}]}>
         <View
           style={styles.imageView}>
         {props.images_array_length === 0 ? (
-          <Ionicons name={'image'} color={'red'} size={25} />
+          <Ionicons name={'image'} color={'red'} size={hp(10)} />
         ) : (
           <Image source={{uri:props.image}} style={styles.image} resizeMode="cover" />
         )}

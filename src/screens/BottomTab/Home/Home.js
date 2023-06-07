@@ -19,6 +19,7 @@ import Header from '../../../components/Header/Header';
 import DashboardCard from '../../../components/CustomCards/Dashboard/DashboardCard';
 import Loader from '../../../components/Loader/Loader';
 import NoDataFound from '../../../components/NoDataFound/NoDataFound';
+import DashboardIrregularCard from '../../../components/CustomCards/Dashboard/DasboardIrregularCard';
 
 /////////////app styles///////////////////
 import styles from './styles';
@@ -178,7 +179,6 @@ const Home = ({navigation}) => {
   const [visitedItemIndex, setVisitedItemIndex] = useState(null);
 
   const handleVisit = (index, link) => {
-    console.log('is pressed');
     setVisitedItemIndex(index);
     Linking.openURL(link);
   };
@@ -215,7 +215,9 @@ const Home = ({navigation}) => {
                   resizeMode="cover"
                 />
               </View>
-              <Text style={styles.stories_user}>{item.ad_name === null? "ad-name":item.ad_name}</Text>
+              <Text style={styles.stories_user}>
+                {item.ad_name === null ? 'ad-name' : item.ad_name}
+              </Text>
             </>
           )}
         </Lightbox>
@@ -244,176 +246,197 @@ const Home = ({navigation}) => {
               flexDirection: 'row',
               marginBottom: hp(0.5),
             }}>
-            {
-              item[0]?.promoted === 'true' ? (
-                <>
-                  <TouchableOpacity onPress={() => on_nav(item[0].id)}>
-                    {item[0]?.images.length === 0 ? (
-                      <Ionicons
-                        name={'image'}
-                        color={'grey'}
-                        size={hp(15)}
-                        style={{alignSelf: 'center'}}
-                      />
-                    ) : (
-                      <Image
-                        source={{uri: BASE_URL + item[0]?.images[0]}}
-                        style={{height: 170, width: 280}}
-                        resizeMode="cover"
-                      />
-                    )}
-                  </TouchableOpacity>
+            {item[0]?.promoted === 'true' ? (
+              <>
+                <TouchableOpacity onPress={() => on_nav(item[0].id)}>
+                    <DashboardIrregularCard
+                    image={BASE_URL + item[0]?.images[0]}
+                    images_array_length={item[0]?.images.length}
+                    maintext={item[0]?.name}
+                    subtext={item[0]?.location}
+                    price={item[0]?.price}
+                    type="horizontal"
+                    onpress={() => {
+                      dispatch(
+                        setItemDetail({
+                          id: item[0]?.id,
+                          navplace: 'dashboard_Items',
+                        }),
+                      ),
+                        navigation.navigate('ItemDetails');
+                    }}
+                  />
+                </TouchableOpacity>
 
-                  <View>
-                    <TouchableOpacity onPress={() => on_nav(item[1].id)}>
-                      {item[1]?.images.length === 0 ? (
-                        <Ionicons
-                          name={'image'}
-                          color={'grey'}
-                          size={hp(15)}
-                          style={{alignSelf: 'center'}}
-                        />
-                      ) : (
-                        <Image
-                          source={{uri: BASE_URL + item[1]?.images[0]}}
-                          style={{height: 82, width: 134, margin: 2}}
-                          resizeMode="cover"
-                        />
-                      )}
-                    </TouchableOpacity>
-                    <View>
-                      <TouchableOpacity onPress={() => on_nav(item[2].id)}>
-                        {item[2]?.images.length === 0 ? (
-                          <Ionicons
-                            name={'image'}
-                            color={'grey'}
-                            size={hp(15)}
-                            style={{alignSelf: 'center'}}
-                          />
-                        ) : (
-                          <Image
-                            source={{uri: BASE_URL + item[2]?.images[0]}}
-                            style={{height: 82, width: 134, margin: 2}}
-                            resizeMode="cover"
-                          />
-                        )}
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </>
-              ) : item[1]?.promoted === 'true' ? (
-                <>
+                <View>
+                  <TouchableOpacity onPress={() => on_nav(item[1].id)}>
+                      <DashboardIrregularCard
+                        image={BASE_URL + item[1]?.images[0]}
+                        images_array_length={item[1]?.images.length}
+                        maintext={item[1]?.name}
+                        subtext={item[1]?.location}
+                        price={item[1]?.price}
+                        onpress={() => {
+                          dispatch(
+                            setItemDetail({
+                              id: item.id,
+                              navplace: 'dashboard_Items',
+                            }),
+                          ),
+                            navigation.navigate('ItemDetails');
+                        }}
+                      />
+                  </TouchableOpacity>
                   <View>
                     <TouchableOpacity onPress={() => on_nav(item[2].id)}>
-                      {item[2]?.images.length === 0 ? (
-                        <Ionicons
-                          name={'image'}
-                          color={'grey'}
-                          size={hp(15)}
-                          style={{alignSelf: 'center'}}
+                        <DashboardIrregularCard
+                          image={BASE_URL + item[2]?.images[0]}
+                          images_array_length={item[2]?.images.length}
+                          maintext={item[2]?.name}
+                          subtext={item[2]?.location}
+                          price={item[2]?.price}
+                          onpress={() => {
+                            dispatch(
+                              setItemDetail({
+                                id: item[2]?.id,
+                                navplace: 'dashboard_Items',
+                              }),
+                            ),
+                              navigation.navigate('ItemDetails');
+                          }}
                         />
-                      ) : (
-                        <Image
-                          source={{uri: BASE_URL + item[2]?.images[0]}}
-                          style={{height: 82, width: 134, margin: 2}}
-                          resizeMode="cover"
-                        />
-                      )}
                     </TouchableOpacity>
-                    <View>
-                      <TouchableOpacity onPress={() => on_nav(item[0].id)}>
-                        {item[0]?.images.length === 0 ? (
-                          <Ionicons
-                            name={'image'}
-                            color={'grey'}
-                            size={hp(15)}
-                            style={{alignSelf: 'center'}}
-                          />
-                        ) : (
-                          <Image
-                            source={{uri: BASE_URL + item[0]?.images[0]}}
-                            style={{height: 82, width: 134, margin: 2}}
-                            resizeMode="cover"
-                          />
-                        )}
-                      </TouchableOpacity>
-                    </View>
                   </View>
-                  <TouchableOpacity onPress={() => on_nav(item[1].id)}>
-                    {item[1]?.images.length === 0 ? (
-                      <Ionicons
-                        name={'image'}
-                        color={'grey'}
-                        size={hp(15)}
-                        style={{alignSelf: 'center'}}
-                      />
-                    ) : (
-                      <Image
-                        source={{uri: BASE_URL + item[1]?.images[0]}}
-                        style={{height: 170, width: 274}}
-                        resizeMode="cover"
-                      />
-                    )}
-                  </TouchableOpacity>
-                </>
-              ) : item[2]?.promoted === 'true' ? (
-                <>
-                  <View>
-                    <TouchableOpacity onPress={() => on_nav(item[1].id)}>
-                      {item[1]?.images.length === 0 ? (
-                        <Ionicons
-                          name={'image'}
-                          color={'grey'}
-                          size={hp(15)}
-                          style={{alignSelf: 'center'}}
-                        />
-                      ) : (
-                        <Image
-                          source={{uri: BASE_URL + item[1]?.images[0]}}
-                          style={{height: 82, width: 134, margin: 2}}
-                          resizeMode="cover"
-                        />
-                      )}
-                    </TouchableOpacity>
-                    <View>
-                      <TouchableOpacity onPress={() => on_nav(item[0].id)}>
-                        {item[0]?.images.length === 0 ? (
-                          <Ionicons
-                            name={'image'}
-                            color={'grey'}
-                            size={hp(10)}
-                            style={{alignSelf: 'center'}}
-                          />
-                        ) : (
-                          <Image
-                            source={{uri: BASE_URL + item[0]?.images[0]}}
-                            style={{height: 82, width: 134, margin: 2}}
-                            resizeMode="cover"
-                          />
-                        )}
-                      </TouchableOpacity>
-                    </View>
-                  </View>
+                </View>
+              </>
+            ) : item[1]?.promoted === 'true' ? (
+              <>
+                <View>
                   <TouchableOpacity onPress={() => on_nav(item[2].id)}>
-                    {item[2]?.images.length === 0 ? (
-                      <Ionicons
-                        name={'image'}
-                        color={'grey'}
-                        size={hp(15)}
-                        style={{alignSelf: 'center'}}
+                      <DashboardIrregularCard
+                        image={BASE_URL + item[2]?.images[0]}
+                        images_array_length={item[2]?.images.length}
+                        maintext={item[2]?.name}
+                        subtext={item[2]?.location}
+                        price={item[2]?.price}
+                        onpress={() => {
+                          dispatch(
+                            setItemDetail({
+                              id: item[2]?.id,
+                              navplace: 'dashboard_Items',
+                            }),
+                          ),
+                            navigation.navigate('ItemDetails');
+                        }}
                       />
-                    ) : (
-                      <Image
-                        source={{uri: BASE_URL + item[2]?.images[0]}}
-                        style={{height: 170, width: 274}}
-                        resizeMode="cover"
-                      />
-                    )}
                   </TouchableOpacity>
-                </>
-              ) : null
-
-            }
+                  <View>
+                    <TouchableOpacity onPress={() => on_nav(item[0].id)}>
+                        <DashboardIrregularCard
+                          image={BASE_URL + item[0]?.images[0]}
+                          images_array_length={item[0]?.images.length}
+                          maintext={item[0]?.name}
+                          subtext={item[0]?.location}
+                          price={item[0]?.price}
+                          onpress={() => {
+                            dispatch(
+                              setItemDetail({
+                                id: item[0]?.id,
+                                navplace: 'dashboard_Items',
+                              }),
+                            ),
+                              navigation.navigate('ItemDetails');
+                          }}
+                        />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <TouchableOpacity onPress={() => on_nav(item[1].id)}>
+                    <DashboardIrregularCard
+                    image={BASE_URL + item[0]?.images[0]}
+                    images_array_length={item[0]?.images.length}
+                    maintext={item[0]?.name}
+                    subtext={item[0]?.location}
+                    price={item[0]?.price}
+                    type="horizontal"
+                    onpress={() => {
+                      dispatch(
+                        setItemDetail({
+                          id: item[0]?.id,
+                          navplace: 'dashboard_Items',
+                        }),
+                      ),
+                        navigation.navigate('ItemDetails');
+                    }}
+                  />
+           
+                </TouchableOpacity>
+              </>
+            ) : item[2]?.promoted === 'true' ? (
+              <>
+                <View>
+                  <TouchableOpacity onPress={() => on_nav(item[1].id)}>
+                      <DashboardIrregularCard
+                        image={BASE_URL + item[1]?.images[0]}
+                        images_array_length={item[1]?.images.length}
+                        maintext={item[1]?.name}
+                        subtext={item[1]?.location}
+                        price={item[1]?.price}
+                        onpress={() => {
+                          dispatch(
+                            setItemDetail({
+                              id: item[1]?.id,
+                              navplace: 'dashboard_Items',
+                            }),
+                          ),
+                            navigation.navigate('ItemDetails');
+                        }}
+                      />
+                  </TouchableOpacity>
+                  <View>
+                    <TouchableOpacity onPress={() => on_nav(item[0].id)}>
+                 
+                        <DashboardIrregularCard
+                          image={BASE_URL + item[0]?.images[0]}
+                          images_array_length={item[0]?.images.length}
+                          maintext={item[0]?.name}
+                          subtext={item[0]?.location}
+                          price={item[0]?.price}
+                          onpress={() => {
+                            dispatch(
+                              setItemDetail({
+                                id: item[0]?.id,
+                                navplace: 'dashboard_Items',
+                              }),
+                            ),
+                              navigation.navigate('ItemDetails');
+                          }}
+                        />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <TouchableOpacity onPress={() => on_nav(item[2].id)}>
+                <DashboardIrregularCard
+                    image={BASE_URL + item[2]?.images[0]}
+                    images_array_length={item[2]?.images.length}
+                    maintext={item[2]?.name}
+                    subtext={item[2]?.location}
+                    price={item[2]?.price}
+                    type="horizontal"
+                    onpress={() => {
+                      dispatch(
+                        setItemDetail({
+                          id: item[2]?.id,
+                          navplace: 'dashboard_Items',
+                        }),
+                      ),
+                        navigation.navigate('ItemDetails');
+                    }}
+                  />
+            
+                </TouchableOpacity>
+              </>
+            ) : null}
           </View>
         ) : (
           <FlatList
@@ -421,36 +444,59 @@ const Home = ({navigation}) => {
             horizontal={true}
             scrollEnabled={false}
             keyExtractor={(item, index) => index}
-            renderItem={({item}) => (
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  width: wp(31),
-                  marginHorizontal:wp(1)
-                }}>
-                <TouchableOpacity onPress={() => on_nav(item.id)}>
-                  {item.images.length === 0 ? (
-                    <Ionicons
-                      name={'image'}
-                      color={'grey'}
-                      size={hp(15)}
-                      style={{alignSelf: 'center'}}
-                    />
-                  ) : (
-                    <Image
-                      source={{uri: BASE_URL + item?.images[0]}}
-                      style={{height: hp(15), width:wp(32)}}
-                      resizeMode="cover"
-                    />
-                  )}
-                </TouchableOpacity>
-              </View>
-            )}
+            renderItem={renderItemrow_cards}
+            // renderItem={({item}) => (
+            //   <View
+            //     style={{
+            //       alignItems: 'center',
+            //       justifyContent: 'center',
+            //       alignSelf: 'center',
+            //       width: wp(31),
+            //       marginHorizontal: wp(1),
+            //     }}>
+            //     <TouchableOpacity onPress={() => on_nav(item.id)}>
+            //       {item.images.length === 0 ? (
+            //         <Ionicons
+            //           name={'image'}
+            //           color={'grey'}
+            //           size={hp(15)}
+            //           style={{alignSelf: 'center'}}
+            //         />
+            //       ) : (
+            //         <Image
+            //           source={{uri: BASE_URL + item?.images[0]}}
+            //           style={{height: hp(15), width: wp(32)}}
+            //           resizeMode="cover"
+            //         />
+            //       )}
+            //     </TouchableOpacity>
+            //   </View>
+            // )}
           />
         )}
       </View>
+    );
+  };
+
+  const renderItemrow_cards = ({item}) => {
+    return (
+      <DashboardCard
+        image={BASE_URL + item.images[0]}
+        images_array_length={item.images.length}
+        maintext={item.name}
+        subtext={item.location}
+        price={item.price}
+        type={'dashboard_card'}
+        onpress={() => {
+          dispatch(
+            setItemDetail({
+              id: item.id,
+              navplace: 'dashboard_Items',
+            }),
+          ),
+            navigation.navigate('ItemDetails');
+        }}
+      />
     );
   };
   const handleLoadMore = () => {
@@ -494,11 +540,8 @@ const Home = ({navigation}) => {
             windowSize={7} // Reduce the window size
             onEndReachedThreshold={0.7}
             estimatedItemSize={50}
-            // onEndReached={() => GetDashboardItems()}
-            // refreshing={refresh}
-            // onRefresh={() => Refresh()}
+            onEndReached={handleLoadMore}
             keyExtractor={(item, index) => index}
-            //scrollEnabled={false}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />

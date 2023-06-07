@@ -83,7 +83,8 @@ const RattingBottomSheet = props => {
     axios.request(config)
     .then((response) => {
       console.log(JSON.stringify(response.data));
-      props.getData()
+   
+      setModalVisible(true)
     })
     .catch((error) => {
       console.log(error);
@@ -183,14 +184,11 @@ const RattingBottomSheet = props => {
         modalVisible={modalVisible}
         CloseModal={() => setModalVisible(false)}
         text={'Sucess'}
-        subtext={
-          props.btntext === 'REPORT'
-            ? 'Report Sucessfully'
-            : 'Review Added Successfully'
-        }
-        buttontext={'OK'}
+        subtext={'Ratting Added Successfully'}
+        btn_text={'Done'}
         onPress={() => {
           props.onClose();
+          props.getData()
           setModalVisible(false);
           //navigation.navigate('CommentsDetails')
         }}

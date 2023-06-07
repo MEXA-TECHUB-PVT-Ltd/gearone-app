@@ -179,7 +179,7 @@ const Search = ({navigation}) => {
           term={search}
           placeholder="Search Here"
           onTermChange={searchhere => setSearch(searchhere)}
-          searchiconpress={() => listing_Search(search)}
+          searchiconpress={() => searchResult_navigate()}
           onSubmitEditing={searchResult_navigate}
         />
         <View

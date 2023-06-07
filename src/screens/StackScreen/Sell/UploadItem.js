@@ -235,11 +235,11 @@ const UploadItem = ({navigation}) => {
           borderWidth: hp(0.3),
           borderColor: 'grey',
           borderRadius: wp(2),
-          marginHorizontal: wp(1),
+          marginHorizontal: wp(2),
         }}>
         <Image
           source={{uri: item}}
-          style={{height: hp(10), width: wp(20), borderRadius: wp(2)}}
+          style={{height: hp(11), width: wp(18.5), borderRadius: wp(2)}}
           resizeMode="cover"
         />
       </View>
@@ -259,16 +259,20 @@ const UploadItem = ({navigation}) => {
           }}
           right_logo={logo}
         />
-        <FlatList
+             <View style={{alignItems:'center',justifyContent:'center',paddingHorizontal:wp(6)}}>
+             <FlatList
           data={item_images_array.slice(0, maxIndex)}
           renderItem={renderItem}
           ListFooterComponent={() => (
+            item_images_array.length >= maxIndex?null:
             <TouchableOpacity
               onPress={() => {
-                if (item_images_array.length > maxIndex) {
+                if (item_images_array.length >= maxIndex) {
                   setsnackbarValue({
                     value: 'You can only pick up to 5 images.',
                     color: 'red',
+                  frombellow:85,
+                  type:"cameraerror"
                   });
                   setVisible('true');
                 } else {
@@ -276,7 +280,7 @@ const UploadItem = ({navigation}) => {
                   refRBSheet.current.open();
                 }
               }}>
-              <View style={{alignSelf: 'center', marginVertical: hp(4)}}>
+              <View style={{ marginVertical: hp(4),width:wp(96),paddingHorizontal:wp(2)}}>
                 <UploadIcon width={wp(20)} height={hp(11)} />
               </View>
             </TouchableOpacity>
@@ -285,6 +289,8 @@ const UploadItem = ({navigation}) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         />
+             </View>
+
         <View style={{marginLeft: wp(12)}}>
           <Text style={styles.textinput_title}>Item Name</Text>
         </View>
@@ -305,6 +311,7 @@ const UploadItem = ({navigation}) => {
           onRef={ref_input2}
           type={'withouticoninput'}
           term={Item_price}
+          keyboard_type={'numeric'}
           returnType={'next'}
           onNext={() => {
             ref_input3.current.focus();
@@ -386,12 +393,12 @@ const UploadItem = ({navigation}) => {
           onClose={() => refRBGenderDDSheet.current.close()}
         />
         <Snackbar
-          duration={600}
+          duration={snackbarValue.type ==="cameraerror"?1000: 600}
           visible={visible}
           onDismiss={onDismissSnackBar}
           style={{
             backgroundColor: snackbarValue.color,
-            marginBottom: hp(12),
+            marginBottom: hp(snackbarValue.type ==="cameraerror"?85:10),
             zIndex: 999,
           }}>
           {snackbarValue.value}

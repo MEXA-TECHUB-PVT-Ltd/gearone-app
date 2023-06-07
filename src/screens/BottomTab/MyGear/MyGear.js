@@ -102,7 +102,9 @@ const MyGear = ({navigation}) => {
         setUsername(response.data.result[0].username);
         setFollowig(response.data.followings);
         setFollowers(response.data.followers);
-        setRattings(response.data.Total_Ratings);
+        var ratting=response.data.avgRatings
+        var subratting=ratting.substring(0,1)
+        setRattings(subratting === "N"?"0":subratting) ;
       })
       .catch(function (error) {
         console.log('error', error);
@@ -116,7 +118,12 @@ const MyGear = ({navigation}) => {
     GetProfileData();
     GetLogo()
   }, [isFocused]);
-
+  //////logout function//////
+  const logout = async () => {
+    await AsyncStorage.removeItem('User_id');
+    await AsyncStorage.removeItem('JWT_Token');
+    navigation.navigate('Login');
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -263,15 +270,12 @@ const MyGear = ({navigation}) => {
         type={'confirmation'}
         onPress_yes={() => {
           setModalVisible(false);
-          navigation.navigate('Login');
+          logout()
         }}
         onPress_cancel={() => {
           setModalVisible(false);
         }}
-        onPress_back={() => {
-          setModalVisible(false);
-          navigation.navigate('Login');
-        }}
+ 
       />
           <CustomModal
         modalVisible={guest_modalVisible}

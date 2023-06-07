@@ -325,13 +325,13 @@ const ItemDetails = ({navigation, route}) => {
 
   ////////////firebase store function/////////////////
   const firebase_store_user = props => {
-    GetProfileData()
+    GetProfileData();
     firestore().collection('Users').add({
       id: user_id,
       phoneNo: phone_number,
       country_code: country_code,
-      username:username,
-      user_image:profileImage
+      username: username,
+      user_image: profileImage,
     });
     navigation.navigate('ChatScreen', {
       navtype: 'chatlist',
@@ -368,9 +368,7 @@ const ItemDetails = ({navigation, route}) => {
             <Text style={styles.ItemPrice_text}>{Item_item_price} $</Text>
           </View>
           {Item_like_user_id === login_user_id ? (
-            <TouchableOpacity
-            //onPress={() => Item_unlike(predata.Item_id)}
-            >
+            <View>
               <View style={styles.iconview}>
                 <Icon
                   name={'heart'}
@@ -380,12 +378,9 @@ const ItemDetails = ({navigation, route}) => {
                 />
                 <Text style={styles.icontext}>{Item_likes_count} Likes</Text>
               </View>
-            </TouchableOpacity>
+            </View>
           ) : (
-            <TouchableOpacity
-              activeOpacity={0.2}
-              //onPress={() => Item_like(predata.Item_id)}
-              style={[styles.iconview, {width: wp(30)}]}>
+            <View style={[styles.iconview, {width: wp(30)}]}>
               <Icon
                 name={'heart'}
                 //name={'heart-outline'}
@@ -398,7 +393,7 @@ const ItemDetails = ({navigation, route}) => {
                 style={{marginRight: wp(1)}}
               />
               <Text style={styles.icontext}>{Item_likes_count} Likes</Text>
-            </TouchableOpacity>
+            </View>
           )}
           {ItemDetail.navplace === 'login_user_items' ? null : (
             <View>
@@ -421,12 +416,12 @@ const ItemDetails = ({navigation, route}) => {
                   />
                   <Text
                     style={styles.verticletext}
-                    onPress={() =>{ join_as_guest === true
-                      ? setGuestModalVisible(true)
-                      : null
+                    onPress={() => {
+                      join_as_guest === true
+                        ? setGuestModalVisible(true)
+                        : null;
                       //navigation.navigate('Followers')
-                    }}
-                      >
+                    }}>
                     Share
                   </Text>
                 </View>
@@ -488,7 +483,7 @@ const ItemDetails = ({navigation, route}) => {
                   onPress={() => {
                     join_as_guest === true
                       ? setGuestModalVisible(true)
-                      :firebase_store_user()
+                      : firebase_store_user();
                   }}>
                   <MaterialIcons name={'chat'} size={20} color={'white'} />
                   <Text style={styles.verticletext}>Messages</Text>

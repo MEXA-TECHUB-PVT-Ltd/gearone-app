@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text } from 'react-native';
 import moment from 'moment';
 import Colors from '../../utills/Colors';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const Counter = ({ endTime }) => {
   const [counter, setCounter] = useState(null);
@@ -15,7 +15,7 @@ const Counter = ({ endTime }) => {
       // Check if the end time has passed
       if (remainingTime <= 0) {
         clearInterval(interval);
-        setCounter("Time's up!");
+        setCounter("Expire Deal!");
       } else {
         // Format the remaining time as hours, minutes, and seconds
         const duration = moment.duration(remainingTime);
@@ -34,7 +34,7 @@ const Counter = ({ endTime }) => {
     return () => clearInterval(interval);
   }, [endTime]);
 
-  return <Text style={{color:Colors.Appthemecolor,fontSize:heightPercentageToDP(3) ,textAlign:'center'}}>{counter}</Text>;
+  return <Text style={{color:Colors.Appthemecolor,fontSize:heightPercentageToDP(3) ,textAlign:'center',width:widthPercentageToDP(60),alignSelf:'center'}}>{counter}</Text>;
 };
 
 export default Counter;
