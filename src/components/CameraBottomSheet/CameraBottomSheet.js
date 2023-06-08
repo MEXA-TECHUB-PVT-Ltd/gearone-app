@@ -55,7 +55,8 @@ const CamerBottomSheet = props => {
           : props.type === 'onepic' && props.from === 'cover'
           ? dispatch(
             updateCoverImagePath( image.path),
-            ):props.type==="Chat_image"?props.onClose()
+            )
+            :props.type==="Chat_image"? dispatch(updateImagePath(image.path))
           : dispatch(
               updateImagePath(image.path),
             );
@@ -66,6 +67,8 @@ const CamerBottomSheet = props => {
           ? props.onpress()
           : props.type === 'onepic' && props.from === 'cover'
           ? props.onpress()
+          :props.type==="Chat_image"? 
+          props.onClose()
           : props.refRBSheet.current.close();
       }
     });
@@ -91,18 +94,10 @@ const CamerBottomSheet = props => {
             )
           : props.type === 'onepic' && props.from === 'cover'
           ? dispatch(
-              updateImagePath({
-                path: '',
-                Profilepath: '',
-                Coverpath: image.path,
-              }),
+              updateImagePath( image.path),
             )
           : dispatch(
-              updateImagePath({
-                path: image.path,
-                Profilepath: image.path,
-                Coverpath: image.path,
-              }),
+              updateImagePath( image.path),
             );
       }
       {

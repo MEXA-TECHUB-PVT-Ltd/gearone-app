@@ -139,7 +139,7 @@ const CategoryItem = ({navigation,route}) => {
    const handleLoadMore = () => {
     setPage(page+1);
     setRefreshing(true)
-    GetMyItems();
+    GetCategoryItems();
     setRefreshing(false)
   };
 

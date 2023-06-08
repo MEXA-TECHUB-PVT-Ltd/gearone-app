@@ -51,24 +51,81 @@ const AllFollowers = ({navigation, route}) => {
 
   /////////////Get Notification/////////////
   const [myposts, setMyPosts] = useState('');
+  const [myposts_error, setMyPostsError] = useState("");
+  const [page, setPage] = useState(1);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const GetAllFollowers = async () => {
+    var token = await AsyncStorage.getItem('JWT_Token');
     var user_id = await AsyncStorage.getItem('User_id');
-    axios({
-      method: 'POST',
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    let data = JSON.stringify({
+      user_ID: user_id,
+      page:page
+    });
+
+    let config = {
+      method: 'post',
+      headers: headers,
       url: BASE_URL + 'follow/get_followers',
-      body: {
-        user_ID: user_id,
-        "page":"1"
-      },
-    })
-      .then(async function (response) {
-        console.log('list data here ', response.data.result);
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
         setCount(1)
-        setMyPosts(response.data.result);
+        setMyPostsError(JSON.stringify(response.data.status) )
+          setMyPosts(
+            page === 1
+              ? response.data.result
+              : [...myposts, ...response.data.result])
+         
+
       })
-      .catch(function (error) {
-        console.log('error', error);
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const Followings = async (props) => {
+    var token = await AsyncStorage.getItem('JWT_Token');
+    var user_id = await AsyncStorage.getItem('User_id');
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    let data = JSON.stringify({
+      follow_by_user_ID:user_id,
+      user_ID:props
+    });
+
+    let config = {
+      method: 'post',
+      headers: headers,
+      url: BASE_URL + 'follow/follow_user',
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        setCount(1)
+        setMyPostsError(JSON.stringify(response.data.status) )
+          setMyPosts(
+            page === 1
+              ? response.data.result
+              : [...myposts, ...response.data.result])
+         
+
+      })
+      .catch(error => {
+        console.log(error);
       });
   };
   const[count,setCount]=useState(0)
@@ -86,6 +143,7 @@ const AllFollowers = ({navigation, route}) => {
       userimage={ item.user_image}
         username={item.username}
         btn_text={'Follow'}
+        btn_press={()=>Followings(item.user_id)}
         onpress={() => {
           navigation.navigate('MainListingsDetails', {
             listing_id: item.id,
@@ -93,6 +151,13 @@ const AllFollowers = ({navigation, route}) => {
         }}
       />
     );
+  };
+
+  const handleLoadMore = () => {
+    setPage(page+1);
+    setRefreshing(true)
+    GetAllFollowers();
+    setRefreshing(false)
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -110,8 +175,8 @@ const AllFollowers = ({navigation, route}) => {
         <View style={{marginTop:hp(3)}}>
         <FlatList
           data={myposts}
-          numColumns={3}
           renderItem={renderItem}
+          onEndReached={handleLoadMore}
           keyExtractor={(item, index) => index}
           scrollEnabled={false}
         />

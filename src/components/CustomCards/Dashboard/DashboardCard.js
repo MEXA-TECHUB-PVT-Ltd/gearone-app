@@ -19,7 +19,7 @@ const DashboardCard = props => {
   const formattedLikes = formatter.format(props.price);
   return (
     <TouchableOpacity onPress={props.onpress} activeOpacity={0.9}>
-      <View style={[styles.card,{marginVertical:props.type === "dashboard_card"?hp(0):hp(2)}]}>
+      <View style={[styles.card,{marginVertical:props.type === "dashboard_card"?hp(0):hp(2),marginBottom:props.type === "dashboard_card"?hp(2.5):hp(0)}]}>
         <View
           style={styles.imageView}>
         {props.images_array_length === 0 ? (

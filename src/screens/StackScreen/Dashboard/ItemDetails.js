@@ -141,15 +141,43 @@ const ItemDetails = ({navigation, route}) => {
         );
         setItem_Like_User_id(itemhere?.likey_by - 0);
         setItem_Description(response?.result[0].description);
+        GetProfileData()
       })
       .catch(error => {
         console.log('Error  : ', error);
       });
   }, [Item_likes_count]);
+
+    /////////////Get Notification/////////////
+  const [profileImage, setProfileImage] = useState('');
+  const [username, setUsername] = useState('');
+  const [country_code, setCountryCode] = useState('');
+  const [phone_number, setPhoneNumber] = useState('');
+  const [user_id, setUser_id] = useState('');
+
+  const GetProfileData = async () => {
+    axios({
+      method: 'GET',
+      url: BASE_URL + 'auth/specific_user/' + Item_userid,
+    })
+      .then(async function (response) {
+        console.log('list data here ', response.data.result);
+        setProfileImage(response.data.result[0].image);
+        setUsername(response.data.result[0].username);
+        setCountryCode(response.data.result[0].country_code);
+        setPhoneNumber(response.data.result[0].phone);
+        setUser_id(response.data.result[0].id);
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+  };
   useEffect(() => {
     GetItemDetail();
     getuser();
     GetDashboardLogo();
+    GetProfileData()
+    Save_ItemStatus();
   }, []);
   const getuser = async () => {
     var user_id = await AsyncStorage.getItem('User_id');
@@ -222,10 +250,7 @@ const ItemDetails = ({navigation, route}) => {
   const Save_Item = async props => {
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
-    var raw = JSON.stringify({
-      item_ID: ItemDetail.id,
-      user_ID: user_id,
-    });
+
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
       'Content-Type': 'application/json',
@@ -245,11 +270,10 @@ const ItemDetails = ({navigation, route}) => {
     axios
       .request(config)
       .then(response => {
-        console.log(JSON.stringify(response.data.status));
-        if (response.data.status === true) {
-          setItem_Save_User_id(response.data.result[0].user_id);
-          //setModalVisible(true),
-          //GetItemDetail()
+        console.log('save', JSON.stringify(response.data));
+        Save_ItemStatus();
+        if (response.data.status === 'true') {
+          Save_ItemStatus();
         } else {
         }
       })
@@ -261,10 +285,7 @@ const ItemDetails = ({navigation, route}) => {
   const UnSave_Item = async props => {
     var user_id = await AsyncStorage.getItem('User_id');
     var token = await AsyncStorage.getItem('JWT_Token');
-    var raw = JSON.stringify({
-      item_ID: ItemDetail.id,
-      user_ID: user_id,
-    });
+    console.log('here');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
       'Content-Type': 'application/json',
@@ -284,9 +305,10 @@ const ItemDetails = ({navigation, route}) => {
     axios
       .request(config)
       .then(response => {
-        console.log(JSON.stringify(response.data));
-        if (response.data.status === true) {
-          setItem_Save_User_id(response.data.result[0].user_id);
+        console.log('unsave', JSON.stringify(response.data));
+        Save_ItemStatus();
+        if (response.data.status === 'true') {
+          Save_ItemStatus();
           //setModalVisible(true),
           //GetItemDetail()
         } else {
@@ -297,48 +319,107 @@ const ItemDetails = ({navigation, route}) => {
       });
   };
 
-  /////////////Get Notification/////////////
-  const [profileImage, setProfileImage] = useState('');
-  const [username, setUsername] = useState('');
-  const [country_code, setCountryCode] = useState('');
-  const [phone_number, setPhoneNumber] = useState('');
-  const [user_id, setUser_id] = useState('');
+  const [save_status, setSaveStatus] = useState('');
+  //----------save Item ///////////
+  const Save_ItemStatus = async props => {
+    var user_id = await AsyncStorage.getItem('User_id');
+    var token = await AsyncStorage.getItem('JWT_Token');
 
-  const GetProfileData = async () => {
-    console.log('list data here Item_userid ', Item_userid);
-    axios({
-      method: 'GET',
-      url: BASE_URL + 'auth/specific_user/' + Item_userid,
-    })
-      .then(async function (response) {
-        console.log('list data here ', response.data.result);
-        setProfileImage(response.data.result[0].image);
-        setUsername(response.data.result[0].username);
-        setCountryCode(response.data.result[0].country_code);
-        setPhoneNumber(response.data.result[0].phone);
-        setUser_id(response.data.result[0].id);
+    var headers = {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+      'Content-Type': 'application/json',
+    };
+    let data = JSON.stringify({
+      item_ID: ItemDetail.id,
+      user_ID: user_id,
+    });
+
+    let config = {
+      method: 'post',
+      url: BASE_URL + 'save_item/check_item',
+      headers: headers,
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then(response => {
+        console.log('save staus', JSON.stringify(response.data));
+        if (response.data.Saved === 'true') {
+          setSaveStatus(response.data.Saved);
+        } else {
+          setSaveStatus('false');
+        }
       })
-      .catch(function (error) {
-        console.log('error', error);
+      .catch(error => {
+        console.log(error);
       });
   };
 
-  ////////////firebase store function/////////////////
-  const firebase_store_user = props => {
-    GetProfileData();
-    firestore().collection('Users').add({
-      id: user_id,
-      phoneNo: phone_number,
-      country_code: country_code,
-      username: username,
-      user_image: profileImage,
-    });
-    navigation.navigate('ChatScreen', {
-      navtype: 'chatlist',
-      userid: Item_userid,
-    });
-  };
 
+
+  const [friendList, setFriendList] = useState([]);
+
+  const user=async()=>{
+    var user_id = await AsyncStorage.getItem('User_id');
+   firestore()
+    .collection('users')
+    .doc('user_' + user_id)
+    .onSnapshot(snapshot => {
+      if (snapshot.exists) {
+        const userData = snapshot.data();
+        const userFriendList = userData.friends || [];
+        setFriendList(userFriendList);
+      }
+    });
+  }
+
+  useEffect( () => {
+    user()
+    console.log('friend list here', friendList,"..............",Item_userid);
+    // return () => {
+    //   unsubscribe();
+    // };
+  }, []);
+  const startChatWithUser = async () => {
+ 
+    var user_id = await AsyncStorage.getItem('User_id');
+    //const isFriend = friendList.includes(Item_userid);
+    const isFriend = friendList.some((friend) => friend.id === Item_userid);
+    console.log('Chat other user.', isFriend, Item_userid,"........",username,profileImage);
+    if (isFriend) {
+      // Start the chat with the other user
+      console.log('Chat started with the other user.');
+      navigation.navigate('ChatScreen', {
+        navtype: 'chatlist',
+        userid: Item_userid,
+      });
+    } else {
+      // setFriendList([...friendList,{id: Item_userid,
+      //   username: username,
+      //   user_image: profileImage}])
+      // friendList.push({   id: Item_userid,
+      //   username: username,
+      //   user_image: profileImage,});
+      // Add the other user to the friend list
+      firestore()
+        .collection('users')
+        .doc('user_'+ user_id)
+        .update({friends:firestore.FieldValue.arrayUnion({ id: Item_userid, user_name: username, user_image: profileImage })})
+        .then(() => {
+          console.log('Other user added to the friend list.');
+          navigation.navigate('ChatScreen', {
+            navtype: 'chatlist',
+            userid: Item_userid,
+          });
+          // Start the chat with the other user
+          console.log('Chat started with the other user.');
+        })
+        .catch(error => {
+          console.log('Error adding other user to the friend list:', error);
+        });
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -355,6 +436,7 @@ const ItemDetails = ({navigation, route}) => {
         <AutoImageSlider
           slider_images_array={Item_Images.length === 0 ? images : Item_Images}
         />
+
         <View>
           <View
             style={{
@@ -367,6 +449,52 @@ const ItemDetails = ({navigation, route}) => {
             <Text style={styles.ItemName_text}>{Item_item_title}</Text>
             <Text style={styles.ItemPrice_text}>{Item_item_price} $</Text>
           </View>
+          {ItemDetail.type === 'save' && save_status === 'true' ? (
+            <View
+              style={{
+                marginTop: hp(5),
+                alignItems: 'flex-end',
+                paddingRight: wp(8),
+                position: 'absolute',
+                right: 0,
+                bottom: hp(10.5),
+              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  console.log('pressed');
+                  UnSave_Item();
+                }}>
+                <Icon name={'bookmark'} size={20} color={'red'} />
+              </TouchableOpacity>
+            </View>
+          ) : null}
+          {ItemDetail.type === 'like' && Item_like_user_id === login_user_id ? (
+            <View
+              style={{
+                marginTop: hp(5),
+                alignItems: 'flex-end',
+                paddingRight: wp(8),
+                position: 'absolute',
+                right: 0,
+                bottom: hp(10.5),
+              }}>
+              <TouchableOpacity
+                style={{alignItems: 'center'}}
+                onPress={() => {
+                  console.log('pressed');
+                  Item_unlike();
+                }}>
+                <Icon
+                  name={'heart'}
+                  size={25}
+                  color={Colors.Appthemecolor}
+                  onPress={() => {
+                    Item_unlike();
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : null}
           {Item_like_user_id === login_user_id ? (
             <View>
               <View style={styles.iconview}>
@@ -395,6 +523,7 @@ const ItemDetails = ({navigation, route}) => {
               <Text style={styles.icontext}>{Item_likes_count} Likes</Text>
             </View>
           )}
+
           {ItemDetail.navplace === 'login_user_items' ? null : (
             <View>
               <View
@@ -454,7 +583,7 @@ const ItemDetails = ({navigation, route}) => {
                   </TouchableOpacity>
                 )}
                 <View style={styles.verticleLine}></View>
-                {Item_save_user_id === login_user_id ? (
+                {save_status === 'true' ? (
                   <TouchableOpacity
                     style={{alignItems: 'center'}}
                     onPress={() => {
@@ -483,7 +612,7 @@ const ItemDetails = ({navigation, route}) => {
                   onPress={() => {
                     join_as_guest === true
                       ? setGuestModalVisible(true)
-                      : firebase_store_user();
+                      : startChatWithUser();
                   }}>
                   <MaterialIcons name={'chat'} size={20} color={'white'} />
                   <Text style={styles.verticletext}>Messages</Text>

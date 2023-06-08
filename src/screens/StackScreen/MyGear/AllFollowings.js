@@ -51,30 +51,31 @@ const AllFollowings = ({navigation, route}) => {
      }, [logo]);
 
   /////////////Get Notification/////////////
-  const [myposts, setMyPosts] = useState('');
-  const [myposts_error, setMyPostsError] = useState("");
+  const [Followings, setFollowings] = useState('');
+  const [Followings_error, setFollowingsError] = useState("");
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  const GetAllFollowers = async () => {
+  const GetAllFollowings = async () => {
     var user_id = await AsyncStorage.getItem('User_id');
     axios({
       method: 'POST',
       url: BASE_URL + 'follow/get_followings',
       body: {
         user_ID: user_id,
+        page:'1'
       },
     })
       .then(async function (response) {
         console.log('list data here ', response.data.result);
-        setMyPosts(response.data.result);
+        setFollowings(response.data.result);
       })
       .catch(function (error) {
         console.log('error', error);
       });
   };
   useEffect(() => {
-    GetAllFollowers();
+    GetAllFollowings();
     GetLogo()
   }, []);
 
@@ -107,7 +108,7 @@ const AllFollowings = ({navigation, route}) => {
         />
         <View style={{marginTop:hp(3)}}>
         <FlatList
-          data={myposts}
+          data={Followings}
           numColumns={3}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
