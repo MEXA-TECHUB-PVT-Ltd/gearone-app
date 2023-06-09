@@ -1,514 +1,509 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.mtechubgearone"
-4    android:versionCode="1"
-5    android:versionName="1.0" >
+4    android:versionCode="3"
+5    android:versionName="3.0" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml
+8-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml
 9        android:targetSdkVersion="33" />
-9-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml
+9-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:3:1-63
-11-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:3:18-60
+11-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:3:1-63
+11-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:3:18-60
 12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-12-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:4:1-75
-12-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:4:18-72
+12-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:4:1-75
+12-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:4:18-72
 13    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-13-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:5:1-76
-13-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:5:18-74
+13-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:5:1-76
+13-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:5:18-74
 14    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-14-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:6:1-75
-14-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:6:18-73
+14-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:6:1-75
+14-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:6:18-73
 15    <uses-permission android:name="android.permission.CAMERA" />
-15-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:7:1-60
-15-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:7:18-58
+15-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:7:1-60
+15-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:7:18-58
 16
 17    <uses-feature
-17-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:8:1-81
+17-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:8:1-81
 18        android:name="android.hardware.camera"
-18-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:8:15-53
+18-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:8:15-53
 19        android:required="false" />
-19-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:8:54-78
+19-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:8:54-78
 20    <uses-feature
-20-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:9:1-87
+20-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:9:1-87
 21        android:name="android.hardware.camera.front"
-21-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:9:15-59
+21-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:9:15-59
 22        android:required="false" />
-22-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:9:60-84
+22-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:9:60-84
 23
 24    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-24-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:10:1-75
-24-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:10:18-72
-25    <uses-permission android:name="android.permission.SEND_SMS" />
-25-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:11:1-63
-25-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:11:18-60
-26    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-26-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:12:1-66
-26-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:12:18-63
-27    <uses-permission android:name="android.permission.READ_SMS" />
-27-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:13:1-63
-27-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:13:18-60
-28    <uses-permission android:name="android.permission.WAKE_LOCK" />
-28-->[:react-native-firebase_auth] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\auth\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:10:5-68
-28-->[:react-native-firebase_auth] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\auth\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:10:22-65
-29
-30    <queries>
-30-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:9:5-13:15
-31        <intent>
-31-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:10:9-12:18
-32            <action android:name="android.media.action.IMAGE_CAPTURE" />
-32-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:11:13-73
-32-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:11:21-70
-33        </intent>
-34    </queries>
-35
-36    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Required by older versions of Google Play services to create IID tokens -->
-36-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:25:5-77
-36-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:25:22-74
-37    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-37-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:28:5-82
-37-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:28:22-79
-38    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
-38-->[com.google.android.gms:play-services-measurement-api:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\7127ff17780f79bb9796ef204ef2baba\transformed\jetified-play-services-measurement-api-21.2.2\AndroidManifest.xml:25:5-79
-38-->[com.google.android.gms:play-services-measurement-api:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\7127ff17780f79bb9796ef204ef2baba\transformed\jetified-play-services-measurement-api-21.2.2\AndroidManifest.xml:25:22-76
-39    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
-39-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:26:5-110
-39-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:26:22-107
-40
-41    <application
-41-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:16:5-36:19
-42        android:name="com.mtechubgearone.MainApplication"
-42-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:17:7-38
-43        android:allowBackup="false"
-43-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:21:7-34
-44        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-44-->[androidx.core:core:1.7.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\5c85eefd62ee9cacecdf09834619c6ef\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
-45        android:icon="@mipmap/ic_launcher"
-45-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:19:7-41
-46        android:label="@string/app_name"
-46-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:18:7-39
-47        android:roundIcon="@mipmap/ic_launcher_round"
-47-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:20:7-52
-48        android:theme="@style/AppTheme"
-48-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:22:7-38
-49        android:usesCleartextTraffic="true" >
-49-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:23:7-42
-50        <activity
-50-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:24:7-35:18
-51            android:name="com.mtechubgearone.MainActivity"
-51-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:25:9-37
-52            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-52-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:27:9-118
-53            android:exported="true"
-53-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:30:9-32
-54            android:label="@string/app_name"
-54-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:26:9-41
-55            android:launchMode="singleTask"
-55-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:28:9-40
-56            android:windowSoftInputMode="adjustResize" >
-56-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:29:9-51
-57            <intent-filter>
-57-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:31:9-34:25
-58                <action android:name="android.intent.action.MAIN" />
-58-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:32:13-65
-58-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:32:21-62
-59
-60                <category android:name="android.intent.category.LAUNCHER" />
-60-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:33:13-73
-60-->E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\android\app\src\main\AndroidManifest.xml:33:23-70
-61            </intent-filter>
-62        </activity>
-63
-64        <service
-64-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:14:9-16:40
-65            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingHeadlessService"
-65-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:15:13-103
-66            android:exported="false" />
-66-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:16:13-37
-67        <service
-67-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:17:9-23:19
-68            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingService"
-68-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:18:13-95
-69            android:exported="false" >
-69-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:19:13-37
-70            <intent-filter>
-70-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:20:13-22:29
-71                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-71-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:21:17-78
-71-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:21:25-75
-72            </intent-filter>
-73        </service>
-74
-75        <receiver
-75-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:25:9-32:20
-76            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingReceiver"
-76-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:26:13-96
-77            android:exported="true"
-77-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:27:13-36
-78            android:permission="com.google.android.c2dm.permission.SEND" >
-78-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:28:13-73
-79            <intent-filter>
-79-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:29:13-31:29
-80                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-80-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:30:17-81
-80-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:30:25-78
-81            </intent-filter>
-82        </receiver>
-83
-84        <meta-data
-84-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:34:9-36:36
-85            android:name="firebase_messaging_auto_init_enabled"
-85-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:35:13-64
-86            android:value="true" />
-86-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:36:13-33
-87        <meta-data
-87-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:37:9-39:32
-88            android:name="com.google.firebase.messaging.default_notification_channel_id"
-88-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:38:13-89
-89            android:value="" />
-89-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:39:13-29
-90        <meta-data
-90-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:40:9-42:47
-91            android:name="com.google.firebase.messaging.default_notification_color"
-91-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:41:13-84
-92            android:resource="@color/white" />
-92-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:42:13-44
-93        <meta-data
-93-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:11:9-13:36
-94            android:name="app_data_collection_default_enabled"
-94-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:12:13-63
-95            android:value="true" />
-95-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:13:13-33
-96
-97        <service
-97-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:15:9-23:19
-98            android:name="com.google.firebase.components.ComponentDiscoveryService"
-98-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:16:13-84
-99            android:directBootAware="true"
-99-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:17:13-43
-100            android:exported="false" >
-100-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:18:13-37
-101            <meta-data
-101-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:20:13-22:85
-102                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
-102-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:21:17-120
-103                android:value="com.google.firebase.components.ComponentRegistrar" />
-103-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:22:17-82
-104            <meta-data
-104-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:55:13-57:85
-105                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
-105-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:56:17-119
-106                android:value="com.google.firebase.components.ComponentRegistrar" />
-106-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:57:17-82
-107            <meta-data
-107-->[com.google.firebase:firebase-datatransport:18.1.7] C:\Users\mtechubuser\.gradle\caches\transforms-3\2cc9de08e2ba2e95e96cdd19c6d3df79\transformed\jetified-firebase-datatransport-18.1.7\AndroidManifest.xml:27:13-29:85
-108                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
-108-->[com.google.firebase:firebase-datatransport:18.1.7] C:\Users\mtechubuser\.gradle\caches\transforms-3\2cc9de08e2ba2e95e96cdd19c6d3df79\transformed\jetified-firebase-datatransport-18.1.7\AndroidManifest.xml:28:17-115
-109                android:value="com.google.firebase.components.ComponentRegistrar" />
-109-->[com.google.firebase:firebase-datatransport:18.1.7] C:\Users\mtechubuser\.gradle\caches\transforms-3\2cc9de08e2ba2e95e96cdd19c6d3df79\transformed\jetified-firebase-datatransport-18.1.7\AndroidManifest.xml:29:17-82
-110            <meta-data
-110-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:69:13-71:85
-111                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
-111-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:70:17-109
-112                android:value="com.google.firebase.components.ComponentRegistrar" />
-112-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:71:17-82
-113            <meta-data
-113-->[com.google.firebase:firebase-firestore:24.6.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a84e975b9c5120e4d88d54edbf286a00\transformed\jetified-firebase-firestore-24.6.0\AndroidManifest.xml:19:13-21:85
-114                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
-114-->[com.google.firebase:firebase-firestore:24.6.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a84e975b9c5120e4d88d54edbf286a00\transformed\jetified-firebase-firestore-24.6.0\AndroidManifest.xml:20:17-111
-115                android:value="com.google.firebase.components.ComponentRegistrar" />
-115-->[com.google.firebase:firebase-firestore:24.6.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a84e975b9c5120e4d88d54edbf286a00\transformed\jetified-firebase-firestore-24.6.0\AndroidManifest.xml:21:17-82
-116            <meta-data
-116-->[com.google.android.gms:play-services-measurement-api:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\7127ff17780f79bb9796ef204ef2baba\transformed\jetified-play-services-measurement-api-21.2.2\AndroidManifest.xml:31:13-33:85
-117                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
-117-->[com.google.android.gms:play-services-measurement-api:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\7127ff17780f79bb9796ef204ef2baba\transformed\jetified-play-services-measurement-api-21.2.2\AndroidManifest.xml:32:17-139
-118                android:value="com.google.firebase.components.ComponentRegistrar" />
-118-->[com.google.android.gms:play-services-measurement-api:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\7127ff17780f79bb9796ef204ef2baba\transformed\jetified-play-services-measurement-api-21.2.2\AndroidManifest.xml:33:17-82
-119            <meta-data
-119-->[com.google.firebase:firebase-installations:17.1.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\99ec38bfd3590a3a3fc09bd5c25d93fe\transformed\jetified-firebase-installations-17.1.3\AndroidManifest.xml:17:13-19:85
-120                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
-120-->[com.google.firebase:firebase-installations:17.1.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\99ec38bfd3590a3a3fc09bd5c25d93fe\transformed\jetified-firebase-installations-17.1.3\AndroidManifest.xml:18:17-127
-121                android:value="com.google.firebase.components.ComponentRegistrar" />
-121-->[com.google.firebase:firebase-installations:17.1.3] C:\Users\mtechubuser\.gradle\caches\transforms-3\99ec38bfd3590a3a3fc09bd5c25d93fe\transformed\jetified-firebase-installations-17.1.3\AndroidManifest.xml:19:17-82
-122        </service>
-123
-124        <provider
-124-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:25:9-29:38
-125            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
-125-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:26:13-88
-126            android:authorities="com.mtechubgearone.reactnativefirebaseappinitprovider"
-126-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:27:13-86
-127            android:exported="false"
-127-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:28:13-37
-128            android:initOrder="99" />
-128-->[:react-native-firebase_app] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\app\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:29:13-35
-129        <provider
-129-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:18:9-26:20
-130            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
-130-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:19:13-94
-131            android:authorities="com.mtechubgearone.provider"
-131-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:20:13-60
-132            android:exported="false"
-132-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:21:13-37
-133            android:grantUriPermissions="true" >
-133-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:22:13-47
-134            <meta-data
-134-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:23:13-25:78
-135                android:name="android.support.FILE_PROVIDER_PATHS"
-135-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:24:17-67
-136                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
-136-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:25:17-75
-137        </provider>
-138
-139        <activity
-139-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:28:9-30:72
-140            android:name="com.yalantis.ucrop.UCropActivity"
-140-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:29:13-60
-141            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-141-->[:react-native-image-crop-picker] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\react-native-image-crop-picker\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:30:13-69
-142
-143        <receiver
-143-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:31:9-38:20
-144            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-144-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:32:13-78
-145            android:exported="true"
-145-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:33:13-36
-146            android:permission="com.google.android.c2dm.permission.SEND" >
-146-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:34:13-73
-147            <intent-filter>
-147-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:29:13-31:29
-148                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-148-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:30:17-81
-148-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:30:25-78
-149            </intent-filter>
-150        </receiver>
-151        <!--
-152             FirebaseMessagingService performs security checks at runtime,
-153             but set to not exported to explicitly avoid allowing another app to call it.
-154        -->
-155        <service
-155-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:44:9-51:19
-156            android:name="com.google.firebase.messaging.FirebaseMessagingService"
-156-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:45:13-82
-157            android:directBootAware="true"
-157-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:46:13-43
-158            android:exported="false" >
-158-->[com.google.firebase:firebase-messaging:23.1.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\eeb8b6d825fc36f2224fdbd96d99b021\transformed\jetified-firebase-messaging-23.1.2\AndroidManifest.xml:47:13-37
-159            <intent-filter android:priority="-500" >
-159-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:20:13-22:29
-160                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-160-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:21:17-78
-160-->[:react-native-firebase_messaging] E:\MtechubProjects\Gear_1\againgitProject\gearone-app-2\node_modules\@react-native-firebase\messaging\android\build\intermediates\merged_manifest\release\AndroidManifest.xml:21:25-75
-161            </intent-filter>
-162        </service>
-163        <service
-163-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\83c3194237fe0c194601a5a7930c0718\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:28:9-34:19
-164            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-164-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\83c3194237fe0c194601a5a7930c0718\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:29:13-103
-165            android:exported="false" >
-165-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\83c3194237fe0c194601a5a7930c0718\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:30:13-37
-166            <meta-data
-166-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\83c3194237fe0c194601a5a7930c0718\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:31:13-33:39
-167                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-167-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\83c3194237fe0c194601a5a7930c0718\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:32:17-94
-168                android:value="cct" />
-168-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\83c3194237fe0c194601a5a7930c0718\transformed\jetified-transport-backend-cct-3.1.8\AndroidManifest.xml:33:17-36
-169        </service>
-170        <service
-170-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\22dde47cfb97fb1793538dbe86681f9d\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:26:9-30:19
-171            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-171-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\22dde47cfb97fb1793538dbe86681f9d\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:27:13-117
-172            android:exported="false"
-172-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\22dde47cfb97fb1793538dbe86681f9d\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:28:13-37
-173            android:permission="android.permission.BIND_JOB_SERVICE" >
-173-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\22dde47cfb97fb1793538dbe86681f9d\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:29:13-69
-174        </service>
-175
-176        <receiver
-176-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\22dde47cfb97fb1793538dbe86681f9d\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:32:9-34:40
-177            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-177-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\22dde47cfb97fb1793538dbe86681f9d\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:33:13-132
-178            android:exported="false" />
-178-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\mtechubuser\.gradle\caches\transforms-3\22dde47cfb97fb1793538dbe86681f9d\transformed\jetified-transport-runtime-3.1.8\AndroidManifest.xml:34:13-37
-179
-180        <activity
-180-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:29:9-46:20
-181            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
-181-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:30:13-80
-182            android:excludeFromRecents="true"
-182-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:31:13-46
-183            android:exported="true"
-183-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:32:13-36
-184            android:launchMode="singleTask"
-184-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:33:13-44
-185            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-185-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:34:13-72
-186            <intent-filter>
-186-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:35:13-45:29
-187                <action android:name="android.intent.action.VIEW" />
-187-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:36:17-69
-187-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:36:25-66
-188
-189                <category android:name="android.intent.category.DEFAULT" />
-189-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:38:17-76
-189-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:38:27-73
-190                <category android:name="android.intent.category.BROWSABLE" />
-190-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:39:17-78
-190-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:39:27-75
-191
-192                <data
-192-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:41:17-44:51
-193                    android:host="firebase.auth"
-193-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:42:21-49
-194                    android:path="/"
-194-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:43:21-37
-195                    android:scheme="genericidp" />
-195-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:44:21-48
-196            </intent-filter>
-197        </activity>
-198        <activity
-198-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:47:9-64:20
-199            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
-199-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:48:13-79
-200            android:excludeFromRecents="true"
-200-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:49:13-46
-201            android:exported="true"
-201-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:50:13-36
-202            android:launchMode="singleTask"
-202-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:51:13-44
-203            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-203-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:52:13-72
-204            <intent-filter>
-204-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:53:13-63:29
-205                <action android:name="android.intent.action.VIEW" />
-205-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:36:17-69
-205-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:36:25-66
-206
-207                <category android:name="android.intent.category.DEFAULT" />
-207-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:38:17-76
-207-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:38:27-73
-208                <category android:name="android.intent.category.BROWSABLE" />
-208-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:39:17-78
-208-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:39:27-75
-209
-210                <data
-210-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:41:17-44:51
-211                    android:host="firebase.auth"
-211-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:42:21-49
-212                    android:path="/"
-212-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:43:21-37
-213                    android:scheme="recaptcha" />
-213-->[com.google.firebase:firebase-auth:22.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\266d746cf0a3ef06db94f78148968757\transformed\jetified-firebase-auth-22.0.0\AndroidManifest.xml:44:21-48
-214            </intent-filter>
-215        </activity>
-216
-217        <provider
-217-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d501d11b51b9b45c2628fe2147cac516\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:25:9-30:39
-218            android:name="com.google.firebase.provider.FirebaseInitProvider"
-218-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d501d11b51b9b45c2628fe2147cac516\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:26:13-77
-219            android:authorities="com.mtechubgearone.firebaseinitprovider"
-219-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d501d11b51b9b45c2628fe2147cac516\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:27:13-72
-220            android:directBootAware="true"
-220-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d501d11b51b9b45c2628fe2147cac516\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:28:13-43
-221            android:exported="false"
-221-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d501d11b51b9b45c2628fe2147cac516\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:29:13-37
-222            android:initOrder="100" />
-222-->[com.google.firebase:firebase-common:20.3.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\d501d11b51b9b45c2628fe2147cac516\transformed\jetified-firebase-common-20.3.2\AndroidManifest.xml:30:13-36
-223
-224        <activity
-224-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:23:9-27:75
-225            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
-225-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:24:13-93
-226            android:excludeFromRecents="true"
-226-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:25:13-46
-227            android:exported="false"
-227-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:26:13-37
-228            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-228-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:27:13-72
-229        <!--
-230            Service handling Google Sign-In user revocation. For apps that do not integrate with
-231            Google Sign-In, this service will never be started.
-232        -->
-233        <service
-233-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:33:9-37:51
-234            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
-234-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:34:13-89
-235            android:exported="true"
-235-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:35:13-36
-236            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
-236-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:36:13-107
-237            android:visibleToInstantApps="true" />
-237-->[com.google.android.gms:play-services-auth:20.5.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15577f227c38a1d2d360057fdaaa6887\transformed\jetified-play-services-auth-20.5.0\AndroidManifest.xml:37:13-48
-238
-239        <activity
-239-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\14534f11995b76409b349d353840fdfc\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
-240            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-240-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\14534f11995b76409b349d353840fdfc\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
-241            android:exported="false"
-241-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\14534f11995b76409b349d353840fdfc\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
-242            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-242-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\mtechubuser\.gradle\caches\transforms-3\14534f11995b76409b349d353840fdfc\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
-243
-244        <receiver
-244-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:29:9-33:20
-245            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
-245-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:30:13-85
-246            android:enabled="true"
-246-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:31:13-35
-247            android:exported="false" >
-247-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:32:13-37
-248        </receiver>
-249
-250        <service
-250-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:35:9-38:40
-251            android:name="com.google.android.gms.measurement.AppMeasurementService"
-251-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:36:13-84
-252            android:enabled="true"
-252-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:37:13-35
-253            android:exported="false" />
-253-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:38:13-37
-254        <service
-254-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:39:9-43:72
-255            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
-255-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:40:13-87
-256            android:enabled="true"
-256-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:41:13-35
-257            android:exported="false"
-257-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:42:13-37
-258            android:permission="android.permission.BIND_JOB_SERVICE" />
-258-->[com.google.android.gms:play-services-measurement:21.2.2] C:\Users\mtechubuser\.gradle\caches\transforms-3\dcbcd7f8418ceaa96d9f153e8af9d911\transformed\jetified-play-services-measurement-21.2.2\AndroidManifest.xml:43:13-69
-259
-260        <meta-data
-260-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15a57b7be4a044055cfebf45f345142e\transformed\jetified-play-services-basement-18.2.0\AndroidManifest.xml:21:9-23:69
-261            android:name="com.google.android.gms.version"
-261-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15a57b7be4a044055cfebf45f345142e\transformed\jetified-play-services-basement-18.2.0\AndroidManifest.xml:22:13-58
-262            android:value="@integer/google_play_services_version" />
-262-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\15a57b7be4a044055cfebf45f345142e\transformed\jetified-play-services-basement-18.2.0\AndroidManifest.xml:23:13-66
-263
-264        <provider
-264-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\9aaa1b590eb2f3bcac6c49d3fc8b84cf\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
-265            android:name="androidx.startup.InitializationProvider"
-265-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\9aaa1b590eb2f3bcac6c49d3fc8b84cf\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
-266            android:authorities="com.mtechubgearone.androidx-startup"
-266-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\9aaa1b590eb2f3bcac6c49d3fc8b84cf\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
-267            android:exported="false" >
-267-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\9aaa1b590eb2f3bcac6c49d3fc8b84cf\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
-268            <meta-data
-268-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\9aaa1b590eb2f3bcac6c49d3fc8b84cf\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
-269                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-269-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\9aaa1b590eb2f3bcac6c49d3fc8b84cf\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
-270                android:value="androidx.startup" />
-270-->[androidx.emoji2:emoji2:1.0.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\9aaa1b590eb2f3bcac6c49d3fc8b84cf\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
-271            <meta-data
-271-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a4ee5ae2a9f6a2d028dd8e6b11840bc8\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
-272                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-272-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a4ee5ae2a9f6a2d028dd8e6b11840bc8\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
-273                android:value="androidx.startup" />
-273-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\mtechubuser\.gradle\caches\transforms-3\a4ee5ae2a9f6a2d028dd8e6b11840bc8\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
-274        </provider>
-275    </application>
-276
-277</manifest>
+24-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:10:1-75
+24-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:10:18-72
+25    <uses-permission android:name="android.permission.WAKE_LOCK" />
+25-->[:react-native-firebase_auth] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/auth/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:10:5-68
+25-->[:react-native-firebase_auth] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/auth/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:10:22-65
+26
+27    <queries>
+27-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:9:5-13:15
+28        <intent>
+28-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-12:18
+29            <action android:name="android.media.action.IMAGE_CAPTURE" />
+29-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-73
+29-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:11:21-70
+30        </intent>
+31    </queries>
+32
+33    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+33-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:25:5-77
+33-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:25:22-74
+34    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+34-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:28:5-82
+34-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:28:22-79
+35    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+35-->[com.google.android.gms:play-services-measurement-api:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/7127ff17780f79bb9796ef204ef2baba/transformed/jetified-play-services-measurement-api-21.2.2/AndroidManifest.xml:25:5-79
+35-->[com.google.android.gms:play-services-measurement-api:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/7127ff17780f79bb9796ef204ef2baba/transformed/jetified-play-services-measurement-api-21.2.2/AndroidManifest.xml:25:22-76
+36    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+36-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:26:5-110
+36-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:26:22-107
+37    <!--
+38 <uses-permission android:name="android.permission.SEND_SMS" />
+39<uses-permission android:name="android.permission.RECEIVE_SMS" />
+40<uses-permission android:name="android.permission.READ_SMS" />
+41    -->
+42    <application
+42-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:16:5-36:19
+43        android:name="com.mtechubgearone.MainApplication"
+43-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:17:7-38
+44        android:allowBackup="false"
+44-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:21:7-34
+45        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+45-->[androidx.core:core:1.7.0] /Users/muhammadusama/.gradle/caches/transforms-3/5c85eefd62ee9cacecdf09834619c6ef/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+46        android:icon="@mipmap/ic_launcher"
+46-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:19:7-41
+47        android:label="@string/app_name"
+47-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:18:7-39
+48        android:roundIcon="@mipmap/ic_launcher_round"
+48-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:20:7-52
+49        android:theme="@style/AppTheme"
+49-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:22:7-38
+50        android:usesCleartextTraffic="true" >
+50-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:23:7-42
+51        <activity
+51-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:24:7-35:18
+52            android:name="com.mtechubgearone.MainActivity"
+52-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:25:9-37
+53            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+53-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:27:9-118
+54            android:exported="true"
+54-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:30:9-32
+55            android:label="@string/app_name"
+55-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:26:9-41
+56            android:launchMode="singleTask"
+56-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:28:9-40
+57            android:windowSoftInputMode="adjustResize" >
+57-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:29:9-51
+58            <intent-filter>
+58-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:31:9-34:25
+59                <action android:name="android.intent.action.MAIN" />
+59-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:32:13-65
+59-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:32:21-62
+60
+61                <category android:name="android.intent.category.LAUNCHER" />
+61-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:33:13-73
+61-->/Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/android/app/src/main/AndroidManifest.xml:33:23-70
+62            </intent-filter>
+63        </activity>
+64
+65        <service
+65-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:14:9-16:40
+66            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingHeadlessService"
+66-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-103
+67            android:exported="false" />
+67-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:16:13-37
+68        <service
+68-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:17:9-23:19
+69            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingService"
+69-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:18:13-95
+70            android:exported="false" >
+70-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:19:13-37
+71            <intent-filter>
+71-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:20:13-22:29
+72                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+72-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:21:17-78
+72-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:21:25-75
+73            </intent-filter>
+74        </service>
+75
+76        <receiver
+76-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:25:9-32:20
+77            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingReceiver"
+77-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:26:13-96
+78            android:exported="true"
+78-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:27:13-36
+79            android:permission="com.google.android.c2dm.permission.SEND" >
+79-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:28:13-73
+80            <intent-filter>
+80-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:29:13-31:29
+81                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+81-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:30:17-81
+81-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:30:25-78
+82            </intent-filter>
+83        </receiver>
+84
+85        <meta-data
+85-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:34:9-36:36
+86            android:name="firebase_messaging_auto_init_enabled"
+86-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:35:13-64
+87            android:value="true" />
+87-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:36:13-33
+88        <meta-data
+88-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:37:9-39:32
+89            android:name="com.google.firebase.messaging.default_notification_channel_id"
+89-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:38:13-89
+90            android:value="" />
+90-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:39:13-29
+91        <meta-data
+91-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:40:9-42:47
+92            android:name="com.google.firebase.messaging.default_notification_color"
+92-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:41:13-84
+93            android:resource="@color/white" />
+93-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:42:13-44
+94        <meta-data
+94-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:11:9-13:36
+95            android:name="app_data_collection_default_enabled"
+95-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-63
+96            android:value="true" />
+96-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-33
+97
+98        <service
+98-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:15:9-23:19
+99            android:name="com.google.firebase.components.ComponentDiscoveryService"
+99-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:16:13-84
+100            android:directBootAware="true"
+100-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:17:13-43
+101            android:exported="false" >
+101-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:18:13-37
+102            <meta-data
+102-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:20:13-22:85
+103                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
+103-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:21:17-120
+104                android:value="com.google.firebase.components.ComponentRegistrar" />
+104-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:22:17-82
+105            <meta-data
+105-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:55:13-57:85
+106                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+106-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:56:17-119
+107                android:value="com.google.firebase.components.ComponentRegistrar" />
+107-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:57:17-82
+108            <meta-data
+108-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/muhammadusama/.gradle/caches/transforms-3/2cc9de08e2ba2e95e96cdd19c6d3df79/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:27:13-29:85
+109                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+109-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/muhammadusama/.gradle/caches/transforms-3/2cc9de08e2ba2e95e96cdd19c6d3df79/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:28:17-115
+110                android:value="com.google.firebase.components.ComponentRegistrar" />
+110-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/muhammadusama/.gradle/caches/transforms-3/2cc9de08e2ba2e95e96cdd19c6d3df79/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:29:17-82
+111            <meta-data
+111-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:69:13-71:85
+112                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+112-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:70:17-109
+113                android:value="com.google.firebase.components.ComponentRegistrar" />
+113-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:71:17-82
+114            <meta-data
+114-->[com.google.firebase:firebase-firestore:24.6.0] /Users/muhammadusama/.gradle/caches/transforms-3/a84e975b9c5120e4d88d54edbf286a00/transformed/jetified-firebase-firestore-24.6.0/AndroidManifest.xml:19:13-21:85
+115                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+115-->[com.google.firebase:firebase-firestore:24.6.0] /Users/muhammadusama/.gradle/caches/transforms-3/a84e975b9c5120e4d88d54edbf286a00/transformed/jetified-firebase-firestore-24.6.0/AndroidManifest.xml:20:17-111
+116                android:value="com.google.firebase.components.ComponentRegistrar" />
+116-->[com.google.firebase:firebase-firestore:24.6.0] /Users/muhammadusama/.gradle/caches/transforms-3/a84e975b9c5120e4d88d54edbf286a00/transformed/jetified-firebase-firestore-24.6.0/AndroidManifest.xml:21:17-82
+117            <meta-data
+117-->[com.google.android.gms:play-services-measurement-api:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/7127ff17780f79bb9796ef204ef2baba/transformed/jetified-play-services-measurement-api-21.2.2/AndroidManifest.xml:31:13-33:85
+118                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+118-->[com.google.android.gms:play-services-measurement-api:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/7127ff17780f79bb9796ef204ef2baba/transformed/jetified-play-services-measurement-api-21.2.2/AndroidManifest.xml:32:17-139
+119                android:value="com.google.firebase.components.ComponentRegistrar" />
+119-->[com.google.android.gms:play-services-measurement-api:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/7127ff17780f79bb9796ef204ef2baba/transformed/jetified-play-services-measurement-api-21.2.2/AndroidManifest.xml:33:17-82
+120            <meta-data
+120-->[com.google.firebase:firebase-installations:17.1.3] /Users/muhammadusama/.gradle/caches/transforms-3/99ec38bfd3590a3a3fc09bd5c25d93fe/transformed/jetified-firebase-installations-17.1.3/AndroidManifest.xml:17:13-19:85
+121                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+121-->[com.google.firebase:firebase-installations:17.1.3] /Users/muhammadusama/.gradle/caches/transforms-3/99ec38bfd3590a3a3fc09bd5c25d93fe/transformed/jetified-firebase-installations-17.1.3/AndroidManifest.xml:18:17-127
+122                android:value="com.google.firebase.components.ComponentRegistrar" />
+122-->[com.google.firebase:firebase-installations:17.1.3] /Users/muhammadusama/.gradle/caches/transforms-3/99ec38bfd3590a3a3fc09bd5c25d93fe/transformed/jetified-firebase-installations-17.1.3/AndroidManifest.xml:19:17-82
+123        </service>
+124
+125        <provider
+125-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:25:9-29:38
+126            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
+126-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:26:13-88
+127            android:authorities="com.mtechubgearone.reactnativefirebaseappinitprovider"
+127-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:27:13-86
+128            android:exported="false"
+128-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:28:13-37
+129            android:initOrder="99" />
+129-->[:react-native-firebase_app] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:29:13-35
+130        <provider
+130-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:18:9-26:20
+131            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
+131-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:19:13-94
+132            android:authorities="com.mtechubgearone.provider"
+132-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:20:13-60
+133            android:exported="false"
+133-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:21:13-37
+134            android:grantUriPermissions="true" >
+134-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:22:13-47
+135            <meta-data
+135-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:23:13-25:78
+136                android:name="android.support.FILE_PROVIDER_PATHS"
+136-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:24:17-67
+137                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
+137-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:25:17-75
+138        </provider>
+139
+140        <activity
+140-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:28:9-30:72
+141            android:name="com.yalantis.ucrop.UCropActivity"
+141-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:29:13-60
+142            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+142-->[:react-native-image-crop-picker] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:30:13-69
+143
+144        <receiver
+144-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:31:9-38:20
+145            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+145-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:32:13-78
+146            android:exported="true"
+146-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:33:13-36
+147            android:permission="com.google.android.c2dm.permission.SEND" >
+147-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:34:13-73
+148            <intent-filter>
+148-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:29:13-31:29
+149                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+149-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:30:17-81
+149-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:30:25-78
+150            </intent-filter>
+151        </receiver>
+152        <!--
+153             FirebaseMessagingService performs security checks at runtime,
+154             but set to not exported to explicitly avoid allowing another app to call it.
+155        -->
+156        <service
+156-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:44:9-51:19
+157            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+157-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:45:13-82
+158            android:directBootAware="true"
+158-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:46:13-43
+159            android:exported="false" >
+159-->[com.google.firebase:firebase-messaging:23.1.2] /Users/muhammadusama/.gradle/caches/transforms-3/eeb8b6d825fc36f2224fdbd96d99b021/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:47:13-37
+160            <intent-filter android:priority="-500" >
+160-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:20:13-22:29
+161                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+161-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:21:17-78
+161-->[:react-native-firebase_messaging] /Users/muhammadusama/ProjectsNonicloude/gearOneApp/gearOneMtechub/gearone-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:21:25-75
+162            </intent-filter>
+163        </service>
+164        <service
+164-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/83c3194237fe0c194601a5a7930c0718/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:28:9-34:19
+165            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+165-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/83c3194237fe0c194601a5a7930c0718/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:29:13-103
+166            android:exported="false" >
+166-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/83c3194237fe0c194601a5a7930c0718/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:30:13-37
+167            <meta-data
+167-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/83c3194237fe0c194601a5a7930c0718/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:31:13-33:39
+168                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+168-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/83c3194237fe0c194601a5a7930c0718/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:32:17-94
+169                android:value="cct" />
+169-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/83c3194237fe0c194601a5a7930c0718/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:33:17-36
+170        </service>
+171        <service
+171-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/22dde47cfb97fb1793538dbe86681f9d/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:26:9-30:19
+172            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+172-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/22dde47cfb97fb1793538dbe86681f9d/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:27:13-117
+173            android:exported="false"
+173-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/22dde47cfb97fb1793538dbe86681f9d/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:28:13-37
+174            android:permission="android.permission.BIND_JOB_SERVICE" >
+174-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/22dde47cfb97fb1793538dbe86681f9d/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:29:13-69
+175        </service>
+176
+177        <receiver
+177-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/22dde47cfb97fb1793538dbe86681f9d/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:32:9-34:40
+178            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+178-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/22dde47cfb97fb1793538dbe86681f9d/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:33:13-132
+179            android:exported="false" />
+179-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/muhammadusama/.gradle/caches/transforms-3/22dde47cfb97fb1793538dbe86681f9d/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:34:13-37
+180
+181        <activity
+181-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:29:9-46:20
+182            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+182-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:30:13-80
+183            android:excludeFromRecents="true"
+183-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:31:13-46
+184            android:exported="true"
+184-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:32:13-36
+185            android:launchMode="singleTask"
+185-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:33:13-44
+186            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+186-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:34:13-72
+187            <intent-filter>
+187-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:35:13-45:29
+188                <action android:name="android.intent.action.VIEW" />
+188-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:36:17-69
+188-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:36:25-66
+189
+190                <category android:name="android.intent.category.DEFAULT" />
+190-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:38:17-76
+190-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:38:27-73
+191                <category android:name="android.intent.category.BROWSABLE" />
+191-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:39:17-78
+191-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:39:27-75
+192
+193                <data
+193-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:41:17-44:51
+194                    android:host="firebase.auth"
+194-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:42:21-49
+195                    android:path="/"
+195-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:43:21-37
+196                    android:scheme="genericidp" />
+196-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:44:21-48
+197            </intent-filter>
+198        </activity>
+199        <activity
+199-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:47:9-64:20
+200            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+200-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:48:13-79
+201            android:excludeFromRecents="true"
+201-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:49:13-46
+202            android:exported="true"
+202-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:50:13-36
+203            android:launchMode="singleTask"
+203-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:51:13-44
+204            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+204-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:52:13-72
+205            <intent-filter>
+205-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:53:13-63:29
+206                <action android:name="android.intent.action.VIEW" />
+206-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:36:17-69
+206-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:36:25-66
+207
+208                <category android:name="android.intent.category.DEFAULT" />
+208-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:38:17-76
+208-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:38:27-73
+209                <category android:name="android.intent.category.BROWSABLE" />
+209-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:39:17-78
+209-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:39:27-75
+210
+211                <data
+211-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:41:17-44:51
+212                    android:host="firebase.auth"
+212-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:42:21-49
+213                    android:path="/"
+213-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:43:21-37
+214                    android:scheme="recaptcha" />
+214-->[com.google.firebase:firebase-auth:22.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/266d746cf0a3ef06db94f78148968757/transformed/jetified-firebase-auth-22.0.0/AndroidManifest.xml:44:21-48
+215            </intent-filter>
+216        </activity>
+217
+218        <provider
+218-->[com.google.firebase:firebase-common:20.3.2] /Users/muhammadusama/.gradle/caches/transforms-3/d501d11b51b9b45c2628fe2147cac516/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:25:9-30:39
+219            android:name="com.google.firebase.provider.FirebaseInitProvider"
+219-->[com.google.firebase:firebase-common:20.3.2] /Users/muhammadusama/.gradle/caches/transforms-3/d501d11b51b9b45c2628fe2147cac516/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:26:13-77
+220            android:authorities="com.mtechubgearone.firebaseinitprovider"
+220-->[com.google.firebase:firebase-common:20.3.2] /Users/muhammadusama/.gradle/caches/transforms-3/d501d11b51b9b45c2628fe2147cac516/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:27:13-72
+221            android:directBootAware="true"
+221-->[com.google.firebase:firebase-common:20.3.2] /Users/muhammadusama/.gradle/caches/transforms-3/d501d11b51b9b45c2628fe2147cac516/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:28:13-43
+222            android:exported="false"
+222-->[com.google.firebase:firebase-common:20.3.2] /Users/muhammadusama/.gradle/caches/transforms-3/d501d11b51b9b45c2628fe2147cac516/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:29:13-37
+223            android:initOrder="100" />
+223-->[com.google.firebase:firebase-common:20.3.2] /Users/muhammadusama/.gradle/caches/transforms-3/d501d11b51b9b45c2628fe2147cac516/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:30:13-36
+224
+225        <activity
+225-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:23:9-27:75
+226            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+226-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:24:13-93
+227            android:excludeFromRecents="true"
+227-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:25:13-46
+228            android:exported="false"
+228-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:26:13-37
+229            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+229-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:27:13-72
+230        <!--
+231            Service handling Google Sign-In user revocation. For apps that do not integrate with
+232            Google Sign-In, this service will never be started.
+233        -->
+234        <service
+234-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:33:9-37:51
+235            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+235-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:34:13-89
+236            android:exported="true"
+236-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:35:13-36
+237            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+237-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:36:13-107
+238            android:visibleToInstantApps="true" />
+238-->[com.google.android.gms:play-services-auth:20.5.0] /Users/muhammadusama/.gradle/caches/transforms-3/15577f227c38a1d2d360057fdaaa6887/transformed/jetified-play-services-auth-20.5.0/AndroidManifest.xml:37:13-48
+239
+240        <activity
+240-->[com.google.android.gms:play-services-base:18.0.1] /Users/muhammadusama/.gradle/caches/transforms-3/14534f11995b76409b349d353840fdfc/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+241            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+241-->[com.google.android.gms:play-services-base:18.0.1] /Users/muhammadusama/.gradle/caches/transforms-3/14534f11995b76409b349d353840fdfc/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+242            android:exported="false"
+242-->[com.google.android.gms:play-services-base:18.0.1] /Users/muhammadusama/.gradle/caches/transforms-3/14534f11995b76409b349d353840fdfc/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+243            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+243-->[com.google.android.gms:play-services-base:18.0.1] /Users/muhammadusama/.gradle/caches/transforms-3/14534f11995b76409b349d353840fdfc/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+244
+245        <receiver
+245-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:29:9-33:20
+246            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+246-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:30:13-85
+247            android:enabled="true"
+247-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:31:13-35
+248            android:exported="false" >
+248-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:32:13-37
+249        </receiver>
+250
+251        <service
+251-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:35:9-38:40
+252            android:name="com.google.android.gms.measurement.AppMeasurementService"
+252-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:36:13-84
+253            android:enabled="true"
+253-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:37:13-35
+254            android:exported="false" />
+254-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:38:13-37
+255        <service
+255-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:39:9-43:72
+256            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+256-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:40:13-87
+257            android:enabled="true"
+257-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:41:13-35
+258            android:exported="false"
+258-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:42:13-37
+259            android:permission="android.permission.BIND_JOB_SERVICE" />
+259-->[com.google.android.gms:play-services-measurement:21.2.2] /Users/muhammadusama/.gradle/caches/transforms-3/dcbcd7f8418ceaa96d9f153e8af9d911/transformed/jetified-play-services-measurement-21.2.2/AndroidManifest.xml:43:13-69
+260
+261        <meta-data
+261-->[com.google.android.gms:play-services-basement:18.2.0] /Users/muhammadusama/.gradle/caches/transforms-3/15a57b7be4a044055cfebf45f345142e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:21:9-23:69
+262            android:name="com.google.android.gms.version"
+262-->[com.google.android.gms:play-services-basement:18.2.0] /Users/muhammadusama/.gradle/caches/transforms-3/15a57b7be4a044055cfebf45f345142e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:22:13-58
+263            android:value="@integer/google_play_services_version" />
+263-->[com.google.android.gms:play-services-basement:18.2.0] /Users/muhammadusama/.gradle/caches/transforms-3/15a57b7be4a044055cfebf45f345142e/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:23:13-66
+264
+265        <provider
+265-->[androidx.emoji2:emoji2:1.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/9aaa1b590eb2f3bcac6c49d3fc8b84cf/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+266            android:name="androidx.startup.InitializationProvider"
+266-->[androidx.emoji2:emoji2:1.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/9aaa1b590eb2f3bcac6c49d3fc8b84cf/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
+267            android:authorities="com.mtechubgearone.androidx-startup"
+267-->[androidx.emoji2:emoji2:1.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/9aaa1b590eb2f3bcac6c49d3fc8b84cf/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
+268            android:exported="false" >
+268-->[androidx.emoji2:emoji2:1.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/9aaa1b590eb2f3bcac6c49d3fc8b84cf/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
+269            <meta-data
+269-->[androidx.emoji2:emoji2:1.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/9aaa1b590eb2f3bcac6c49d3fc8b84cf/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+270                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+270-->[androidx.emoji2:emoji2:1.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/9aaa1b590eb2f3bcac6c49d3fc8b84cf/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
+271                android:value="androidx.startup" />
+271-->[androidx.emoji2:emoji2:1.0.0] /Users/muhammadusama/.gradle/caches/transforms-3/9aaa1b590eb2f3bcac6c49d3fc8b84cf/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
+272            <meta-data
+272-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/muhammadusama/.gradle/caches/transforms-3/a4ee5ae2a9f6a2d028dd8e6b11840bc8/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+273                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+273-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/muhammadusama/.gradle/caches/transforms-3/a4ee5ae2a9f6a2d028dd8e6b11840bc8/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+274                android:value="androidx.startup" />
+274-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/muhammadusama/.gradle/caches/transforms-3/a4ee5ae2a9f6a2d028dd8e6b11840bc8/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+275        </provider>
+276    </application>
+277
+278</manifest>
