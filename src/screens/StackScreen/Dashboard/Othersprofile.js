@@ -106,7 +106,7 @@ const OtherProfile = ({navigation, route}) => {
         setFollowers(response.data.followers);
         var ratting=response.data.avgRatings
         var subratting=ratting.substring(0,1)
-        setRattings(subratting) ;
+        setRattings(subratting === "N"?"0":subratting) ;
        
       })
       .catch(function (error) {

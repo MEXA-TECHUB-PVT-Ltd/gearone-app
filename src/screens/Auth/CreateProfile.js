@@ -120,6 +120,7 @@ const CreateProfile = ({navigation}) => {
           left_iconPress={() => {
             navigation.goBack();
           }}
+          right_logo={0}
         />
         {personal === true ? (
           <PersonalDetail />

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useLayoutEffect, useRef} from 'react';
-import {View, Text, SafeAreaView,Alert,TouchableOpacity} from 'react-native';
+import {View, Text, SafeAreaView, Alert, TouchableOpacity} from 'react-native';
 
 ////////////////app pakages////////////
 import {Snackbar} from 'react-native-paper';
@@ -119,6 +119,7 @@ const Verification = ({navigation, route}) => {
 
   ///////////autn confirmation status/////////////
   const [confirm, setConfirm] = useState();
+  const [error, setError] = useState('');
 
   // Handle the button press
   async function signInWithPhoneNumber(phoneNumber) {
@@ -128,20 +129,9 @@ const Verification = ({navigation, route}) => {
       setConfirm(confirmation);
       setLoading(false);
     } catch (error) {
-      Alert.alert(
-        'Error',
-        `Please `+ error,
-        [
-          { text: 'OK', onPress: () => console.log('OK Pressed') },
-        ],
-        { cancelable: false }
-      )
+      setModalVisible(true);
+      setError(`Please ` + error);
     }
-    // setloading(true)
-    // setdisable(true)
-
-    // setloading(false)
-    // setdisable(false)
   }
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -154,16 +144,8 @@ const Verification = ({navigation, route}) => {
       await confirm.confirm(value);
       SigUpUser();
     } catch (error) {
-      console.log('Invalid code.', error);
-      Alert.alert(
-        'Error',
-        `Please `+ error,
-        [
-          { text: 'OK', onPress: () => console.log('OK Pressed') },
-        ],
-        { cancelable: false }
-      );
-      setsnackbarValue('Invalid code, Please Enter Valid one');
+      setModalVisible(true);
+      setError(`Please ` + error);
     }
   }
   //////////////Api Calling////////////////////
@@ -194,7 +176,7 @@ const Verification = ({navigation, route}) => {
             'JWT_Token',
             JSON.stringify(response.data.token),
           );
-          firebase_store_user(response.data.result[0].id);
+          //firebase_store_user(response.data.result[0].id);
           navigation.navigate('CreateProfile');
           setloading(0);
           setdisable(0);
@@ -242,7 +224,7 @@ const Verification = ({navigation, route}) => {
             'JWT_Token',
             JSON.stringify(response.data.token),
           );
-          //firebase_store_user(response.data.result.customer_id);
+          firebase_store_user(response.data.result[0].id);
           navigation.navigate('Drawerroute');
           setloading(0);
           setdisable(0);
@@ -264,30 +246,40 @@ const Verification = ({navigation, route}) => {
   };
 
   ////////////firebase store function/////////////////
-  const firebase_store_user = props => {
-    firestore().collection('Users').add({
-      id: props,
-      phoneNo: predata.phone_number,
-      country_code: predata.country_code,
-    });
+  const firebase_store_user = async(props) => {
+    try {
+      await firestore().collection('users').doc("user_"+props).set({
+        id: props,
+        phoneNo: predata.phone_number,
+        country_code: predata.country_code,
+        friends: [],
+      });
+      console.log('User created successfully!');
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+    // firestore().collection('Users').add({
+    //   id: props,
+    //   phoneNo: predata.phone_number,
+    //   country_code: predata.country_code,
+    // });
   };
   useEffect(() => {
     checkPermission();
     setLoading(false);
   }, []);
   const dummy_phonenuber = () => {
-    setloading(true)
-    setdisable(true)
+    setloading(true);
+    setdisable(true);
     if (predata.phone_number === '1234567890') {
       if (value === '000000') {
         SigUpUser();
-        setloading(false)
-        setdisable(false)
+        setloading(false);
+        setdisable(false);
       } else {
-        
         setsnackbarValue('Please Enter Valid one');
-        setloading(false)
-        setdisable(false)
+        setloading(false);
+        setdisable(false);
         console.log('hree issue in code');
       }
     }
@@ -360,7 +352,10 @@ const Verification = ({navigation, route}) => {
         </View>
         <TouchableOpacity
           disabled={disabletimer}
-          onPress={() => {      signInWithPhoneNumber(predata.country_code + predata.phone_number), setdisableTimer(true)}}
+          onPress={() => {
+            signInWithPhoneNumber(predata.country_code + predata.phone_number),
+              setdisableTimer(true);
+          }}
           style={{marginLeft: wp(8)}}>
           <Text style={styles.Cellmaintext}>Resend Code</Text>
         </TouchableOpacity>
@@ -372,21 +367,31 @@ const Verification = ({navigation, route}) => {
           topDistance={35}
           loading={loading}
           disabled={disable}
-          onPress={
-            () =>
-              predata.dummy_number === true ? dummy_phonenuber() : confirmCode()
+          onPress={() =>
+            predata.dummy_number === true ? dummy_phonenuber() : confirmCode()
           }
         />
       </View>
       <CustomModal
         modalVisible={modalVisible}
-        text={'Success'}
-        btn_text={'Go to Create Profile'}
-        subtext={'Account Verified Successfully'}
+        text={'Error'}
+        btn_text={'Ok'}
+        subtext={
+          error ===
+          'Please Error: [auth/too-many-requests] We have blocked all requests from this device due to unusual activity. Try again later.'
+            ? error.substring(38)
+            : error ===
+              'Please Error: [auth/invalid-verification-code] The verification code from SMS/TOTP is invalid. Please check and enter the correct verification code again.'
+            ? error.substring(46)
+            : error ===
+              'Please Error: [auth/session-expired] The sms code has expired. Please re-send the verification code to try again.'
+            ? error.substring(36)
+            : 'error'
+        }
         type={'single_btn'}
         onPress={() => {
           setModalVisible(false);
-          navigation.navigate('CreateProfile');
+          // /navigation.navigate('CreateProfile');
         }}
       />
       <Snackbar

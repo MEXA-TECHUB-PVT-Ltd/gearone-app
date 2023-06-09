@@ -5,6 +5,7 @@ import {
   Image,
   PermissionsAndroid,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 
 ///////////////import app components/////////////
@@ -55,15 +56,18 @@ import {fontFamily} from '../../../constant/fonts';
 /////////app redux///////
 import {useSelector} from 'react-redux';
 
+import EmojiPicker from 'rn-emoji-keyboard';
+
 const ChatScreen = ({route, navigation}) => {
   ////////////////redux/////////////////
-  const imagePath = useSelector(state => state.image.path);
+  const imagePath = useSelector(state => state.image);
+  console.log("here redux",imagePath.path)
 
   //////////navigation//////////
   const isFocused = useIsFocused();
 
   /////////////redux/////////////
-  const {emoji_name} = useSelector(state => state.emoji)
+  const {emoji_name} = useSelector(state => state.emoji);
 
   ////////////previos data//////////
   const [emoji_visible, setEmojivisible] = useState(false);
@@ -98,9 +102,8 @@ const ChatScreen = ({route, navigation}) => {
   };
   useEffect(() => {
     GetProfileData();
-    AllMessages()
+    AllMessages();
   }, []);
-
 
   const requestCameraPermission = async () => {
     try {
@@ -126,8 +129,8 @@ const ChatScreen = ({route, navigation}) => {
   const AllMessages = async () => {
     var user_id = await AsyncStorage.getItem('User_id');
     const docid =
-    predata.userid > user_id
-        ?user_id + '-' + predata.userid
+      predata.userid > user_id
+        ? user_id + '-' + predata.userid
         : predata.userid + '-' + user_id;
 
     const messageRef = firestore()
@@ -166,8 +169,8 @@ const ChatScreen = ({route, navigation}) => {
     console.log('here chat message value array', messageArray);
     var user_id = await AsyncStorage.getItem('User_id');
     const docid =
-    predata.userid > user_id
-        ?user_id + '-' + predata.userid
+      predata.userid > user_id
+        ? user_id + '-' + predata.userid
         : predata.userid + '-' + user_id;
 
     let myMsg = null;
@@ -175,16 +178,15 @@ const ChatScreen = ({route, navigation}) => {
     console.log('here chat message value', msg);
     myMsg = {
       ...msg,
-      //text:emoji_name,
-      //type: "image_text",
-      //image: imagePath,
-      senderId:predata.userid,
+      //text:text,
+      type: "image_text",
+      image: imagePath.path,
+      senderId: predata.userid,
       receiverId: user_id,
       user: {
         _id: predata.userid,
         name: 'ali',
       },
-      
     };
     if (messageArray.text) {
       msg.text = messageArray.text;
@@ -207,7 +209,7 @@ const ChatScreen = ({route, navigation}) => {
     messages.forEach(message => {});
     AllMessages();
   };
-  const handleSendImage = (image) => {
+  const handleSendImage = image => {
     const imageMessage = {
       _id: Math.round(Math.random() * 1000000),
       image,
@@ -229,7 +231,7 @@ const ChatScreen = ({route, navigation}) => {
           width: wp(100),
           alignItems: 'center',
           justifyContent: 'center',
-           position: 'absolute',
+          position: 'absolute',
           //bottom: hp(1),
         }}>
         <InputToolbar
@@ -243,20 +245,24 @@ const ChatScreen = ({route, navigation}) => {
             left: wp(3),
           }}
         />
-        <View style={{position: 'absolute', top: hp(2.5), left: wp(6)}}>
+
+        <TouchableOpacity
+          style={{position: 'absolute', top: hp(2.5), left: wp(6)}}
+          onPress={() => setIsOpen(true)}>
           <FontAwesome5
             name={'smile'}
             size={22}
             color={'#444444'}
-            onPress={() => setEmojivisible(true)}
+            onPress={() => setIsOpen(true)}
           />
-        </View>
+        </TouchableOpacity>
+
         <View style={{position: 'absolute', top: hp(2.5), right: wp(20)}}>
           <MaterialCommunityIcons
             name={'camera'}
             size={22}
             color={'#444444'}
-           onPress={() => refRBSheet.current.open()}
+            onPress={() => refRBSheet.current.open()}
             //onPress={() => handleImageUpload()}
           />
         </View>
@@ -287,26 +293,39 @@ const ChatScreen = ({route, navigation}) => {
     );
   };
   const CustomBubbleText = props => {
+   // console.log('hree data',props.currentMessage)
     return (
       <View>
         {props.currentMessage.image ? (
-          <Image source={{uri: props.currentMessage.image}} 
-          style={{height:120,width:100}}
-          resizeMode="contain"
+          <Image
+            source={{uri: props.currentMessage.image}}
+            style={{height: 120, width: 100}}
+            resizeMode="contain"
           />
         ) : (
-        <Text
-          style={{
-            color: 'black',
-            paddingHorizontal: wp(1),
-            paddingVertical: 0,
-            //fontWeight: "bold",
-          }}>
-          {props.currentMessage.text}
-        </Text>
+          <Text
+            style={{
+              color: 'black',
+              paddingHorizontal: wp(1),
+              paddingVertical: 0,
+              //fontWeight: "bold",
+            }}>
+            {props.currentMessage.text}
+          </Text>
         )}
       </View>
     );
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const handlePick = emojiObject => {
+    console.log(emojiObject);
+    /* example emojiObject = { 
+        "emoji": "❤️",
+        "name": "red heart",
+        "slug": "red_heart",
+      }
+    */
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -317,16 +336,14 @@ const ChatScreen = ({route, navigation}) => {
         left_iconPress={() => {
           navigation.goBack();
         }}
-        username={username}
+        username={username+imagePath.path}
         userimage={profileImage}
       />
-{/* <View style={{height:hp(79.6),marginTop:hp(4.5)}}>
-</View> */}
-<GiftedChat
+      <GiftedChat
         alwaysShowSend
         isTyping={true}
         renderAvatar={() => null}
-        bottomOffset ={8}
+        bottomOffset={8}
         // /inverted={true}
         multiline={true}
         //minInputToolbarHeight={hp(80)}
@@ -335,7 +352,7 @@ const ChatScreen = ({route, navigation}) => {
           fontSize: hp(1.8),
           color: 'black',
           backgroundColor: '#E6E6E6',
-         // height: hp(3),
+          // height: hp(3),
         }}
         textInputProps={{
           placeholder: 'Type Something',
@@ -346,11 +363,11 @@ const ChatScreen = ({route, navigation}) => {
             backgroundColor: '#E6E6E6',
             width: wp(60),
             height: hp(6),
-            color:'black'
-           // bottom: 0,
+            color: 'black',
+            // bottom: 0,
           },
         }}
-        renderEmoji={(props) => <Emoji {...props} />}
+        renderEmoji={props => <Emoji {...props} />}
         renderInputToolbar={props => {
           return <CustomInputToolbar {...props} />;
         }}
@@ -376,7 +393,7 @@ const ChatScreen = ({route, navigation}) => {
                     props.currentMessage.text != ''
                       ? Colors.Appthemecolor
                       : 'orange',
-                 // width: props.currentMessage.text != '' ? wp(80) : wp(70),
+                  // width: props.currentMessage.text != '' ? wp(80) : wp(70),
                   marginBottom: hp(1.5),
                   paddingTop: hp(2),
                   paddingHorizontal: wp(3),
@@ -401,14 +418,18 @@ const ChatScreen = ({route, navigation}) => {
         }}
       />
 
-
       <CamerBottomSheet
         refRBSheet={refRBSheet}
-        onClose={() =>{ refRBSheet.current.close(),handleSendImage(imagePath)}}
+        onClose={() => {
+          refRBSheet.current.close(), handleSendImage(imagePath);
+        }}
         title={'From Gallery'}
         type={'Chat_image'}
       />
-      <EmojiSelector modal_open={emoji_visible} modal_close={()=>setEmojivisible(false)} />
+      <EmojiSelector
+        modal_open={emoji_visible}
+        modal_close={() => setEmojivisible(false)}
+      />
     </SafeAreaView>
   );
 };
