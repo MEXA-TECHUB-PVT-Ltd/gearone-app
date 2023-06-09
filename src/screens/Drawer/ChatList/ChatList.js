@@ -48,12 +48,6 @@ const ChatList = ({navigation}) => {
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
 
-  ////////////////loading/////////////
-  const [loading, setloading] = useState(true);
-
-
-  const [data, setData] = useState();
-
   useEffect(() => {
     if (isFocused && join_as_guest) {
       setModalVisible(true);
@@ -62,22 +56,6 @@ const ChatList = ({navigation}) => {
     //firebase_all_users()
   }, [isFocused]);
 
-  /////////////////firebase all users///////////////
-  const firebase_all_users = () => {
-    const userList = [];
-    firestore()
-      .collection('Users')
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          const user_data = documentSnapshot.data();
-          userList.push(user_data)
-          
-          setData(userList);
-     
-        });
-      });
-  };
   const [friendList, setFriendList] = useState([]);
 
   useEffect(() => {
@@ -108,6 +86,8 @@ const ChatList = ({navigation}) => {
           navigation.navigate('ChatScreen', {
             navtype: 'chatlist',
             userid: item.id,
+            userimage:item.user_image,
+            username:item.user_name
           })
         }>
         <View style={styles.card}>
@@ -143,7 +123,7 @@ const ChatList = ({navigation}) => {
           </View>
           <View style={{}}>
             <Text style={[styles.timetxt, {color: '#7A8FA6'}]}>
-              {item.id}
+              {/* {item.id} */}
             </Text>
           </View>
         </View>

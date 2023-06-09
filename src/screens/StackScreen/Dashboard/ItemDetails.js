@@ -395,13 +395,6 @@ const ItemDetails = ({navigation, route}) => {
         userid: Item_userid,
       });
     } else {
-      // setFriendList([...friendList,{id: Item_userid,
-      //   username: username,
-      //   user_image: profileImage}])
-      // friendList.push({   id: Item_userid,
-      //   username: username,
-      //   user_image: profileImage,});
-      // Add the other user to the friend list
       firestore()
         .collection('users')
         .doc('user_'+ user_id)
