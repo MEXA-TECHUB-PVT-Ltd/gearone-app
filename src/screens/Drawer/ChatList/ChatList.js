@@ -48,37 +48,36 @@ const ChatList = ({navigation}) => {
   ///////////////Modal States///////////////
   const [modalVisible, setModalVisible] = useState(false);
 
-  ////////////////loading/////////////
-  const [loading, setloading] = useState(true);
-
-
-  const [data, setData] = useState();
-
   useEffect(() => {
     if (isFocused && join_as_guest) {
       setModalVisible(true);
       // You can customize the a message as per your needs
     }
-    firebase_all_users()
+    //firebase_all_users()
   }, [isFocused]);
 
-  /////////////////firebase all users///////////////
-  const firebase_all_users = () => {
-    const userList = [];
-    firestore()
-      .collection('Users')
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          const user_data = documentSnapshot.data();
-          userList.push(user_data)
-          
-          setData(userList);
-     
-        });
-      });
-  };
+  const [friendList, setFriendList] = useState([]);
 
+  useEffect(() => {
+    const fetchFriendList = async () => {
+      
+    var user_id = await AsyncStorage.getItem('User_id');
+      try {
+        const userDoc = await firestore()
+          .collection('users')
+          .doc("user_"+user_id)
+          .get();
+
+        const userData = userDoc.data();
+        const friends = userData.friends || [];
+        setFriendList(friends);
+      } catch (error) {
+        console.error('Error fetching friend list:', error);
+      }
+    };
+
+    fetchFriendList();
+  }, []);
   ///////////////////flatlist render item///////////////
   const renderitem = ({item}) => {
     return (
@@ -87,6 +86,8 @@ const ChatList = ({navigation}) => {
           navigation.navigate('ChatScreen', {
             navtype: 'chatlist',
             userid: item.id,
+            userimage:item.user_image,
+            username:item.user_name
           })
         }>
         <View style={styles.card}>
@@ -102,7 +103,7 @@ const ChatList = ({navigation}) => {
               {item.user_image ===null?
                 <Avatar.Text size={45} 
                 style={{backgroundColor:Colors.Appthemecolor}}
-                label={item.username === null?"Us":item.username.substring(0,1)} />
+                label={item.user_name === null?"Us":item.user_name.substring(0,1)} />
               :
                             <Image
                 source={{uri: BASE_URL+ item.user_image}}
@@ -114,15 +115,15 @@ const ChatList = ({navigation}) => {
             </View>
 
             <View style={{marginLeft: wp(2), marginTop: hp(1), width: wp(65)}}>
-              <Text style={styles.user_name_txt}>{item.username === null?"userName":item.username}</Text>
+              <Text style={styles.user_name_txt}>{item.user_name === null?"userName":item.user_name}</Text>
               <Text style={[styles.detailtxt, {color: '#7A8FA6'}]}>
-                {"item.detail"}
+                {/* {"item.detail"} */}
               </Text>
             </View>
           </View>
           <View style={{}}>
             <Text style={[styles.timetxt, {color: '#7A8FA6'}]}>
-              {item.id}
+              {/* {item.id} */}
             </Text>
           </View>
         </View>
@@ -141,7 +142,7 @@ const ChatList = ({navigation}) => {
       />
       <View style={{marginTop: hp(3)}}>
         <FlatList
-          data={data}
+          data={friendList}
           renderItem={renderitem}
           keyExtractor={(item, index) => index.toString()}
           scrollEnabled={true}

@@ -112,7 +112,7 @@ const LikedItems = ({navigation, route}) => {
         price={item.price}
         images_array_length={item.images.length}
         onpress={() => {
-          dispatch(setItemDetail({id: item.id, navplace: 'login_user_items'}));
+          dispatch(setItemDetail({id: item.id, navplace: 'login_user_items',type:'like'}));
           navigation.navigate('ItemDetails', {
             Item_id: item.id,
           });

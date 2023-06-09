@@ -236,6 +236,14 @@ const MyGear = ({navigation}) => {
             marginTop: hp(0),
           }}></View>
         <View>
+        <SettingsMenu
+            label={'Messages'}
+            labelPress={() =>
+              navigation.navigate('ChatList', {
+                navplace: 'ChatList',
+              })
+            }
+          />
           <SettingsMenu
             label={'My Account'}
             labelPress={() =>

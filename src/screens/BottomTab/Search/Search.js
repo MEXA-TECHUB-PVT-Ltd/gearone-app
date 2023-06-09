@@ -100,6 +100,7 @@ const Search = ({navigation}) => {
     try {
       const jsonValue = await AsyncStorage.getItem('dataArray');
       const retrievedArray = jsonValue != null ? JSON.parse(jsonValue) : [];
+      //const reversedArray = retrievedArray.reverse();
       setDataArray(retrievedArray);
       setCount(1);
     } catch (error) {
@@ -118,7 +119,7 @@ const Search = ({navigation}) => {
 
   const addDataToArray = () => {
     const newItem = search;
-    const updatedArray = [...dataArray, newItem];
+    const updatedArray = [ newItem,...dataArray];
     setDataArray(updatedArray);
   };
   const removeItem = index => {

@@ -43,18 +43,15 @@ const Gender_DropDowns = props => {
 
   const GetCategories = async () => {
     axios({
-      method: 'GET',
-      url: BASE_URL + 'category/get_all_category',
+      method: 'POST',
+      url: BASE_URL + 'category/GetAll_only_Categories',
       data: {
-        page: Ppage,
+        page: page,
         AdsOffset: '0',
       },
     })
       .then(async function (response) {
-        const filteredData = response.data.filter(
-          category => category.type === 'category',
-        );
-        setCategories(filteredData);
+        setCategories(response.data.result);
         //setCategories(response.data.result);
       })
       .catch(function (error) {

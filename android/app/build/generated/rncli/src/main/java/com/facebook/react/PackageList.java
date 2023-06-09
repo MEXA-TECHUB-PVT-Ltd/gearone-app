@@ -23,6 +23,8 @@ import io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage;
 import io.invertase.firebase.firestore.ReactNativeFirebaseFirestorePackage;
 // @react-native-firebase/messaging
 import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
+// @react-native-firebase/storage
+import io.invertase.firebase.storage.ReactNativeFirebaseStoragePackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-image-crop-picker
@@ -90,6 +92,7 @@ public class PackageList {
       new ReactNativeFirebaseAuthPackage(),
       new ReactNativeFirebaseFirestorePackage(),
       new ReactNativeFirebaseMessagingPackage(),
+      new ReactNativeFirebaseStoragePackage(),
       new RNGestureHandlerPackage(),
       new PickerPackage(),
       new InstaStoryPackage(),

@@ -1697,6 +1697,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-17.5.0.tgz#9c6db50423c67760dd61e553189187b9e5a2b75e"
   integrity sha512-9jB7jEt4ySdALio2qwquAkXI106GTdPEuGY+vUFuNT6Wwwc5VQhyiJ5yforaF0BEsppFgK151PLYQQdIhahgzA==
 
+"@react-native-firebase/storage@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-18.0.0.tgz#ebaaa54a560aadece7a5025c17758dba0766c8d5"
+  integrity sha512-aJchEV1nHzECq5bNE9bA6sczJs0ox59IQoox9vnuzdfh+Aep3ezjQBVJckriQ7/W/pV28fs32XyRx3GLVSRq6w==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -6892,6 +6897,11 @@ rimraf@~2.6.2:
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
   dependencies:
     glob "^7.1.3"
+
+rn-emoji-keyboard@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/rn-emoji-keyboard/-/rn-emoji-keyboard-1.2.2.tgz#cdcfff32a76791b0b3aa7ee5d2f4c1d79196f3b2"
+  integrity sha512-Vc6T77FaEq8dfXZPfjmge9OHZI1Lcpl96SU4XgXzIdFLjpLx8NA0HuGxg10CYAYHmAxZoJ4FdHTdyw/yfxIJdA==
 
 run-parallel@^1.1.9:
   version "1.2.0"

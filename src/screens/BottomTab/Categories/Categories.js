@@ -7,7 +7,7 @@ import {
   FlatList,
   Image,
   RefreshControl,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 
 ///////////////app components////////////////
@@ -74,13 +74,12 @@ const data = [
 ];
 
 const Categories = ({navigation}) => {
+  ///////////data states/////////
+  const [refresh, setRefresh] = useState(false);
+  const [page, setPage] = useState(1);
+  const [ads, setAds] = useState(0);
 
-    ///////////data states/////////
-    const [refresh, setRefresh] = useState(false);
-    const [page, setPage] = useState(1);
-    const [ads, setAds] = useState(0);
-  
-    const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   /////////////Get Screen Logo/////////////
   const [logo, setLogo] = useState([]);
@@ -110,11 +109,11 @@ const Categories = ({navigation}) => {
   /////////////Get Categories/////////////
 
   const [span_array, setSpanArray] = useState([]);
-  const[count,setCount]=useState(0)
+  const [count, setCount] = useState(0);
 
   const GetCategories = useCallback(async () => {
-    setCount(count+1)
-    console.log("in page ads",ads,page)
+    setCount(count + 1);
+    console.log('in page ads', ads, page);
     var token = await AsyncStorage.getItem('JWT_Token');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
@@ -127,7 +126,7 @@ const Categories = ({navigation}) => {
     });
 
     let config = {
-      method: 'Get',
+      method: 'POST',
       url: BASE_URL + 'category/get_all_category',
       headers: headers,
       data: data,
@@ -138,28 +137,16 @@ const Categories = ({navigation}) => {
       .then(response => {
         console.log('response here in maintttt', response.data.result);
         if (response.data.status === true) {
-          setAds(response.data.InpageAds)
-          // setLoading(false);
-          // setCount(1);
-          // var recent_data = response.data.result;
-          // var newArray = recent_data.concat(dashboard_items);
-var idhere=0
+          setAds(response.data.InpageAds);
+          var idhere = 0;
           // Create a new array by mapping over the original data and adding the 'span' attribute
           const updatedData = response.data.result.map(item => ({
             ...item,
-            id:idhere+1,
-            span: item.type === 'ad' ? 3 : 3/2,
+            id: idhere + 1,
+            span: item.type === 'ad' ? 3 : 3 / 2,
             color: item.type === 'ad' ? 'red' : 'yellow',
           }));
-          setSpanArray(page === 1 ? updatedData : [span_array,...updatedData ]);
-          //setSpanArray(updatedData);
-         // console.log('here data in update one', updatedData);
-          //setCategories(response.data.result);
-
-          // const adItems = data.filter((item) => item.type === 'ad');
-          // setCategories_Ad(adItems);
-          // const otherItems = data.filter((item) => item.type !== 'ad');
-          // setCategories(otherItems);
+          setSpanArray(page === 1 ? updatedData : [span_array, ...updatedData]);
         } else {
           <NoDataFound title={'No data here'} />;
           setLoading(false);
@@ -173,59 +160,55 @@ var idhere=0
 
   useEffect(() => {
     GetLogo();
-    if(count ===0)
-    {
+    if (count === 0) {
       GetCategories();
     }
-
   }, []);
 
   const renderView = prop => {
     if (prop.type === 'ad') {
       return (
         // <TouchableOpacity onPress={()=>{}
-        
+
         // }>
         <View
           style={{alignSelf: 'center', marginVertical: hp(2)}}
           key={prop.index}>
           <Image
             source={{uri: BASE_URL + prop.image}}
-            style={{width: wp(85), height: hp(20),borderRadius:hp(1.5)}}
+            style={{width: wp(85), height: hp(20), borderRadius: hp(1.5)}}
             resizeMode="cover"
           />
         </View>
         // </TouchableOpacity>
-
       );
     } else {
       return (
-        <TouchableOpacity onPress={()=>{ 
-                   navigation.navigate('CategoryItem', {
-          category_id: prop.id,
-          category_name:prop.name
-        }) }}
-        style={{alignSelf:'center',paddingHorizontal:wp(5)}}
-      >
-        <CategoryCard
-          image={prop.image}
-          //images_array_length={item.images.length}
-          maintext={prop.name}
-          subtext={prop.location}
-          price={prop.price}
-          onpress={() => {
+        <TouchableOpacity
+          onPress={() => {
             navigation.navigate('CategoryItem', {
               category_id: prop.id,
-              category_name:prop.name
+              category_name: prop.name,
             });
           }}
-        /></TouchableOpacity>
-
+          style={{alignSelf: 'center', paddingHorizontal: wp(5)}}>
+          <CategoryCard
+            image={prop.image}
+            //images_array_length={item.images.length}
+            maintext={prop.name}
+            subtext={prop.location}
+            price={prop.price}
+            onpress={() => {
+              navigation.navigate('CategoryItem', {
+                category_id: prop.id,
+                category_name: prop.name,
+              });
+            }}
+          />
+        </TouchableOpacity>
       );
     }
   };
-
-
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -249,8 +232,8 @@ var idhere=0
   }, [refreshing]);
 
   const handleLoadMore = () => {
-    setRefreshing(false)
-    setPage(page+1);
+    setRefreshing(false);
+    setPage(page + 1);
     GetCategories();
   };
   return (
@@ -264,7 +247,7 @@ var idhere=0
         //     onRefresh={() => handleLoadMore()}
         //   />
         // }
-        >
+      >
         <Header
           title={'Categories'}
           // left_icon={'chevron-back-sharp'}
@@ -273,16 +256,15 @@ var idhere=0
           // }}
           right_logo={BASE_URL + logo}
         />
-        <View style={{paddingHorizontal:wp(5)}}>
-        <BrickList
-          data={span_array}
-          renderItem={prop => renderView(prop)}
-          columns={3}
-          rowHeight={hp(22)}
-          onEndReached={handleLoadMore}
-        />
+        <View style={{paddingHorizontal: wp(5)}}>
+          <BrickList
+            data={span_array}
+            renderItem={prop => renderView(prop)}
+            columns={3}
+            rowHeight={hp(22)}
+            onEndReached={handleLoadMore}
+          />
         </View>
-   
       </ScrollView>
     </SafeAreaView>
   );

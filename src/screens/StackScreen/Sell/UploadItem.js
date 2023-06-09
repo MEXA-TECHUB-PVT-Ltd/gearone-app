@@ -9,6 +9,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+///////////////icons////////////////
+import Icon from 'react-native-vector-icons/Ionicons';
+
 ///////////////app components////////////////
 import Header from '../../../components/Header/Header';
 import CustomTextInput from '../../../components/TextInput/CustomTextInput';
@@ -41,10 +44,13 @@ import UploadIcon from '../../../assets/svgs/upload_icon.svg';
 import {useSelector, useDispatch} from 'react-redux';
 import {setItemDetail} from '../../../redux/ItemSlice';
 import {updateGender} from '../../../redux/GenderSlice';
-import {updateImagesArrayPath} from '../../../redux/ImagesArray';
+import {updateImagesArrayPath,removeArrayImage} from '../../../redux/ImagesArray';
 
 ////////////screen id//////////////
 import ScreensNames from '../../../data/ScreensNames';
+import Colors from '../../../utills/Colors';
+
+
 
 const UploadItem = ({navigation}) => {
   ////////////redux////////////
@@ -226,7 +232,7 @@ const UploadItem = ({navigation}) => {
       CreateItem();
     }
   };
-  const renderItem = ({item}) => {
+  const renderItem = ({item,index}) => {
     return (
       <View
         style={{
@@ -237,15 +243,26 @@ const UploadItem = ({navigation}) => {
           borderRadius: wp(2),
           marginHorizontal: wp(2),
         }}>
+
         <Image
           source={{uri: item}}
           style={{height: hp(11), width: wp(18.5), borderRadius: wp(2)}}
           resizeMode="cover"
         />
+                              <Icon
+              name={"md-close-circle"}
+              size={25}
+              color={Colors.Appthemecolor}
+              style={{position:'absolute',right:-10,top:-17}}
+              onPress={()=>handleRemoveImage(item)}
+            />
       </View>
     );
   };
 
+  const handleRemoveImage = (image) => {
+    dispatch(removeArrayImage(image))
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView

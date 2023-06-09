@@ -32,6 +32,7 @@ import { fontFamily } from "../../constant/fonts";
 
 ////////////////app images//////////////
 import { appImages } from "../../constant/images";
+import { BASE_URL } from "../../utills/ApiRootUrl";
 
 const ChatHeader = ({
   username,
@@ -41,6 +42,7 @@ const ChatHeader = ({
   onPress,
   viewstate,
 }) => {
+  console.log("here user image",picture)
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -59,7 +61,7 @@ const ChatHeader = ({
       <View style={styles.profileOptions}>
         <TouchableOpacity style={styles.profile}>
           <View>
-            <Image source={{uri:picture}} style={styles.image} resizeMode="contain" />
+            <Image source={{uri:BASE_URL+ picture}} style={styles.image} resizeMode="contain" />
             <View style={{ position: "absolute", right: wp(1), bottom: hp(0.) }}>
             <Octicons
        name={"dot-fill"}

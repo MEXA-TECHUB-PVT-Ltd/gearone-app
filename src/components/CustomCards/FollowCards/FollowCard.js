@@ -8,6 +8,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { BASE_URL } from '../../../utills/ApiRootUrl';
 
 const FollowCard = props => {
   return (
@@ -16,7 +17,7 @@ const FollowCard = props => {
         <View style={{flexDirection: 'row'}}>
           <Image
             //source={{uri: IMAGE_URL+item.props.userimage}}
-            source={props.userimage}
+            source={{uri:BASE_URL+ props.userimage}}
             style={{width: wp(12), height: hp(6), borderRadius: wp(10)}}
             resizeMode="contain"
           />
@@ -24,7 +25,7 @@ const FollowCard = props => {
             <Text style={styles.usertext}>{props.username}</Text>
           </View>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             backgroundColor: Colors.Appthemecolor,
             width: wp(26),
@@ -34,7 +35,7 @@ const FollowCard = props => {
             justifyContent: 'center',
           }}>
           <Text style={styles.usertext}>{props.btn_text}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View
         style={{
