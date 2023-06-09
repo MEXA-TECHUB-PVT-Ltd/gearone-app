@@ -151,9 +151,9 @@ const ItemDetails = ({navigation, route}) => {
     /////////////Get Notification/////////////
   const [profileImage, setProfileImage] = useState('');
   const [username, setUsername] = useState('');
-  const [country_code, setCountryCode] = useState('');
-  const [phone_number, setPhoneNumber] = useState('');
-  const [user_id, setUser_id] = useState('');
+  // const [country_code, setCountryCode] = useState('');
+  // const [phone_number, setPhoneNumber] = useState('');
+  // const [user_id, setUser_id] = useState('');
 
   const GetProfileData = async () => {
     axios({
@@ -164,9 +164,9 @@ const ItemDetails = ({navigation, route}) => {
         console.log('list data here ', response.data.result);
         setProfileImage(response.data.result[0].image);
         setUsername(response.data.result[0].username);
-        setCountryCode(response.data.result[0].country_code);
-        setPhoneNumber(response.data.result[0].phone);
-        setUser_id(response.data.result[0].id);
+        // setCountryCode(response.data.result[0].country_code);
+        // setPhoneNumber(response.data.result[0].phone);
+        // setUser_id(response.data.result[0].id);
       })
       .catch(function (error) {
         console.log('error', error);
