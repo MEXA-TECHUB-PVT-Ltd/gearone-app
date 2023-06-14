@@ -47,6 +47,10 @@ const Home = ({navigation}) => {
   ///////redux states/////////
   const dispatch = useDispatch();
 
+   /////////////Get Items/////////////
+   const [dashboard_items, setDashboardItems] = useState([]);
+   const [dashboard_error_status, setDashboardErrorStatus] = useState(false);
+
   //////////loader state/////
   const [isLoading, setLoading] = useState(false);
   /////////////Get Screen Logo/////////////
@@ -109,6 +113,8 @@ const Home = ({navigation}) => {
           setCount(1);
         }
         //setDashboardStories(response.result);
+
+        console.log("Response", dashboard_stories)
       })
       .catch(error => {
         console.log('Error  : ', error);
@@ -121,12 +127,10 @@ const Home = ({navigation}) => {
 
   const [refreshing, setRefreshing] = React.useState(false);
 
-  /////////////Get Items/////////////
-  const [dashboard_items, setDashboardItems] = useState([]);
-  const [dashboard_error_status, setDashboardErrorStatus] = useState(false);
+ 
 
   const GetDashboardItems = useCallback(async () => {
-    console.log(page);
+    //console.log(page);
     var token = await AsyncStorage.getItem('JWT_Token');
     var headers = {
       Authorization: `Bearer ${JSON.parse(token)}`,
@@ -151,12 +155,14 @@ const Home = ({navigation}) => {
         if (response.data.status === true) {
           setLoading(false);
           setCount(1);
+          console.log("response", response.data.result)
           setDashboardItems(
             page === 1
               ? response.data.result
               : [...dashboard_items, ...response.data.result],
           );
         } else {
+          console.log("not getting response", response.data.result)
           setDashboardErrorStatus(true);
           setLoading(false);
           setCount(1);
@@ -175,6 +181,7 @@ const Home = ({navigation}) => {
     }
     GetDashboardStories();
     GetDashboardLogo();
+
   }, [page]);
   const [visitedItemIndex, setVisitedItemIndex] = useState(null);
 
@@ -184,8 +191,11 @@ const Home = ({navigation}) => {
   };
   const [isLarge, setIsLarge] = useState(false);
   const storyrenderItem = ({item, index}) => {
+    
     return (
+      
       <View style={{}}>
+       {console.log("Key", item)}
         <Lightbox
           activeProps={{resizeMode: 'contain'}}
           onLongPress={() => setIsLarge(true)}
@@ -236,6 +246,7 @@ const Home = ({navigation}) => {
   };
 
   const renderItem_two = ({item, index}) => {
+  {console.log("showing", item[0])}
     return (
       <View>
         {item[0]?.promoted === 'true' ||
@@ -508,6 +519,8 @@ const Home = ({navigation}) => {
   };
   return (
     <SafeAreaView style={styles.container}>
+      {console.log("storyStatus", dashboard_stories)}
+     
       <Loader isLoading={isLoading} />
       <ScrollView
         showsHorizontalScrollIndicator={false}
@@ -546,18 +559,24 @@ const Home = ({navigation}) => {
             showsHorizontalScrollIndicator={false}
           />
         )}
-        <View style={styles.bottomlineview}></View>
+        <View style={styles.bottomlineview}>
+        
+        </View>
         {dashboard_error_status === true ? (
+          
           <NoDataFound icon={'exclamation-thick'} text={'No Data Found'} />
+          
         ) : (
-          <FlatList
-            data={dashboard_items}
+
+//dashboard_items[0]
+           <FlatList
+            data={Object.values(dashboard_items)}
             scrollEnabled={false}
             keyExtractor={(item, index) => index}
             renderItem={renderItem_two}
             onEndReached={handleLoadMore}
             refreshing={refresh}
-          />
+          /> 
         )}
       </ScrollView>
     </SafeAreaView>
